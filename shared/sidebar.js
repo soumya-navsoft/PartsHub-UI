@@ -43,7 +43,7 @@ window.PHRenderShell = function () {
         { id: 'rfq-to-garage', label: 'RFQ To Garage', href: 'rfq-to-garage.html' },
         { id: 'garage-quotations', label: 'Garage Quotations', href: 'garage-quotations-list.html' },
         { id: 'rfq-to-supplier', label: 'RFQ To Supplier', href: 'rfq-to-supplier.html' },
-        { id: 'supplier-quotations', label: 'Supplier Quotations', href: 'supplier-quotations-compare.html' },
+        { id: 'supplier-quotations', label: 'Supplier Quotations', href: 'supplier-quotations-list.html' },
         { id: 'claim-orders', label: 'Claim Orders', href: 'orders.html' },
         { id: 'finalized-claims', label: 'Claim Finalization', href: 'finalized-claims.html' }
       ]},

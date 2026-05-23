@@ -17,12 +17,12 @@
         <div class="page-card__toolbar">
           <div>
             <div style="font-size:12px;color:var(--ink-400)">Comparing</div>
-            <div style="font-weight:700">Claim JKLMN56780 — Sulaiman Al-Zayoudi · Toyota Camry 2022</div>
+            <div style="font-weight:700" id="claim-head">Claim JKLMN56780 — Sulaiman Al-Zayoudi · Toyota Camry 2022</div>
           </div>
           <div style="margin-left:auto" class="flex gap-8">
+            <a class="btn" id="backToList" href="garage-quotations-by-rfq.html">← Back to List</a>
             <button class="btn">Download PDF</button>
             <button class="btn btn--ghost-red">Reject all</button>
-            <button class="btn btn--primary">Approve selected</button>
           </div>
         </div>
         <table class="compare">
@@ -85,9 +85,9 @@
           <tbody>
             <tr>
               <td class="row-label"></td>
-              <td class="col--accent"><button class="select-btn" style="background:var(--brand-red);color:#fff">Approve</button></td>
-              <td class="col--blue"><button class="select-btn">Approve</button></td>
-              <td><button class="select-btn">Approve</button></td>
+              <td class="col--accent"><a class="select-btn" style="background:var(--brand-red);color:#fff;text-decoration:none" href="garage-quotation-detail.html?qid=q1&garage=Royal%20Swiss%20Automobile">View &amp; Approve</a></td>
+              <td class="col--blue"><a class="select-btn" style="text-decoration:none" href="garage-quotation-detail.html?qid=q2&garage=Craft%20Auto%20Services">View Quotation</a></td>
+              <td><a class="select-btn" style="text-decoration:none" href="garage-quotation-detail.html?qid=q3&garage=Gargash%20Auto%20Centre">View Quotation</a></td>
             </tr>
           </tbody>
         </table>
@@ -107,6 +107,19 @@
 </div>
 <script src="../shared/icons.js"></script>
 <script src="../shared/sidebar.js"></script>
+<script>
+  // Carry RFQ / claim context through the URL so back & detail links keep state
+  const _p = new URLSearchParams(location.search);
+  const _rfq   = _p.get('rfq')   || 'JKLMN5678O';
+  const _claim = _p.get('claim') || 'EFGHI1234U';
+  const _back = document.getElementById('backToList');
+  if (_back) _back.href = `garage-quotations-by-rfq.html?rfq=${encodeURIComponent(_rfq)}&claim=${encodeURIComponent(_claim)}`;
+  // Append context to each detail link
+  document.querySelectorAll('a[href*="garage-quotation-detail.html"]').forEach(a => {
+    const sep = a.href.includes('?') ? '&' : '?';
+    a.href = a.href + sep + `rfq=${encodeURIComponent(_rfq)}&claim=${encodeURIComponent(_claim)}`;
+  });
+</script>
 <script>
   const PARTS = [
     ['Shock absorbers (×4)', 4, [['AED 350','col--accent'],['AED 390','col--blue'],['AED 420','']]],

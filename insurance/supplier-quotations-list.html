@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>PartsHub Insurance — Garage Quotations</title>
+<title>PartsHub Insurance — Supplier Quotations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../shared/styles.css" />
@@ -107,7 +107,7 @@
   .pg-arrow:disabled { opacity: 0.4; cursor: not-allowed; }
 </style>
 </head>
-<body data-portal="insurance" data-page="claims" data-subpage="garage-quotations" data-page-title="Garage Quotations">
+<body data-portal="insurance" data-page="claims" data-subpage="supplier-quotations" data-page-title="Supplier Quotations">
 <div class="app">
   <div id="shell-sidebar"></div>
   <main>
@@ -128,9 +128,9 @@
               <th style="border-radius:6px 0 0 0">&nbsp;</th>
               <th>RFQ ID</th>
               <th>Claim ID</th>
-              <th>No. of Garages Sent Quotation</th>
+              <th>No. of Suppliers Sent Quotation</th>
               <th>Average Cost</th>
-              <th style="border-radius:0 6px 0 0">Avg. Repair Time</th>
+              <th style="border-radius:0 6px 0 0">Avg. Delivery Time</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -151,19 +151,19 @@
   document.getElementById('statsBtn').innerHTML = PHIcon('bars', 18);
 
   const ROWS = [
-    [1, 'JKLMN5678O',  'EFGHI1234U', 8, '19,532', '10 Days'],
-    [2, 'VWXYZ2345X',  'EFGHI1234U', 5, '96,789', '25 Days'],
-    [3, 'XYZAB2345C',  'LMNOP5678A', 7, '56,789', '22 Days'],
-    [4, 'QRSTU9012W',  'RSTUV2345W', 6, '69,123', '19 Days'],
-    [5, 'UVWXY2345S',  'XYZAB2345C', 4, '34,567', '30 Days'],
-    [6, 'QRSTU9012W',  'XYZAB2345C', 3, '23,456', '11 Days'],
-    [7, 'FGHIJ5678K',  'XYZAB2345C', 5, '78,901', '26 Days']
+    [1, 'SRQ00081', 'CLM00313', 24, '4,932', '3 Days'],
+    [2, 'SRQ00080', 'CLM00328', 18, '7,840', '4 Days'],
+    [3, 'SRQ00079', 'CLM00320', 22, '6,420', '5 Days'],
+    [4, 'SRQ00078', 'CLM00317', 16, '3,180', '4 Days'],
+    [5, 'SRQ00077', 'CLM00314', 20, '9,120', '6 Days'],
+    [6, 'SRQ00076', 'CLM00310', 14, '2,840', '3 Days'],
+    [7, 'SRQ00075', 'CLM00312', 19, '5,200', '4 Days']
   ];
 
   document.querySelector('#qTable tbody').innerHTML = ROWS.map(r => `
     <tr>
       <td class="cl-sl">${r[0]}</td>
-      <td><a class="cl-id" href="garage-quotations-by-rfq.html?rfq=${encodeURIComponent(r[1])}&claim=${encodeURIComponent(r[2])}">${r[1]}</a></td>
+      <td><a class="cl-id" href="supplier-quotations-by-rfq.html?rfq=${encodeURIComponent(r[1])}&claim=${encodeURIComponent(r[2])}">${r[1]}</a></td>
       <td>${r[2]}</td>
       <td class="num">${r[3]}</td>
       <td class="num">AED ${r[4]}</td>

@@ -2,17 +2,18 @@
 <html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Supplier Quotations — Compare</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="../shared/styles.css"/></head>
+<link rel="stylesheet" href="../shared/styles.css"/><style>.qhead-link{color:inherit;text-decoration:none}.qhead-link:hover{text-decoration:underline}</style></head>
 <body data-portal="insurance" data-page="claim-request" data-subpage="supplier-quotations-compare" data-page-title="Supplier Quotations — Compare">
 <div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
 
       <div class="page-card mb-16">
         <div class="page-card__toolbar">
           <div>
-            <div style="font-weight:700">Claim JKLMN56780 · RFQ EFHG1234U-S · 5 of 5 suppliers responded</div>
-            <div class="muted small">Lowest-price-per-part is highlighted. Select per part to split, or "Best total" for a single supplier.</div>
+            <div style="font-weight:700" id="cmp-head">Claim JKLMN56780 · RFQ EFHG1234U-S · 5 of 5 suppliers responded</div>
+            <div class="muted small">Lowest-price-per-part is highlighted. Click a supplier name to view the full quotation, or use "Pick best total" to auto-select.</div>
           </div>
           <div style="margin-left:auto" class="flex gap-8">
+            <a class="btn" id="backToList" href="supplier-quotations-by-rfq.html">← Back to List</a>
             <button class="btn">Pick best total</button>
             <a class="btn btn--primary" href="supplier-quotations-assign.html">Assign suppliers →</a>
           </div>
@@ -23,11 +24,11 @@
           <thead>
             <tr>
               <th class="row-label">Part / Supplier</th>
-              <th class="col-head col--accent"><div class="lowest-tag">Best total</div><div style="margin-top:8px">Gulf Auto Parts</div></th>
-              <th class="col-head col--blue">Emirates Spare Co.</th>
-              <th class="col-head col--blue">Bin Hamoodah</th>
-              <th class="col-head col--blue">Royal Parts</th>
-              <th class="col-head col--blue">Speedway</th>
+              <th class="col-head col--accent"><div class="lowest-tag">Best total</div><div style="margin-top:8px"><a class="qhead-link" href="supplier-quotation-detail.html?qid=s1&supplier=Gulf%20Auto%20Parts%20LLC">Gulf Auto Parts</a></div></th>
+              <th class="col-head col--blue"><a class="qhead-link" href="supplier-quotation-detail.html?qid=s2&supplier=Emirates%20Spare%20Co.">Emirates Spare Co.</a></th>
+              <th class="col-head col--blue"><a class="qhead-link" href="supplier-quotation-detail.html?qid=s3&supplier=Bin%20Hamoodah%20Trading">Bin Hamoodah</a></th>
+              <th class="col-head col--blue"><a class="qhead-link" href="supplier-quotation-detail.html?qid=s4&supplier=Royal%20Parts%20Supply">Royal Parts</a></th>
+              <th class="col-head col--blue"><a class="qhead-link" href="supplier-quotation-detail.html?qid=s5&supplier=Speedway%20Components">Speedway</a></th>
             </tr>
           </thead>
           <tbody id="rows"></tbody>
@@ -66,10 +67,10 @@
             </tr>
             <tr>
               <td class="row-label"></td>
-              <td class="col--accent"><button class="select-btn" style="background:var(--brand-red);color:#fff">Select all parts</button></td>
-              <td class="col--blue"><button class="select-btn">Select all</button></td>
-              <td><button class="select-btn">Select all</button></td>
-              <td><button class="select-btn">Select all</button></td>
+              <td class="col--accent"><a class="select-btn" style="background:var(--brand-red);color:#fff;text-decoration:none" href="supplier-quotation-detail.html?qid=s1&supplier=Gulf%20Auto%20Parts%20LLC">View &amp; Approve</a></td>
+              <td class="col--blue"><a class="select-btn" style="text-decoration:none" href="supplier-quotation-detail.html?qid=s2&supplier=Emirates%20Spare%20Co.">View quotation</a></td>
+              <td><a class="select-btn" style="text-decoration:none" href="supplier-quotation-detail.html?qid=s3&supplier=Bin%20Hamoodah%20Trading">View quotation</a></td>
+              <td><a class="select-btn" style="text-decoration:none" href="supplier-quotation-detail.html?qid=s4&supplier=Royal%20Parts%20Supply">View quotation</a></td>
               <td><button class="select-btn" style="background:#FDE5E7" disabled>No quote</button></td>
             </tr>
           </tfoot>
@@ -99,4 +100,15 @@ document.getElementById('rows').innerHTML = PARTS.map((p,i)=>{
   
 </div></main></div>
 <script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+<script>
+  const _p = new URLSearchParams(location.search);
+  const _rfq   = _p.get('rfq')   || 'SRQ00081';
+  const _claim = _p.get('claim') || 'CLM00313';
+  const _back = document.getElementById('backToList');
+  if (_back) _back.href = `supplier-quotations-by-rfq.html?rfq=${encodeURIComponent(_rfq)}&claim=${encodeURIComponent(_claim)}`;
+  document.querySelectorAll('a[href*="supplier-quotation-detail.html"]').forEach(a => {
+    const sep = a.href.includes('?') ? '&' : '?';
+    a.href = a.href + sep + `rfq=${encodeURIComponent(_rfq)}&claim=${encodeURIComponent(_claim)}`;
+  });
+</script>
 </body></html>

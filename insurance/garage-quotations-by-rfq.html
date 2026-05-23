@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — Quotations for RFQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .od-actionbar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .od-back {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    padding: 9px 16px; border: 1px solid var(--form-field-border);
+    background: #fff; color: var(--bodyText); border-radius: 6px;
+    font-size: 13.5px; font-family: inherit; cursor: pointer; text-decoration: none;
+  }
+  .od-back:hover { background: var(--bodyBg); }
+  .od-actionbar__sp { flex: 1; }
+  .od-btn-action {
+    padding: 9px 18px; white-space: nowrap; border-radius: 6px;
+    background: var(--brand-red); color: #fff; border: 0;
+    font-size: 13.5px; font-weight: 500; font-family: inherit;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .od-btn-action:hover { background: var(--brand-red-dark); }
+  .od-btn-action.outline { background: #fff; color: var(--brand-red); border: 1px solid var(--brand-red); }
+  .od-btn-action.outline:hover { background: var(--brand-red-ghost); }
+
+  .pill-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 6px;
+    font-size: 13px; font-weight: 500;
+    background: var(--forgot-link-color); color: #fff;
+  }
+
+  /* Info tiles */
+  .info-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 16px; }
+  @media (max-width: 1280px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
+  .info-tile { background: #f4f8fd; border-radius: 8px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; }
+  .info-tile__icon { width: 38px; height: 38px; border-radius: 8px; background: #fff; color: var(--brand-red); display: grid; place-items: center; flex: none; border: 1px solid #e5edf7; }
+  .info-tile__l { font-size: 12.5px; color: var(--ink-500); margin-bottom: 4px; }
+  .info-tile__v { font-size: 14.5px; color: var(--bodyText); font-weight: 500; }
+
+  /* Stats strip */
+  .stat-strip {
+    background: #fff; border: 1px solid var(--auth-box-border);
+    border-radius: 8px; padding: 14px 22px; margin-bottom: 16px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  }
+  @media (max-width: 1180px) { .stat-strip { grid-template-columns: repeat(3, 1fr); } }
+  .stat { display: flex; flex-direction: column; gap: 4px; padding-right: 16px; border-right: 1px solid var(--ink-100); }
+  .stat:last-child { border-right: 0; }
+  .stat__l { font-size: 11.5px; color: var(--ink-500); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  .stat__v { font-size: 22px; font-weight: 500; color: var(--bodyText); font-family: 'Roboto', sans-serif; line-height: 1; }
+  .stat__v.green { color: var(--ok-fg); }
+  .stat__v.red { color: var(--brand-red); }
+  .stat__sub { font-size: 11.5px; color: var(--ink-400); }
+
+  /* Table */
+  .q-card { background: #fff; border: 1px solid var(--auth-box-border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .q-card__head { padding: 14px 22px; border-bottom: 1px solid var(--ink-100); display: flex; align-items: baseline; gap: 12px; }
+  .q-card__t { color: var(--brand-red); font-weight: 500; font-size: 14.5px; font-family: 'Roboto', sans-serif; margin: 0; }
+  .q-card__sub { color: var(--ink-400); font-size: 12.5px; }
+  .q-card__cta { margin-left: auto; display: flex; gap: 8px; }
+
+  table.qbr { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+  table.qbr thead th {
+    text-align: left; font-weight: 500; color: var(--ink-500); font-size: 12.5px;
+    padding: 12px 14px; background: #f4f8fd;
+    border-bottom: 1px solid var(--auth-box-border); white-space: nowrap;
+  }
+  table.qbr tbody td {
+    padding: 14px; border-bottom: 1px solid var(--ink-100);
+    color: var(--bodyText); vertical-align: middle;
+  }
+  table.qbr tbody tr:hover td { background: var(--active-row-color); }
+  table.qbr tbody tr:last-child td { border-bottom: 0; }
+  table.qbr tbody tr.is-lowest td { background: var(--ok-bg); }
+  table.qbr tbody tr.is-lowest:hover td { background: #d8eedf; }
+  table.qbr .num { font-variant-numeric: tabular-nums; }
+
+  .garage-cell { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .garage-cell__logo {
+    width: 38px; height: 38px; border-radius: 6px; flex: none;
+    background: linear-gradient(135deg, #1d4f8c, #2a6fb7); color: #fff;
+    display: grid; place-items: center; font-weight: 700; font-size: 13px;
+  }
+  .garage-cell__name { font-weight: 500; color: var(--bodyText); display: flex; align-items: center; gap: 6px; }
+  .garage-cell__name .oem { background: var(--ok-bg); color: var(--ok-fg); padding: 1px 7px; border-radius: 3px; font-size: 11px; font-weight: 500; }
+  .garage-cell__sub { font-size: 11.5px; color: var(--ink-400); margin-top: 2px; }
+
+  .lowest-tag {
+    background: var(--ok-fg); color: #fff;
+    padding: 2px 8px; border-radius: 3px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; display: inline-block;
+  }
+
+  .total-cell { display: flex; flex-direction: column; gap: 2px; }
+  .total-cell__price { font-weight: 500; color: var(--bodyText); font-variant-numeric: tabular-nums; }
+  .total-cell__price.green { color: var(--ok-fg); font-weight: 700; }
+  .total-cell__price.red { color: var(--brand-red); }
+  .total-cell__variance { font-size: 11px; }
+  .total-cell__variance.under { color: var(--ok-fg); }
+  .total-cell__variance.over { color: var(--brand-red); }
+
+  .star-cell { color: #b87410; font-weight: 700; font-size: 12.5px; }
+  .star-cell small { color: var(--ink-500); font-weight: 400; margin-left: 4px; }
+
+  .qstatus {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 4px;
+    font-size: 11.5px; font-weight: 500;
+  }
+  .qstatus::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .qstatus.received { background: #e3eefc; color: var(--forgot-link-color); }
+  .qstatus.under { background: #fff4dc; color: #b87410; }
+  .qstatus.approved { background: var(--ok-bg); color: var(--ok-fg); }
+  .qstatus.rejected { background: var(--brand-red-ghost); color: var(--brand-red); }
+
+  .row-action {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--brand-red); background: #fff;
+    color: var(--brand-red); border-radius: 4px;
+    padding: 6px 14px; font-size: 12.5px; font-weight: 500;
+    cursor: pointer; text-decoration: none; font-family: inherit;
+  }
+  .row-action:hover { background: var(--brand-red-ghost); }
+  .row-action.muted { color: var(--ink-500); border-color: var(--form-field-border); }
+  .row-action.muted:hover { background: var(--bodyBg); }
+</style>
+</head>
+<body data-portal="insurance" data-page="claims" data-subpage="garage-quotations" data-page-title="">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- Action bar -->
+      <div class="od-actionbar">
+        <a class="od-back" href="garage-quotations-list.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to RFQs
+        </a>
+        <div class="od-actionbar__sp"></div>
+        <button class="od-btn-action outline">Extend Deadline</button>
+        <a class="od-btn-action" id="compareBtn" href="garage-quotations.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Compare All Quotations
+        </a>
+      </div>
+
+      <!-- Info tiles -->
+      <div class="info-grid">
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div>
+          <div><div class="info-tile__l">RFQ ID</div><div class="info-tile__v" id="t-rfq">JKLMN5678O</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg></div>
+          <div><div class="info-tile__l">Claim ID</div><div class="info-tile__v" id="t-claim">EFGHI1234U</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l2-6 4-3h6l4 3 2 6 0 3-4 0 0-2 -10 0 0 2 -4 0z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg></div>
+          <div><div class="info-tile__l">Vehicle</div><div class="info-tile__v">Toyota Camry 2022</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div><div class="info-tile__l">Policy Holder</div><div class="info-tile__v">Sulaiman Al-Zayoudi</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div><div class="info-tile__l">RFQ Closes</div><div class="info-tile__v" style="color:var(--brand-red)">03 Jun 2026, 04:17 PM</div></div>
+        </div>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="stat-strip">
+        <div class="stat"><div class="stat__l">Quotations Received</div><div class="stat__v">8 of 8</div><div class="stat__sub">All garages responded</div></div>
+        <div class="stat"><div class="stat__l">Lowest Quote</div><div class="stat__v green">AED 19,532</div><div class="stat__sub">Royal Swiss Automobile</div></div>
+        <div class="stat"><div class="stat__l">Highest Quote</div><div class="stat__v red">AED 28,840</div><div class="stat__sub">Premier Auto Care</div></div>
+        <div class="stat"><div class="stat__l">Avg Quote</div><div class="stat__v">AED 23,108</div><div class="stat__sub">Spread 32% high → low</div></div>
+        <div class="stat"><div class="stat__l">Target / Reserve</div><div class="stat__v">AED 24,000</div><div class="stat__sub">5 quotes under target</div></div>
+      </div>
+
+      <!-- Quotations table -->
+      <div class="q-card">
+        <div class="q-card__head">
+          <h3 class="q-card__t">All Garage Quotations</h3>
+          <span class="q-card__sub">8 garages quoted · sorted by total cost (ascending) · click a row to view full details</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="qbr" id="qbrTable">
+            <thead>
+              <tr>
+                <th>Garage</th>
+                <th>Branch</th>
+                <th class="num">Labor</th>
+                <th class="num">Parts</th>
+                <th class="num">Total (excl. VAT)</th>
+                <th>Delivery</th>
+                <th>Warranty</th>
+                <th>Rating</th>
+                <th>Status</th>
+                <th>Submitted</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  const p = new URLSearchParams(location.search);
+  const rfqId   = p.get('rfq')   || 'JKLMN5678O';
+  const claimId = p.get('claim') || 'EFGHI1234U';
+  document.getElementById('t-rfq').textContent   = rfqId;
+  document.getElementById('t-claim').textContent = claimId;
+
+  // Topbar
+  function injectTitle() {
+    const t = document.querySelector('.topbar__title');
+    if (!t) { return setTimeout(injectTitle, 30); }
+    t.style.cssText = 'display:flex;align-items:center;gap:12px;flex-shrink:0;white-space:nowrap;margin:0;';
+    if (t.parentElement) t.parentElement.style.flexShrink = '0';
+    t.innerHTML = `<span>Garage Quotations <span style="color:var(--ink-400);font-weight:400">· RFQ ${rfqId}</span></span><span class="pill-status">8 of 8 quotes</span>`;
+  }
+  injectTitle();
+
+  document.getElementById('compareBtn').href = `garage-quotations.html?rfq=${encodeURIComponent(rfqId)}&claim=${encodeURIComponent(claimId)}`;
+
+  // [id, code, name, oem, branch, labor, parts, deliveryDays, warranty, rating, status, submittedAgo]
+  const TARGET = 24000;
+  const ROWS = [
+    ['q1','RS', 'Royal Swiss Automobile', true,  'Dubai · Bay 04',     14600, 4932,  7, '12 months',  4.9, 'received','38 min ago'],
+    ['q2','CA', 'Craft Auto Services',    false, 'Sharjah · Bay 02',   16400, 5820,  5, '6 months',   4.7, 'received','1 h ago'],
+    ['q3','GA', 'Gargash Auto Centre',    true,  'Dubai · Bay 11',     17200, 6100,  9, '12 months',  4.3, 'received','2 h ago'],
+    ['q4','LB', 'Liberty Automobiles',    true,  'Al Ain · Bay 01',    17800, 6420, 10, '12 months',  4.6, 'received','3 h ago'],
+    ['q5','PA', 'Premier Auto Care',      false, 'Sharjah · Bay 04',   18400, 6740,  8, '6 months',   4.4, 'under',   '4 h ago'],
+    ['q6','HM', 'Al Habtoor Motors',      true,  'Abu Dhabi · Bay 07', 19200, 7100, 11, '12 months',  4.5, 'received','5 h ago'],
+    ['q7','TY', 'Al Tayer Motors',        true,  'Dubai · Bay 03',     20100, 7440,  9, '12 months',  4.2, 'received','6 h ago'],
+    ['q8','PC', 'Premier Auto Care',      false, 'Dubai · Bay 12',     21100, 7740, 12, '6 months',   4.1, 'received','7 h ago']
+  ];
+
+  const lowestTotal = Math.min(...ROWS.map(r => r[5] + r[6]));
+  document.querySelector('#qbrTable tbody').innerHTML = ROWS.map(r => {
+    const [id, code, name, oem, branch, labor, parts, deliveryDays, warranty, rating, status, submittedAgo] = r;
+    const total = labor + parts;
+    const isLowest = total === lowestTotal;
+    const variance = Math.round(((total - TARGET) / TARGET) * 100);
+    const vClass = variance < 0 ? 'under' : 'over';
+    const sign = variance > 0 ? '+' : '';
+    const stars = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    const statusMap = {
+      received: 'Received',
+      under: 'Under Review',
+      approved: 'Approved',
+      rejected: 'Rejected'
+    };
+    const detailHref = `garage-quotation-detail.html?qid=${encodeURIComponent(id)}&garage=${encodeURIComponent(name)}&rfq=${encodeURIComponent(rfqId)}&claim=${encodeURIComponent(claimId)}`;
+    return `
+      <tr class="${isLowest ? 'is-lowest' : ''}">
+        <td>
+          <div class="garage-cell">
+            <div class="garage-cell__logo">${code}</div>
+            <div>
+              <div class="garage-cell__name">${name} ${oem ? '<span class="oem">OEM</span>' : ''} ${isLowest ? '<span class="lowest-tag">Lowest</span>' : ''}</div>
+              <div class="garage-cell__sub">Quotation Q-${id.replace('q', '').padStart(3,'0')}</div>
+            </div>
+          </div>
+        </td>
+        <td style="color:var(--ink-500);font-size:12.5px">${branch}</td>
+        <td class="num">AED ${labor.toLocaleString()}</td>
+        <td class="num">AED ${parts.toLocaleString()}</td>
+        <td>
+          <div class="total-cell">
+            <span class="total-cell__price ${isLowest ? 'green' : (variance > 0 ? 'red' : '')}">AED ${total.toLocaleString()}</span>
+            <span class="total-cell__variance ${vClass}">${sign}${variance}% vs target</span>
+          </div>
+        </td>
+        <td>${deliveryDays} days</td>
+        <td style="font-size:12.5px;color:var(--ink-500)">${warranty}</td>
+        <td><span class="star-cell">${stars}<small>${rating}</small></span></td>
+        <td><span class="qstatus ${status}">${statusMap[status] || status}</span></td>
+        <td style="color:var(--ink-500);font-size:12.5px">${submittedAgo}</td>
+        <td><a class="row-action" href="${detailHref}">View →</a></td>
+      </tr>
+    `;
+  }).join('');
+</script>
+</body>
+</html>

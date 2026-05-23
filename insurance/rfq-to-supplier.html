@@ -139,10 +139,13 @@
     [7, 'SRQ00075', 'CLM00312', 'Hyper Co (HQ)', 214, 184, 'Quotes Received',  'received',  '27-05-2026, 07:52 AM'],
     [8, 'SRQ00074', 'CLM00309', 'Hyper Co (HQ)', 214, 32,  'Awaiting Quotes',  'awaiting',  '30-05-2026, 11:14 AM']
   ];
-  document.querySelector('#rfqTable tbody').innerHTML = ROWS.map(r => `
+  document.querySelector('#rfqTable tbody').innerHTML = ROWS.map(r => {
+    const statusKey = r[7];
+    const href = `rfq-to-supplier-detail.html?rfq=${encodeURIComponent(r[1])}&claim=${encodeURIComponent(r[2])}&status=${encodeURIComponent(statusKey === 'received' ? 'closed' : (statusKey === 'awaiting' ? 'open' : 'awaiting'))}`;
+    return `
     <tr>
       <td class="cl-sl">${r[0]}</td>
-      <td><a class="cl-id" href="supplier-quotations-compare.html">${r[1]}</a></td>
+      <td><a class="cl-id" href="${href}">${r[1]}</a></td>
       <td>${r[2]}</td>
       <td>${r[3]}</td>
       <td>${r[4]}</td>
@@ -150,8 +153,8 @@
       <td><span class="cl-status ${r[7]}">${r[6]}</span></td>
       <td>${r[8]}</td>
       <td class="cl-more">⋯</td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 </script>
 </body>
 </html>
