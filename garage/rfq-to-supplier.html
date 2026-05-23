@@ -18,7 +18,7 @@
           <div class="search"><span id="si"></span><input placeholder="Search RFQ ID, part, supplier..." /></div>
           <div style="margin-left:auto" class="flex gap-8">
             <button class="btn"><span id="fi"></span> Filter</button>
-            <button class="btn btn--primary"><span id="pi"></span> Send New RFQ</button>
+            <a class="btn btn--primary" href="rfq-to-supplier-create.html"><span id="pi"></span> Send New RFQ</a>
           </div>
         </div>
         <div class="table-wrap">
@@ -76,10 +76,13 @@
     ['EFHG1245F','JKLMN56791','Spark plug set','4','4','Cancelled','badge--danger'],
     ['EFHG1246G','JKLMN56792','Fuel pump assembly','3','1','Open','badge--ok']
   ];
-  document.querySelector('#rfqTable tbody').innerHTML = rows.map(r => `
+  document.querySelector('#rfqTable tbody').innerHTML = rows.map(r => {
+    const statusKey = r[5].toLowerCase();
+    const href = `rfq-to-supplier-detail.html?rfq=${encodeURIComponent(r[0])}&claim=${encodeURIComponent(r[1])}&status=${statusKey}`;
+    return `
     <tr>
       <td><input type="checkbox" class="cbx"/></td>
-      <td><a class="id-link" href="#">${r[0]}</a></td>
+      <td><a class="id-link" href="${href}">${r[0]}</a></td>
       <td>${r[1]}</td>
       <td>${r[2]}</td>
       <td>${r[3]}</td>
@@ -88,8 +91,8 @@
       <td>20/01/2025</td>
       <td>27/01/2025</td>
       <td class="more">${PHIcon('dot3', 18)}</td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 </script>
 </body>
 </html>

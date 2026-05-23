@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Completion Evidence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<link rel="stylesheet" href="../shared/job-pages.css" />
+<style>
+  .j-grid-ev { display: grid; grid-template-columns: 1fr 340px; gap: 16px; align-items: start; }
+  @media (max-width: 1180px) { .j-grid-ev { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-portal="garage" data-page="jobs" data-page-title="">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- Action bar -->
+      <div class="j-actionbar">
+        <a class="j-back" id="bcBack" href="job-card-detail.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Stages
+        </a>
+        <div class="j-actionbar__sp"></div>
+        <button class="j-icbtn" title="Previous job">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <button class="j-icbtn" title="Next job">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+
+      <!-- Stepper -->
+      <div class="j-pipeline">
+        <div class="j-pipe-row" style="--steps:5">
+          <a class="j-pipe-row__step is-done" href="job-stage-detail.html?stage=1" style="text-decoration:none"><div class="j-pipe__dot">✓</div><div class="j-pipe__lbl">Vehicle Received</div></a>
+          <a class="j-pipe-row__step is-done" href="job-stage-detail.html?stage=2" style="text-decoration:none"><div class="j-pipe__dot">✓</div><div class="j-pipe__lbl">Disassembly</div></a>
+          <a class="j-pipe-row__step is-done" href="job-stage-detail.html?stage=3" style="text-decoration:none"><div class="j-pipe__dot">✓</div><div class="j-pipe__lbl">Repair &amp; Install</div></a>
+          <a class="j-pipe-row__step is-done" href="job-stage-detail.html?stage=4" style="text-decoration:none"><div class="j-pipe__dot">✓</div><div class="j-pipe__lbl">Quality Check</div></a>
+          <div class="j-pipe-row__step is-active"><div class="j-pipe__dot">05</div><div class="j-pipe__lbl">Completion Evidence</div></div>
+        </div>
+      </div>
+
+      <!-- Body 2-col: evidence + handover panel -->
+      <div class="j-grid-ev">
+        <div>
+          <!-- Exterior + Interior -->
+          <div class="j-ev-grid">
+            <div class="j-card">
+              <div class="j-card__hd">
+                <h3 class="j-card__t">Repaired Vehicle — Exterior<span style="color:var(--brand-red)">*</span></h3>
+                <span class="j-card__sub" style="margin-left:auto">8 / min 6</span>
+              </div>
+              <div class="j-ph-grid">
+                <div class="j-ph-tile tile-a"></div>
+                <div class="j-ph-tile tile-b"></div>
+                <div class="j-ph-tile tile-c"></div>
+                <div class="j-ph-tile tile-d"></div>
+                <div class="j-ph-tile tile-e"></div>
+                <div class="j-ph-tile tile-f"></div>
+                <div class="j-ph-tile tile-a"></div>
+                <div class="j-ph-tile tile-b"><div class="j-ph-more">+1</div></div>
+              </div>
+              <div class="j-ph-note">All exterior panels repainted; front bumper alignment verified within 3 mm tolerance. Headlamp beam check passed.</div>
+              <div class="j-ph-tags"><strong>Angles:</strong> Front · Front-Left · Front-Right · Rear · Rear-Left · Rear-Right · Left-Side · Right-Side</div>
+            </div>
+
+            <div class="j-card">
+              <div class="j-card__hd">
+                <h3 class="j-card__t">Repaired Vehicle — Interior<span style="color:var(--brand-red)">*</span></h3>
+                <span class="j-card__sub" style="margin-left:auto">4 / min 3</span>
+              </div>
+              <div class="j-ph-grid">
+                <div class="j-ph-tile tile-b"></div>
+                <div class="j-ph-tile tile-c"></div>
+                <div class="j-ph-tile tile-d"></div>
+                <div class="j-ph-tile tile-f"></div>
+              </div>
+              <div class="j-ph-note">Dashboard cleaned and verified; airbag warning cleared; seat foam un-damaged.</div>
+              <div class="j-ph-tags"><strong>Areas:</strong> Dashboard · Seats · Airbags · Chassis</div>
+            </div>
+          </div>
+
+          <!-- Installed Parts + Test Drive -->
+          <div class="j-ev-grid" style="margin-top:16px">
+            <div class="j-card">
+              <div class="j-card__hd">
+                <h3 class="j-card__t">Installed Parts — Proof of Installation<span style="color:var(--brand-red)">*</span></h3>
+                <span class="j-card__sub" style="margin-left:auto">6 photos · 6 part QRs scanned</span>
+              </div>
+              <div class="j-ph-grid cols-3">
+                <div class="j-ph-tile tile-a"></div>
+                <div class="j-ph-tile tile-b"></div>
+                <div class="j-ph-tile tile-f"></div>
+                <div class="j-ph-tile tile-d"></div>
+                <div class="j-ph-tile tile-c"></div>
+                <div class="j-ph-tile tile-b"></div>
+              </div>
+              <div class="j-ph-tags"><strong>Parts:</strong> Shock absorbers (4) · Battery · Headlamp LH · Radiator · Transmission</div>
+            </div>
+
+            <div class="j-card">
+              <div class="j-card__hd">
+                <h3 class="j-card__t">Test Drive &amp; QC Report<span style="color:var(--brand-red)">*</span></h3>
+                <span class="j-card__sub" style="margin-left:auto">video 1:42 · checklist 24/24</span>
+              </div>
+              <div class="j-video-row">
+                <div class="j-video-thumb"><div class="j-video-thumb__play"></div></div>
+                <div class="j-video-meta">
+                  <div class="j-video-meta__file">Road test 8 km · uploaded</div>
+                  <div class="j-video-meta__sub">test-drive-jc0042.mp4 · 1:42 · 18.4 MB</div>
+                  <ul class="j-video-checks">
+                    <li>Steering: no pull · brakes even</li>
+                    <li>No warning lights on cluster</li>
+                    <li>Cabin / engine noise within baseline</li>
+                    <li>Wheel alignment within tolerance</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="j-ph-note" style="margin-top:12px">Vehicle ready for handover. No anomalies during 8 km test loop including highway.</div>
+            </div>
+          </div>
+
+          <!-- Final Cost & Job Summary -->
+          <div class="j-card" style="margin-top:16px">
+            <h3 class="j-card__t" style="margin-bottom:14px">Final Cost &amp; Job Summary</h3>
+            <div class="j-final-grid">
+              <div class="j-final-tile"><div class="j-final-tile__l">Parts Cost</div><div class="j-final-tile__v">AED 12,750</div></div>
+              <div class="j-final-tile"><div class="j-final-tile__l">Labour Cost</div><div class="j-final-tile__v">AED 11,900</div></div>
+              <div class="j-final-tile"><div class="j-final-tile__l">Sub-total</div><div class="j-final-tile__v">AED 24,650</div></div>
+              <div class="j-final-tile final"><div class="j-final-tile__l">VAT 5% · Final</div><div class="j-final-tile__v">AED 25,883</div></div>
+              <div class="j-final-tile"><div class="j-final-tile__l">Total Hours Logged</div><div class="j-final-tile__v">14.0 hrs</div></div>
+              <div class="j-final-tile"><div class="j-final-tile__l">Parts Installed</div><div class="j-final-tile__v">6 items</div></div>
+              <div class="j-final-tile"><div class="j-final-tile__l">Stages Completed</div><div class="j-final-tile__v">5 / 5</div></div>
+              <div class="j-final-tile"><div class="j-final-tile__l">Vehicle In-Shop</div><div class="j-final-tile__v">5 days</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Pre-Handover Checklist + Customer Handover -->
+        <div>
+          <div class="j-card">
+            <h3 class="j-card__t" style="margin-bottom:8px">Pre-Handover Checklist</h3>
+            <div class="j-check-row">
+              <div class="j-check-row__box"></div>
+              <div><div class="j-check-row__t">All parts installed &amp; verified</div><div class="j-check-row__sub">6 of 6 quotation line items closed</div></div>
+            </div>
+            <div class="j-check-row">
+              <div class="j-check-row__box"></div>
+              <div><div class="j-check-row__t">Quality check passed by supervisor</div><div class="j-check-row__sub">Mohamed I. · 23/01 14:08</div></div>
+            </div>
+            <div class="j-check-row">
+              <div class="j-check-row__box"></div>
+              <div><div class="j-check-row__t">Vehicle washed &amp; valet</div><div class="j-check-row__sub">Standard hand-wash · interior wipe-down</div></div>
+            </div>
+            <div class="j-check-row">
+              <div class="j-check-row__box"></div>
+              <div><div class="j-check-row__t">Customer belongings returned</div><div class="j-check-row__sub">Glovebox + boot inventoried</div></div>
+            </div>
+            <div class="j-check-row">
+              <div class="j-check-row__box"></div>
+              <div><div class="j-check-row__t">Warranty card issued</div><div class="j-check-row__sub">90 days on labour · OEM warranty on parts</div></div>
+            </div>
+            <div class="j-check-row">
+              <div class="j-check-row__box is-empty"></div>
+              <div><div class="j-check-row__t empty">Customer signature collected</div><div class="j-check-row__sub">Required before submitting to insurer</div></div>
+            </div>
+
+            <div class="j-esig">
+              <div class="j-esig__l">Customer e-signature</div>
+              <div class="j-esig__name">Ahmed Al-Mansouri</div>
+              <div class="j-esig__sub">Signed 24/01/2025, 11:08 AM · IP 94.200.··.·· · Pen-tablet</div>
+            </div>
+          </div>
+
+          <div class="j-card">
+            <h3 class="j-card__t" style="margin-bottom:8px">Customer Handover</h3>
+            <div class="j-rail-row"><span class="j-rail-row__l">Customer</span><span class="j-rail-row__v">Ahmed Al-Mansouri</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Contact</span><span class="j-rail-row__v">+971 555-345-678</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Odometer (out)</span><span class="j-rail-row__v">38,428 km</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Fuel level (out)</span><span class="j-rail-row__v">3/4</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Handover slot</span><span class="j-rail-row__v">24/01, 11:00 AM</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Venue</span><span class="j-rail-row__v">Dubai Garage · Bay 04</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">SMS / WhatsApp sent</span><span class="j-rail-row__v" style="color:var(--ok-fg)">✓ 23/01 18:02</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky bottom -->
+      <div class="j-bottom">
+        <a class="j-back" href="javascript:history.back()" style="background:var(--ink-900);color:#fff;border-color:var(--ink-900);font-weight:500">← Back</a>
+        <div class="j-bottom__sp"></div>
+        <button class="j-btn">Cancel</button>
+        <button class="j-btn">Save &amp; Exit</button>
+        <button class="j-btn primary" id="submitBtn">Submit to Insurer for Invoicing</button>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  const p = new URLSearchParams(location.search);
+  const jobId = p.get('job') || 'JC-20250118-0042';
+  document.getElementById('bcBack').href = `job-card-detail.html?job=${encodeURIComponent(jobId)}`;
+
+  function injectTitle() {
+    const t = document.querySelector('.topbar__title');
+    if (!t) { return setTimeout(injectTitle, 30); }
+    t.style.cssText = 'display:flex;align-items:center;gap:12px;flex-shrink:0;white-space:nowrap;margin:0;';
+    if (t.parentElement) t.parentElement.style.flexShrink = '0';
+    t.innerHTML = `<span>Job Card # <strong style="font-weight:700">${jobId}</strong> · Completion Evidence</span><span class="pill-status is-await">● Awaiting Submission</span>`;
+  }
+  injectTitle();
+
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    if (confirm('Submit completion evidence to insurer for invoicing? This locks the job and triggers the payout workflow.')) {
+      alert('Submitted to insurer. Job is now locked for invoicing.');
+      window.location.href = 'jobs.html';
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Repair Stages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<link rel="stylesheet" href="../shared/job-pages.css" />
+</head>
+<body data-portal="garage" data-page="jobs" data-page-title="">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- Action bar -->
+      <div class="j-actionbar">
+        <a class="j-back" id="bcBack" href="job-card-detail.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Job Card
+        </a>
+        <div class="j-actionbar__sp"></div>
+        <button class="j-icbtn" title="Previous stage" id="prevBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <button class="j-icbtn" title="Next stage" id="nextBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+
+      <!-- Body 2-col -->
+      <div class="j-grid">
+        <!-- LEFT: stage card -->
+        <div>
+          <div class="j-stage-card">
+            <div class="j-stage-hd">
+              <div class="j-stage-hd__main">
+                <h3 class="j-stage-hd__t" id="stageTitle">Stage 3 · Repair &amp; Parts Install</h3>
+                <div class="j-stage-hd__sub" id="stageSub">Started 20/01/2025, 10:15 AM · 4 of 6 tasks complete · 6.5 hrs logged</div>
+              </div>
+              <div class="j-stage-hd__cta">
+                <button class="j-btn">+ Add Task</button>
+                <button class="j-btn">↓ Log Hours</button>
+              </div>
+            </div>
+
+            <div id="taskList"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT rail -->
+        <div>
+          <!-- Stage History -->
+          <div class="j-card">
+            <h3 class="j-card__t" style="margin-bottom:8px">Stage History</h3>
+            <div class="j-hist" id="histList"></div>
+          </div>
+
+          <!-- Stage Notes -->
+          <div class="j-card">
+            <h3 class="j-card__t" style="margin-bottom:8px">Stage Notes</h3>
+            <div id="notesList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky bottom -->
+      <div class="j-bottom">
+        <a class="j-btn" id="prevStageLink" href="#">← Previous Stage</a>
+        <div class="j-bottom__sp"></div>
+        <button class="j-btn">Save Draft</button>
+        <button class="j-btn dark">Pause Stage</button>
+        <a class="j-btn primary" id="advanceLink" href="#">Complete Stage &amp; Advance →</a>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  // URL params
+  const p = new URLSearchParams(location.search);
+  const jobId   = p.get('job')   || 'JC-20250118-0042';
+  let   stage   = parseInt(p.get('stage') || '3', 10);
+
+  // ---- Stage data ----
+  const STAGES = [
+    { n: 1, name: 'Vehicle Received',          status: 'done',    started: '19/01/2025, 09:42 AM', ended: '19/01/2025, 10:12 AM',  closedBy: 'Rajesh K.', meta: '0.5 hrs · 8 inspection photos', notes: 'Bumper + headlamp damage confirmed. Customer agreed to repair scope.', summary: 'Customer handover · pre-inspection photos · keys logged into Bay 04.' },
+    { n: 2, name: 'Disassembly & Diagnostics', status: 'done',    started: '19/01 14:00',          ended: '20/01 09:55',           closedBy: 'Mohamed I.', meta: '4.0 hrs · 4 parts logged', notes: 'Front axle bushing confirmed cracked — replacement approved.', summary: 'Front bumper + grille + headlamp removed · 4 parts confirmed for replace · diagnostic scan passed.' },
+    { n: 3, name: 'Repair & Parts Install',    status: 'active',  started: '20/01/2025, 10:15 AM', ended: null,                    closedBy: null, meta: 'In progress · 4 of 6 tasks done · 6.5 hrs logged', notes: '', summary: 'Mechanical install in progress · paint queued · awaiting torque check on axle.' },
+    { n: 4, name: 'Quality Check',             status: 'pending', started: null,                   ended: null,                    closedBy: null, meta: 'Estimated start: 23/01 morning', notes: '', summary: 'Supervisor sign-off on torque, brake bleed, panel alignment, and beam check.' },
+    { n: 5, name: 'Ready for Delivery',        status: 'pending', started: null,                   ended: null,                    closedBy: null, meta: 'Target: 28/01/2025', notes: '', summary: 'Vehicle washed, valet, e-signature collected, GRN generated to insurer.' }
+  ];
+
+  // Stage 3 tasks — full data
+  const STAGE_TASKS = {
+    3: [
+      { id: 't1', name: 'Hood Latch · Replace',           desc: 'Aftermarket part installed and torqued to spec · QR scanned', tech: 'Rajesh K.', status: 'installed', hrs: '1.5 hrs', when: '20/01 11:48', photos: 2, done: true },
+      { id: 't2', name: 'Battery · Repair / Re-seat',     desc: 'Terminals cleaned, voltage verified at 12.6 V',                tech: 'Salim A.',  status: 'done',      hrs: '0.5 hrs', when: '20/01 12:30', photos: 0, done: true },
+      { id: 't3', name: 'Radiator · Replace',             desc: 'Coolant flushed and refilled · pressure test passed',         tech: 'Rajesh K.', status: 'installed', hrs: '2.0 hrs', when: '21/01 09:55', photos: 3, done: true },
+      { id: 't4', name: 'Headlamp · Repair',              desc: 'Bracket re-fabricated, beam alignment within tolerance',     tech: 'Rajesh K.', status: 'done',      hrs: '1.5 hrs', when: '21/01 11:20', photos: 0, done: true },
+      { id: 't5', name: 'Front Axle · Repair',            desc: 'Bushing pressed in · awaiting torque check from supervisor', tech: 'Mohamed I.',status: 'progress',  hrs: '1.0 / 3.0 hrs', when: 'since 09:18', photos: 0, done: false, current: true },
+      { id: 't6', name: 'Front bumper repaint & polish',  desc: 'Primer applied · drying before colour coat',                  tech: 'Salim A.',  status: 'progress',  hrs: '0.5 / 2.0 hrs', when: 'since 10:42', photos: 0, done: false, current: true }
+    ],
+    1: [
+      { id: 'a1', name: 'Customer handover & document check', desc: 'License + insurance card photographed; signature collected', tech: 'Rajesh K.', status: 'done', hrs: '0.2 hrs', when: '19/01 09:50', photos: 2, done: true },
+      { id: 'a2', name: 'Pre-inspection photos (8 angles)',   desc: 'Front, rear, sides, roof — odometer reading 38,420 km',     tech: 'Rajesh K.', status: 'done', hrs: '0.2 hrs', when: '19/01 09:58', photos: 4, done: true },
+      { id: 'a3', name: 'Vehicle handed to Bay 04',           desc: 'Keys logged into safe · belongings inventoried',            tech: 'Rajesh K.', status: 'done', hrs: '0.1 hrs', when: '19/01 10:12', photos: 0, done: true }
+    ],
+    2: [
+      { id: 'b1', name: 'Bumper & grille removal',       desc: 'Clips intact · 8 fasteners cataloged',                     tech: 'Mohamed I.', status: 'done', hrs: '1.5 hrs', when: '19/01 15:30', photos: 2, done: true },
+      { id: 'b2', name: 'Headlamp removal & inspection', desc: 'Lens cracked, bracket bent — flagged for repair',          tech: 'Mohamed I.', status: 'done', hrs: '0.8 hrs', when: '19/01 16:20', photos: 1, done: true },
+      { id: 'b3', name: 'Diagnostic scan (OBD-II)',      desc: '4 fault codes logged, all cleared after damage resolution', tech: 'Mohamed I.', status: 'done', hrs: '0.7 hrs', when: '20/01 09:10', photos: 0, done: true },
+      { id: 'b4', name: 'Damage report & parts list',    desc: '4 parts logged for replacement · sent to insurer',          tech: 'Mohamed I.', status: 'done', hrs: '1.0 hrs', when: '20/01 09:55', photos: 0, done: true }
+    ],
+    4: [
+      { id: 'c1', name: 'Torque verification on installed parts', desc: 'Verify wheel hubs, axle bolts, radiator hose clamps to spec', tech: 'Supervisor', status: 'queued', hrs: '— / 1.0 hrs', when: '', photos: 0, done: false },
+      { id: 'c2', name: 'Brake bleed & functional test',          desc: 'Pedal feel, line pressure 1500 PSI, no leaks',                tech: 'Supervisor', status: 'queued', hrs: '— / 0.5 hrs', when: '', photos: 0, done: false },
+      { id: 'c3', name: 'Panel alignment & gap check',            desc: 'Hood, fender, door gaps within 3 mm tolerance',                tech: 'Supervisor', status: 'queued', hrs: '— / 0.5 hrs', when: '', photos: 0, done: false },
+      { id: 'c4', name: 'Headlamp beam check',                    desc: 'Aim verified on alignment rig',                                tech: 'Supervisor', status: 'queued', hrs: '— / 0.3 hrs', when: '', photos: 0, done: false },
+      { id: 'c5', name: 'OBD scan clear',                         desc: 'No active fault codes',                                        tech: 'Supervisor', status: 'queued', hrs: '— / 0.2 hrs', when: '', photos: 0, done: false }
+    ],
+    5: [
+      { id: 'd1', name: 'Vehicle hand-wash & interior wipe', desc: 'Standard wash · upholstery vacuum', tech: 'Detailer',  status: 'queued', hrs: '— / 1.0 hrs', when: '', photos: 0, done: false },
+      { id: 'd2', name: 'Pre-handover checklist sign-off',   desc: 'Supervisor + tech sign-off',         tech: 'Supervisor', status: 'queued', hrs: '— / 0.3 hrs', when: '', photos: 0, done: false },
+      { id: 'd3', name: 'Customer notification (SMS/WA)',    desc: 'Schedule pickup',                    tech: 'Front desk', status: 'queued', hrs: '— / 0.1 hrs', when: '', photos: 0, done: false }
+    ]
+  };
+
+  const NOTES_BY_STAGE = {
+    3: [
+      { who: 'RK', color: 'var(--forgot-link-color)', body: 'Radiator hose connector P/N differs slightly from quote — same model, OEM supersession. Continuing as approved.', meta: '21/01, 10:08 AM · Rajesh K.' },
+      { who: 'QC', color: 'var(--brand-red)',         body: "Torque check for front axle pending — please don't close task until I sign off.", meta: '22/01, 09:22 AM · Supervisor' },
+      { who: 'SA', color: 'var(--ok-fg)',             body: 'Bumper primer applied. Colour coat after 2-hr cure.', meta: '22/01, 10:48 AM · Salim A.' }
+    ],
+    1: [{ who: 'RK', color: 'var(--forgot-link-color)', body: 'Customer noted previous minor scratch on right rear quarter (not part of claim). Documented in pre-inspection photos.', meta: '19/01, 09:48 AM · Rajesh K.' }],
+    2: [{ who: 'MI', color: '#6b3aa0', body: 'Front axle bushing crack found during disassembly. Photographed; replacement now part of approved scope.', meta: '20/01, 09:55 AM · Mohamed I.' }],
+    4: [], 5: []
+  };
+
+  // ---- Stage History (right rail) ----
+  function renderHistory(currentStage) {
+    const host = document.getElementById('histList');
+    host.innerHTML = STAGES.map(s => {
+      let cls = 'is-pending';
+      if (s.status === 'done') cls = 'is-done';
+      else if (s.n === currentStage) cls = 'is-active';
+      let meta = '';
+      if (s.status === 'done') meta = `${s.started} → ${s.ended}<br>Closed by ${s.closedBy} · ${s.meta}`;
+      else if (s.n === currentStage) meta = s.meta;
+      else meta = s.meta;
+      return `
+        <div class="j-hist__row ${cls}">
+          <div class="j-hist__num">${s.status === 'done' ? '✓' : s.n}</div>
+          <div class="j-hist__main">
+            <div class="j-hist__name">${s.name}</div>
+            <div class="j-hist__meta">${meta}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ---- Tasks ----
+  function renderTasks(stageNum) {
+    const tasks = STAGE_TASKS[stageNum] || [];
+    const host = document.getElementById('taskList');
+    if (!tasks.length) {
+      host.innerHTML = `<div style="padding:30px;text-align:center;color:var(--ink-400);font-size:13px">No tasks logged for this stage yet.</div>`;
+      return;
+    }
+    host.innerHTML = tasks.map(t => {
+      const photosHtml = t.photos > 0 ? `
+        <div class="j-task__photos">
+          ${Array.from({length: Math.min(t.photos, 3)}).map((_, i) => `<div class="j-task__photo tile-${'abcdef'[i % 6]}"></div>`).join('')}
+          ${t.photos > 3 ? `<div class="j-task__photo more">+${t.photos - 3}</div>` : ''}
+        </div>` : '';
+      const statusCls = t.status === 'progress' ? 'progress' : (t.status === 'queued' ? 'queued' : (t.status === 'installed' ? 'installed' : 'done'));
+      const statusLbl = { progress: 'In Progress', queued: 'Queued', installed: 'Installed', done: 'Done' }[t.status] || 'Done';
+      return `
+        <div class="j-task">
+          <div class="j-task__chk"><input type="checkbox" class="j-cbx" ${t.done ? 'checked' : ''}></div>
+          <div class="j-task__main">
+            <div class="j-task__name">${t.name}</div>
+            <div class="j-task__desc">${t.desc}</div>
+            ${photosHtml}
+          </div>
+          <div class="j-task__tech">
+            <div class="j-task__tech-l">Tech</div>
+            <div class="j-task__tech-v">${t.tech}</div>
+          </div>
+          <div class="j-task__status">
+            <span class="j-stat ${statusCls}">${statusLbl}</span>
+          </div>
+          <div class="j-task__hrs">
+            <div class="j-task__hrs-val">${t.hrs}</div>
+            <div class="j-task__hrs-meta">${t.when || '\u00A0'}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ---- Notes ----
+  function renderNotes(stageNum) {
+    const notes = NOTES_BY_STAGE[stageNum] || [];
+    const host = document.getElementById('notesList');
+    if (!notes.length) {
+      host.innerHTML = `<div style="padding:14px 0;text-align:center;color:var(--ink-400);font-size:12.5px">No notes on this stage.</div>`;
+      return;
+    }
+    host.innerHTML = notes.map(n => `
+      <div class="j-note">
+        <div class="j-note__av" style="background:${n.color}">${n.who}</div>
+        <div class="j-note__main">
+          <div class="j-note__body">${n.body}</div>
+          <div class="j-note__meta">${n.meta}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ---- Stepper ----
+  function renderStepper(stageNum) {
+    const host = document.getElementById('stepper');
+    host.innerHTML = STAGES.map(s => {
+      let cls = '';
+      if (s.n < stageNum) cls = 'is-done';
+      else if (s.n === stageNum) cls = 'is-active';
+      const href = s.n === 5
+        ? `job-completion-evidence.html?job=${encodeURIComponent(jobId)}`
+        : `job-stage-detail.html?job=${encodeURIComponent(jobId)}&stage=${s.n}`;
+      const bullet = s.n < stageNum ? '✓' : String(s.n).padStart(2, '0');
+      return `<a class="j-pipe-row__step ${cls}" href="${href}" style="text-decoration:none">
+        <div class="j-pipe__dot">${bullet}</div>
+        <div class="j-pipe__lbl">${s.name}</div>
+      </a>`;
+    }).join('');
+  }
+
+  // ---- Topbar title ----
+  function injectTitle(stageNum) {
+    const t = document.querySelector('.topbar__title');
+    if (!t) { return setTimeout(() => injectTitle(stageNum), 30); }
+    t.style.cssText = 'display:flex;align-items:center;gap:12px;flex-shrink:0;white-space:nowrap;margin:0;';
+    if (t.parentElement) t.parentElement.style.flexShrink = '0';
+    const stagePill = stageNum < 5
+      ? `<span class="pill-status is-progress">Stage ${stageNum} of 5</span>`
+      : `<span class="pill-status is-done">Stage 5 of 5</span>`;
+    t.innerHTML = `<span>Job Card # <strong style="font-weight:700">${jobId}</strong> · Repair Stages</span>${stagePill}`;
+  }
+
+  function go(stageNum) {
+    stage = Math.max(1, Math.min(5, stageNum));
+    const stageObj = STAGES[stage - 1];
+    document.getElementById('stageTitle').textContent = `Stage ${stage} · ${stageObj.name}`;
+    document.getElementById('stageSub').textContent = stageObj.summary;
+
+    renderTasks(stage);
+    renderNotes(stage);
+    renderHistory(stage);
+    injectTitle(stage);
+
+    // Wire bottom nav
+    document.getElementById('prevStageLink').href = stage > 1
+      ? `job-stage-detail.html?job=${encodeURIComponent(jobId)}&stage=${stage - 1}`
+      : 'job-card-detail.html';
+    if (stage === 5) {
+      const adv = document.getElementById('advanceLink');
+      adv.href = `job-completion-evidence.html?job=${encodeURIComponent(jobId)}`;
+      adv.textContent = 'Open Completion Evidence →';
+    } else if (stage === 4) {
+      const adv = document.getElementById('advanceLink');
+      adv.href = `job-completion-evidence.html?job=${encodeURIComponent(jobId)}`;
+      adv.textContent = 'Complete Stage & Open Completion Evidence →';
+    } else {
+      document.getElementById('advanceLink').href = `job-stage-detail.html?job=${encodeURIComponent(jobId)}&stage=${stage + 1}`;
+    }
+    const bcBack = document.getElementById('bcBack');
+    bcBack.href = `job-card-detail.html?job=${encodeURIComponent(jobId)}`;
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => go(stage - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => go(stage + 1));
+
+  go(stage);
+</script>
+</body>
+</html>

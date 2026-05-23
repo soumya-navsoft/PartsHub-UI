@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Supplier Quotations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  /* Topbar pill */
+  .pill-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 13px; font-weight: 500;
+    background: var(--forgot-link-color); color: #fff;
+  }
+  .pill-status .ic { width: 18px; height: 18px; border-radius: 4px; background: rgba(255,255,255,0.2); display: grid; place-items: center; font-size: 10px; }
+
+  /* Action bar */
+  .od-actionbar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .od-back {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    padding: 9px 16px; border: 1px solid var(--form-field-border);
+    background: #fff; color: var(--bodyText); border-radius: 6px;
+    font-size: 13.5px; font-family: inherit; cursor: pointer; text-decoration: none;
+  }
+  .od-back:hover { background: var(--bodyBg); }
+  .od-actionbar__spacer { flex: 1; }
+  .od-btn {
+    padding: 9px 18px; white-space: nowrap; border-radius: 6px;
+    border: 1px solid var(--form-field-border); background: #fff;
+    color: var(--bodyText); font-size: 13.5px; font-family: inherit;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .od-btn:hover { background: var(--bodyBg); }
+  .od-btn.ghost {
+    background: #fff; color: var(--brand-red);
+    border: 1px solid var(--brand-red);
+  }
+  .od-btn.ghost:hover { background: var(--brand-red-ghost); }
+  .od-btn.primary {
+    background: var(--brand-red); color: #fff; border-color: var(--brand-red);
+    font-weight: 500;
+  }
+  .od-btn.primary:hover { background: var(--brand-red-dark); }
+  .od-btn:disabled { background: var(--ink-300); cursor: not-allowed; border-color: var(--ink-300); color: #fff; }
+
+  /* Info tiles */
+  .info-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 16px; }
+  @media (max-width: 1280px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
+  .info-tile { background: #f4f8fd; border-radius: 8px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; }
+  .info-tile__icon { width: 38px; height: 38px; border-radius: 8px; background: #fff; color: var(--brand-red); display: grid; place-items: center; flex: none; border: 1px solid #e5edf7; }
+  .info-tile__label { font-size: 12.5px; color: var(--ink-500); margin-bottom: 4px; }
+  .info-tile__value { font-size: 14.5px; color: var(--bodyText); font-weight: 500; }
+  .info-tile__value a { color: var(--forgot-link-color); text-decoration: none; }
+  .info-tile__value a:hover { text-decoration: underline; }
+
+  /* Stats strip */
+  .stat-strip {
+    background: #fff; border: 1px solid var(--auth-box-border);
+    border-radius: 8px; padding: 14px 22px; margin-bottom: 16px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  }
+  @media (max-width: 1180px) { .stat-strip { grid-template-columns: repeat(3, 1fr); } }
+  .stat { display: flex; flex-direction: column; gap: 4px; padding-right: 16px; border-right: 1px solid var(--ink-100); }
+  .stat:last-child { border-right: 0; }
+  .stat__l { font-size: 11.5px; color: var(--ink-500); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  .stat__v { font-size: 22px; font-weight: 500; color: var(--bodyText); font-family: 'Roboto', sans-serif; line-height: 1; }
+  .stat__v.green { color: var(--ok-fg); }
+  .stat__v.red { color: var(--brand-red); }
+  .stat__sub { font-size: 11.5px; color: var(--ink-400); }
+
+  /* Compare table card */
+  .cmp-card {
+    background: #fff; border: 1px solid var(--auth-box-border);
+    border-radius: 8px; overflow: hidden; margin-bottom: 16px;
+  }
+  .cmp-card__head {
+    padding: 16px 22px; border-bottom: 1px solid var(--auth-box-border);
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .cmp-card__title { color: var(--brand-red); font-weight: 500; font-size: 14.5px; font-family: 'Roboto', sans-serif; margin: 0; }
+  .cmp-card__sub { color: var(--ink-400); font-size: 12.5px; }
+  .cmp-card__cta { margin-left: auto; display: flex; gap: 8px; }
+  .cmp-link-btn {
+    background: transparent; border: 0; color: var(--forgot-link-color);
+    font-size: 12.5px; font-weight: 500; cursor: pointer; font-family: inherit;
+    padding: 6px 10px; border-radius: 4px;
+  }
+  .cmp-link-btn:hover { background: #e3eefc; }
+
+  /* Compare table */
+  .cmp-wrap { overflow-x: auto; }
+  table.cmp { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; min-width: 1100px; }
+  table.cmp thead th {
+    text-align: center; font-weight: 500; color: var(--ink-700);
+    padding: 14px 12px; background: #f4f8fd;
+    border-bottom: 1px solid var(--auth-box-border); position: relative;
+    vertical-align: top;
+  }
+  table.cmp thead th.row-label {
+    text-align: left; font-size: 12.5px; color: var(--ink-500);
+    text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500;
+    background: #f4f8fd; width: 220px;
+  }
+  table.cmp thead th.is-winner { background: var(--brand-red-ghost); color: var(--brand-red); }
+  table.cmp .sup-head { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  table.cmp .sup-head__name { font-size: 13.5px; font-weight: 500; color: var(--bodyText); }
+  table.cmp .is-winner .sup-head__name { color: var(--brand-red); }
+  table.cmp .sup-head__sub { font-size: 11px; color: var(--ink-500); display: flex; gap: 4px; align-items: center; }
+  table.cmp .sup-head__sub .star { color: #b87410; font-weight: 700; }
+  table.cmp .sup-head__sub .oem { background: var(--ok-bg); color: var(--ok-fg); padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 500; }
+  .winner-tag {
+    background: var(--brand-red); color: #fff;
+    padding: 2px 8px; border-radius: 3px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  table.cmp tbody td {
+    padding: 14px 12px; border-bottom: 1px solid var(--ink-100);
+    text-align: center; vertical-align: middle;
+  }
+  table.cmp tbody td.row-label {
+    text-align: left; color: var(--bodyText);
+    background: #fff; border-right: 1px solid var(--ink-100);
+  }
+  table.cmp tbody tr:nth-child(even) td { background: #fafbfd; }
+  table.cmp tbody tr:nth-child(even) td.row-label { background: #f7f8fa; }
+  table.cmp tbody tr:last-child td { border-bottom: 0; }
+
+  table.cmp .price {
+    font-weight: 500; font-variant-numeric: tabular-nums;
+    color: var(--bodyText); cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  table.cmp .price.is-lowest { color: var(--ok-fg); font-weight: 700; }
+  table.cmp .price.is-lowest::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+    background: var(--ok-fg);
+  }
+  table.cmp .price.na { color: var(--ink-300); }
+  table.cmp .price-cell {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+  table.cmp .pcbx {
+    appearance: none; -webkit-appearance: none;
+    width: 16px; height: 16px; border-radius: 4px;
+    border: 1.5px solid var(--ink-300); background: #fff;
+    cursor: pointer; display: inline-grid; place-items: center;
+    flex: none;
+  }
+  table.cmp .pcbx:checked { background: var(--brand-red); border-color: var(--brand-red); }
+  table.cmp .pcbx:checked::after { content: '✓'; color: #fff; font-size: 11px; font-weight: 700; }
+  table.cmp .selected-cell { background: var(--brand-red-ghost) !important; }
+  table.cmp .price-unit { font-size: 11px; color: var(--ink-400); margin-top: 2px; font-weight: 400; }
+  .pct-tag {
+    display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 3px;
+    font-weight: 500; margin-top: 2px;
+  }
+  .pct-tag.up { background: var(--brand-red-ghost); color: var(--brand-red); }
+  .pct-tag.down { background: var(--ok-bg); color: var(--ok-fg); }
+
+  table.cmp tfoot td {
+    padding: 14px 12px; text-align: center;
+    border-top: 1px solid var(--auth-box-border);
+    background: #fafbfd;
+    font-weight: 500; vertical-align: middle;
+  }
+  table.cmp tfoot td.row-label {
+    text-align: left; background: #f4f8fd; color: var(--ink-700);
+  }
+  table.cmp tfoot tr.totals td { background: #fdf3f3; font-size: 14px; }
+  table.cmp tfoot tr.totals td.row-label { background: var(--brand-red-ghost); color: var(--brand-red); font-weight: 700; }
+  table.cmp tfoot tr.totals .total { color: var(--brand-red); font-weight: 700; font-family: 'Roboto', sans-serif; }
+  table.cmp tfoot tr.totals .total.is-best { color: var(--ok-fg); }
+
+  .pick-all-btn {
+    padding: 7px 12px; border-radius: 4px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--brand-red); background: #fff; color: var(--brand-red);
+    cursor: pointer; font-family: inherit; white-space: nowrap;
+  }
+  .pick-all-btn:hover { background: var(--brand-red-ghost); }
+  .pick-all-btn.no-quote { border-color: var(--ink-200); color: var(--ink-300); cursor: not-allowed; }
+
+  .star-row { color: #b87410; letter-spacing: 1px; font-size: 13px; }
+
+  /* Selection summary sticky bar */
+  .sel-bar {
+    position: sticky; bottom: 0;
+    background: #fff; border: 1px solid var(--auth-box-border);
+    border-radius: 8px; padding: 14px 22px;
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    box-shadow: 0 -6px 16px rgba(0,0,0,0.04);
+  }
+  .sel-bar__cell { display: flex; flex-direction: column; gap: 2px; }
+  .sel-bar__l { font-size: 11.5px; color: var(--ink-500); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  .sel-bar__v { font-size: 16px; font-weight: 500; color: var(--bodyText); font-family: 'Roboto', sans-serif; }
+  .sel-bar__v.red { color: var(--brand-red); font-size: 20px; font-weight: 700; }
+  .sel-bar__sp { flex: 1; }
+
+  /* Award mode toggle */
+  .award-toggle { display: inline-flex; border: 1px solid var(--form-field-border); border-radius: 6px; overflow: hidden; margin-right: 8px; }
+  .award-toggle button {
+    background: #fff; border: 0; padding: 9px 14px;
+    font-size: 13px; color: var(--ink-500); cursor: pointer; font-family: inherit;
+  }
+  .award-toggle button + button { border-left: 1px solid var(--form-field-border); }
+  .award-toggle button.is-active { background: var(--brand-red); color: #fff; }
+</style>
+</head>
+<body data-portal="garage" data-page="claim-request" data-subpage="supplier-quotations" data-page-title="">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- Action bar -->
+      <div class="od-actionbar">
+        <a class="od-back" id="bc-back" href="supplier-quotations.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Quotations
+        </a>
+        <div class="od-actionbar__spacer"></div>
+        <div class="award-toggle">
+          <button id="mSingle" class="is-active">Best total (single supplier)</button>
+          <button id="mSplit">Split award (per part)</button>
+        </div>
+        <button class="od-btn">Export</button>
+        <button class="od-btn ghost" id="rejectAll">Reject all</button>
+        <button class="od-btn primary" id="placeOrderBtn">Continue to Allocate →</button>
+      </div>
+
+      <!-- Info tiles -->
+      <div class="info-grid">
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div>
+          <div class="info-tile__main"><div class="info-tile__label">RFQ ID</div><div class="info-tile__value" id="t-rfq">EFHG1234U</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="info-tile__main"><div class="info-tile__label">Order ID</div><div class="info-tile__value"><a id="orderLink" href="claim-order-detail.html?order=ORD-4500">ORD-4500</a></div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg></div>
+          <div class="info-tile__main"><div class="info-tile__label">Claim ID</div><div class="info-tile__value" id="t-claim">JKLMN56780</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l2-6 4-3h6l4 3 2 6 0 3-4 0 0-2 -10 0 0 2 -4 0z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg></div>
+          <div class="info-tile__main"><div class="info-tile__label">Vehicle</div><div class="info-tile__value">BMW 3 Series Black 2024</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 7v5c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V7l-8-5z"/></svg></div>
+          <div class="info-tile__main"><div class="info-tile__label">Insurer</div><div class="info-tile__value">Oriental Insurance Ltd.</div></div>
+        </div>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="stat-strip">
+        <div class="stat">
+          <div class="stat__l">Responses</div>
+          <div class="stat__v">8 of 24</div>
+          <div class="stat__sub">5 with complete bids · 3 partial</div>
+        </div>
+        <div class="stat">
+          <div class="stat__l">Time remaining</div>
+          <div class="stat__v red">1d 14h</div>
+          <div class="stat__sub">closes 26/05/2026 · 18:00</div>
+        </div>
+        <div class="stat">
+          <div class="stat__l">Lowest total</div>
+          <div class="stat__v green" id="lowestTotal">AED 2,840</div>
+          <div class="stat__sub">Gulf Auto Parts</div>
+        </div>
+        <div class="stat">
+          <div class="stat__l">Avg total (complete bids)</div>
+          <div class="stat__v">AED 3,106</div>
+          <div class="stat__sub">across 5 suppliers</div>
+        </div>
+        <div class="stat">
+          <div class="stat__l">Target value</div>
+          <div class="stat__v">AED 3,350</div>
+          <div class="stat__sub">15% headroom on lowest</div>
+        </div>
+      </div>
+
+      <!-- Compare table -->
+      <div class="cmp-card">
+        <div class="cmp-card__head">
+          <h3 class="cmp-card__title">Quotation Comparison</h3>
+          <span class="cmp-card__sub">Lowest price per row is highlighted green · click a price to select that supplier for the part</span>
+          <div class="cmp-card__cta">
+            <button class="cmp-link-btn" id="pickLowest" style="background:var(--brand-red-ghost);color:var(--brand-red)">Auto-pick lowest per part</button>
+            <button class="cmp-link-btn" id="clearSel">Clear selection</button>
+          </div>
+        </div>
+        <div class="cmp-wrap">
+          <table class="cmp" id="cmpTable">
+            <thead>
+              <tr id="cmpHead"></tr>
+            </thead>
+            <tbody id="cmpBody"></tbody>
+            <tfoot id="cmpFoot"></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Selection summary -->
+      <div class="sel-bar">
+        <div class="sel-bar__cell"><span class="sel-bar__l">Parts</span><span class="sel-bar__v" id="selParts">6 of 6</span></div>
+        <div class="sel-bar__cell"><span class="sel-bar__l">Selected suppliers</span><span class="sel-bar__v" id="selSups">1 supplier</span></div>
+        <div class="sel-bar__cell"><span class="sel-bar__l">Estimated delivery</span><span class="sel-bar__v" id="selDelivery">3 days</span></div>
+        <div class="sel-bar__cell"><span class="sel-bar__l">Savings vs. target</span><span class="sel-bar__v" id="selSavings" style="color:var(--ok-fg)">AED 510 (15%)</span></div>
+        <div class="sel-bar__cell"><span class="sel-bar__l">Total awarded value</span><span class="sel-bar__v red" id="selTotal">AED 2,840</span></div>
+        <div class="sel-bar__sp"></div>
+        <button class="od-btn" id="saveDraft">Save as Draft</button>
+        <button class="od-btn primary" id="placeOrderBtn2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 19 12"/><polyline points="12 5 19 12 12 19"/></svg>
+          Allocate to <span id="placeCount">1</span> supplier
+        </button>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  // ---- URL params ----
+  const params = new URLSearchParams(location.search);
+  const rfqId = params.get('rfq') || 'EFHG1234U';
+  const orderId = params.get('order') || 'ORD-4500';
+  const claimId = params.get('claim') || 'JKLMN56780';
+  document.getElementById('t-rfq').textContent = rfqId;
+  document.getElementById('t-claim').textContent = claimId;
+  document.getElementById('orderLink').textContent = orderId;
+  document.getElementById('orderLink').href = `claim-order-detail.html?order=${encodeURIComponent(orderId)}&rfq=${encodeURIComponent(rfqId)}&claim=${encodeURIComponent(claimId)}`;
+  document.getElementById('bc-back').href = `supplier-quotations.html`;
+
+  // ---- Topbar ----
+  function injectTitle() {
+    const t = document.querySelector('.topbar__title');
+    if (!t) { return setTimeout(injectTitle, 30); }
+    t.style.cssText = 'display:flex;align-items:center;gap:12px;flex-shrink:0;white-space:nowrap;margin:0;';
+    if (t.parentElement) t.parentElement.style.flexShrink = '0';
+    t.innerHTML = `<span>Supplier Quotations <span style="color:var(--ink-400);font-weight:400">· RFQ ${rfqId}</span></span><span class="pill-status">⟳ 8 of 24 quotes</span>`;
+  }
+  injectTitle();
+
+  // ---- Data ----
+  // Suppliers: [id, name, short, rating, oem, delivery, warranty]
+  const SUPS = [
+    ['s1', 'Gulf Auto Parts LLC',  'GP', 4.8, true,  '3 days', '12 mo OEM'],
+    ['s2', 'Bin Hamoodah Trading', 'BH', 4.4, true,  '4 days', '12 mo OEM'],
+    ['s3', 'Emirates Spare Co.',   'ES', 4.6, false, '5 days', '6 mo'],
+    ['s4', 'Royal Parts Supply',   'RP', 4.3, false, '4 days', '6 mo'],
+    ['s5', 'Falcon Parts Trading', 'FP', 4.5, true,  '3 days', '12 mo OEM']
+  ];
+
+  // Parts: [id, name, type, qty, target]
+  const PARTS = [
+    ['p1', 'Hood Latch',           'Body',       3, 150],
+    ['p2', 'Battery (electrical)', 'Electrical', 1, 200],
+    ['p3', 'Battery (body)',       'Body',       1, 700],
+    ['p4', 'Radiator',             'Electrical', 2, 325],
+    ['p5', 'Front Axle',           'Mechanical', 1, 700],
+    ['p6', 'Headlamp',             'Body',       2, 325]
+  ];
+
+  // Quotes: { partId: { supId: unitPrice (null = no quote) } }
+  const QUOTES = {
+    p1: { s1: 132, s2: 145, s3: 158, s4: 150, s5: 140 },
+    p2: { s1: 198, s2: 195, s3: null, s4: 210, s5: 205 },
+    p3: { s1: 690, s2: null, s3: 680, s4: 720, s5: 700 },
+    p4: { s1: 305, s2: 320, s3: 310, s4: null, s5: 312 },
+    p5: { s1: 720, s2: 740, s3: null, s4: 760, s5: 725 },
+    p6: { s1: 318, s2: null, s3: 320, s4: 310, s5: 325 }
+  };
+
+  // selection[partId] -> supId
+  let selection = {};
+  let mode = 'single'; // 'single' | 'split'
+
+  function findLowest(partId) {
+    let lowSup = null, lowPrice = Infinity;
+    for (const [sid, price] of Object.entries(QUOTES[partId])) {
+      if (price != null && price < lowPrice) { lowPrice = price; lowSup = sid; }
+    }
+    return { sid: lowSup, price: lowPrice === Infinity ? null : lowPrice };
+  }
+
+  function supTotal(sid) {
+    let total = 0, partsCovered = 0;
+    for (const part of PARTS) {
+      const price = QUOTES[part[0]][sid];
+      if (price != null) { total += price * part[3]; partsCovered++; }
+    }
+    return { total, partsCovered };
+  }
+
+  function bestSingleSup() {
+    let bestSid = null, bestTotal = Infinity;
+    for (const sup of SUPS) {
+      const { total, partsCovered } = supTotal(sup[0]);
+      if (partsCovered === PARTS.length && total < bestTotal) { bestTotal = total; bestSid = sup[0]; }
+    }
+    return { sid: bestSid, total: bestTotal === Infinity ? null : bestTotal };
+  }
+
+  function pickLowestPerPart() {
+    selection = {};
+    for (const part of PARTS) {
+      const { sid } = findLowest(part[0]);
+      if (sid) selection[part[0]] = sid;
+    }
+    if (mode !== 'split') {
+      const u = new Set(Object.values(selection));
+      if (u.size > 1) mode = 'split';
+    }
+    render();
+  }
+
+  function pickSingleSup(sid) {
+    selection = {};
+    for (const part of PARTS) {
+      if (QUOTES[part[0]][sid] != null) selection[part[0]] = sid;
+    }
+    mode = 'single';
+    render();
+  }
+
+  function clearSelection() { selection = {}; render(); }
+
+  function setMode(m) { mode = m; render(); }
+
+  // Render head + foot dynamically
+  function render() {
+    const lowestPerPart = {};
+    PARTS.forEach(p => lowestPerPart[p[0]] = findLowest(p[0]));
+    const best = bestSingleSup();
+
+    // Head
+    const headHtml = ['<th class="row-label">Part / Supplier</th>'].concat(SUPS.map(s => {
+      const isBestTotal = s[0] === best.sid;
+      const subTotal = supTotal(s[0]);
+      const isWinner = isBestTotal && mode === 'single';
+      return `<th class="${isWinner ? 'is-winner' : ''}">
+        <div class="sup-head">
+          ${isBestTotal ? '<div class="winner-tag">Best total</div>' : ''}
+          <div class="sup-head__name">${s[1]}</div>
+          <div class="sup-head__sub"><span class="star">★ ${s[3]}</span>${s[4] ? '<span class="oem">OEM</span>' : ''}</div>
+          <div class="sup-head__sub" style="color:var(--ink-400)">${subTotal.partsCovered}/${PARTS.length} parts</div>
+        </div>
+      </th>`;
+    })).join('');
+    document.getElementById('cmpHead').innerHTML = headHtml;
+
+    // Body
+    document.getElementById('cmpBody').innerHTML = PARTS.map(part => {
+      const [pid, name, type, qty, target] = part;
+      const lowest = lowestPerPart[pid];
+      const cells = SUPS.map(s => {
+        const price = QUOTES[pid][s[0]];
+        if (price == null) {
+          return `<td><div class="price na">N/A</div></td>`;
+        }
+        const isLowest = s[0] === lowest.sid;
+        const isSelected = selection[pid] === s[0];
+        const pct = Math.round(((price - target) / target) * 100);
+        const pctClass = pct > 0 ? 'up' : 'down';
+        const pctSign = pct > 0 ? '+' : '';
+        return `<td class="${isSelected ? 'selected-cell' : ''}">
+          <div class="price-cell" data-pid="${pid}" data-sid="${s[0]}">
+            <input type="checkbox" class="pcbx" ${isSelected ? 'checked' : ''}>
+            <div>
+              <div class="price ${isLowest ? 'is-lowest' : ''}">AED ${price.toLocaleString()}</div>
+              <div class="price-unit">× ${qty} = AED ${(price * qty).toLocaleString()}</div>
+              <div class="pct-tag ${pctClass}">${pctSign}${pct}% vs target</div>
+            </div>
+          </div>
+        </td>`;
+      }).join('');
+      return `<tr>
+        <td class="row-label">
+          <div style="font-weight:500">${name}</div>
+          <div style="font-size:11.5px;color:var(--ink-500);margin-top:2px">${type} · Qty ${qty} · Target AED ${target}</div>
+        </td>
+        ${cells}
+      </tr>`;
+    }).join('');
+
+    // Foot
+    const sels = Object.entries(selection);
+    document.getElementById('cmpFoot').innerHTML = `
+      <tr>
+        <td class="row-label">Subtotal</td>
+        ${SUPS.map(s => {
+          const t = supTotal(s[0]);
+          const partsAll = t.partsCovered === PARTS.length;
+          const isBest = s[0] === best.sid && mode === 'single';
+          return `<td class="${isBest ? 'selected-cell' : ''}">
+            <div style="font-weight:500;font-variant-numeric:tabular-nums;${partsAll ? '' : 'color:var(--ink-400)'}">AED ${t.total.toLocaleString()}</div>
+            ${partsAll ? '' : '<div style="font-size:11px;color:var(--ink-400);margin-top:2px">'+t.partsCovered+' of '+PARTS.length+' parts</div>'}
+          </td>`;
+        }).join('')}
+      </tr>
+      <tr>
+        <td class="row-label">Delivery</td>
+        ${SUPS.map(s => `<td>${s[5]}</td>`).join('')}
+      </tr>
+      <tr>
+        <td class="row-label">Warranty</td>
+        ${SUPS.map(s => `<td>${s[6]}</td>`).join('')}
+      </tr>
+      <tr>
+        <td class="row-label">Rating</td>
+        ${SUPS.map(s => `<td><div class="star-row">★★★★★</div><div style="font-size:11.5px;color:var(--ink-500);margin-top:2px">${s[3]} / 5.0</div></td>`).join('')}
+      </tr>
+      <tr>
+        <td class="row-label"></td>
+        ${SUPS.map(s => {
+          const t = supTotal(s[0]);
+          const partsAll = t.partsCovered === PARTS.length;
+          if (!partsAll) return `<td><button class="pick-all-btn no-quote" disabled>Incomplete bid</button></td>`;
+          return `<td><button class="pick-all-btn" data-pickall="${s[0]}">Award all to ${s[2]}</button></td>`;
+        }).join('')}
+      </tr>
+    `;
+
+    // Wire price cells
+    document.querySelectorAll('.price-cell').forEach(el => {
+      el.addEventListener('click', e => {
+        const pid = el.dataset.pid, sid = el.dataset.sid;
+        if (selection[pid] === sid) delete selection[pid];
+        else { selection[pid] = sid; if (Object.values(selection).filter((v,i,arr) => arr.indexOf(v) === i).length > 1) mode = 'split'; }
+        render();
+      });
+    });
+    document.querySelectorAll('[data-pickall]').forEach(b => b.addEventListener('click', e => {
+      e.stopPropagation();
+      pickSingleSup(b.dataset.pickall);
+    }));
+    document.querySelector('#mSingle').classList.toggle('is-active', mode === 'single');
+    document.querySelector('#mSplit').classList.toggle('is-active', mode === 'split');
+
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const selEntries = Object.entries(selection);
+    const partsSelected = selEntries.length;
+
+    let total = 0;
+    let maxDeliveryDays = 0;
+    const usedSups = new Set();
+    selEntries.forEach(([pid, sid]) => {
+      const part = PARTS.find(p => p[0] === pid);
+      total += QUOTES[pid][sid] * part[3];
+      usedSups.add(sid);
+      const sup = SUPS.find(s => s[0] === sid);
+      const d = parseInt(sup[5]) || 0;
+      if (d > maxDeliveryDays) maxDeliveryDays = d;
+    });
+    const target = PARTS.reduce((a, p) => a + p[4] * p[3], 0);
+    const savings = target - total;
+    const savingsPct = target ? Math.round(savings / target * 100) : 0;
+
+    document.getElementById('selParts').textContent = `${partsSelected} of ${PARTS.length}`;
+    document.getElementById('selSups').textContent = `${usedSups.size} supplier${usedSups.size !== 1 ? 's' : ''}`;
+    document.getElementById('selDelivery').textContent = partsSelected ? `${maxDeliveryDays} days` : '—';
+    document.getElementById('selTotal').textContent = `AED ${total.toLocaleString()}`;
+    document.getElementById('placeCount').textContent = usedSups.size;
+
+    if (partsSelected) {
+      const sign = savings >= 0 ? '−' : '+';
+      const cls = savings >= 0 ? 'var(--ok-fg)' : 'var(--brand-red)';
+      document.getElementById('selSavings').textContent = `${sign}AED ${Math.abs(savings).toLocaleString()} (${Math.abs(savingsPct)}%)`;
+      document.getElementById('selSavings').style.color = cls;
+    } else {
+      document.getElementById('selSavings').textContent = '—';
+      document.getElementById('selSavings').style.color = 'var(--ink-400)';
+    }
+
+    const orderBtns = document.querySelectorAll('#placeOrderBtn, #placeOrderBtn2');
+    orderBtns.forEach(b => b.disabled = partsSelected === 0);
+  }
+
+  // Wire toggles + actions
+  document.getElementById('mSingle').addEventListener('click', () => { setMode('single'); /* auto-pick best single */ const b = bestSingleSup(); if (b.sid) pickSingleSup(b.sid); });
+  document.getElementById('mSplit').addEventListener('click', () => setMode('split'));
+  document.getElementById('pickLowest').addEventListener('click', pickLowestPerPart);
+  document.getElementById('clearSel').addEventListener('click', clearSelection);
+  document.getElementById('rejectAll').addEventListener('click', () => { if (confirm('Reject ALL supplier quotes and re-broadcast the RFQ?')) clearSelection(); });
+  const onPlace = () => {
+    const usedSups = new Set(Object.values(selection));
+    // Persist selection so allocate page can load it
+    try {
+      const payload = { rfq: rfqId, order: orderId, claim: claimId, mode, selection };
+      sessionStorage.setItem('phGarageQuoteSelection', JSON.stringify(payload));
+    } catch (e) {}
+    const qs = new URLSearchParams({ rfq: rfqId, order: orderId, claim: claimId }).toString();
+    window.location.href = `supplier-quotations-allocate.html?${qs}`;
+  };
+  document.getElementById('placeOrderBtn').addEventListener('click', onPlace);
+  document.getElementById('placeOrderBtn2').addEventListener('click', onPlace);
+
+  // Initial: select best single supplier
+  const initial = bestSingleSup();
+  if (initial.sid) pickSingleSup(initial.sid);
+  else render();
+</script>
+</body>
+</html>

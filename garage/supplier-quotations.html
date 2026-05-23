@@ -4,8 +4,160 @@
 <meta charset="UTF-8" />
 <title>PartsHub Garage — Supplier Quotations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  /* KPI strip */
+  .qk-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
+  .qk {
+    background: #fff; border: 1px solid var(--auth-box-border);
+    border-radius: 8px; padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .qk__ic {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: var(--brand-red-ghost); color: var(--brand-red);
+    display: grid; place-items: center; flex: none;
+  }
+  .qk__ic.blue { background: #e3eefc; color: var(--forgot-link-color); }
+  .qk__ic.green { background: var(--ok-bg); color: var(--ok-fg); }
+  .qk__ic.amber { background: #fff4dc; color: #b87410; }
+  .qk__l { font-size: 12.5px; color: var(--ink-500); margin-bottom: 4px; }
+  .qk__v { font-size: 22px; font-weight: 500; color: var(--bodyText); font-family: 'Roboto', sans-serif; line-height: 1.1; }
+  .qk__sub { font-size: 12px; color: var(--ink-400); margin-top: 4px; }
+
+  /* Toolbar */
+  .q-toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .q-search {
+    display: flex; align-items: center; gap: 8px;
+    height: 40px; padding: 0 12px; flex: 1; max-width: 380px;
+    border: 1px solid var(--form-field-border); border-radius: 6px;
+    background: #fff; color: var(--ink-400);
+  }
+  .q-search input {
+    border: 0; outline: 0; background: transparent; flex: 1;
+    font-size: 13.5px; color: var(--bodyText); font-family: inherit;
+  }
+  .q-icbtn {
+    width: 40px; height: 40px; border-radius: 6px;
+    border: 1px solid var(--form-field-border); background: #fff;
+    display: grid; place-items: center; color: var(--ink-700);
+    cursor: pointer; font-family: inherit;
+  }
+  .q-icbtn:hover { background: var(--bodyBg); }
+  .q-toolbar__sp { flex: 1; }
+  .q-tabs { display: flex; gap: 4px; margin-bottom: 14px; }
+  .q-tab {
+    padding: 8px 14px;
+    border: 1px solid var(--form-field-border);
+    background: #fff;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--ink-500);
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .q-tab:hover { background: var(--bodyBg); }
+  .q-tab.is-active { background: var(--brand-red); color: #fff; border-color: var(--brand-red); }
+  .q-tab__count {
+    background: var(--ink-100); color: var(--ink-500);
+    padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 500;
+  }
+  .q-tab.is-active .q-tab__count { background: rgba(255,255,255,0.25); color: #fff; }
+
+  /* List card */
+  .q-card { background: #fff; border: 1px solid var(--auth-box-border); border-radius: 8px; overflow: hidden; }
+  .q-card__head { padding: 12px 18px; border-bottom: 1px solid var(--ink-100); font-size: 13px; color: var(--ink-500); }
+  .q-card__head strong { color: var(--bodyText); font-weight: 500; }
+
+  table.q-tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+  table.q-tbl thead th {
+    text-align: left; font-weight: 500; color: var(--ink-500); font-size: 12.5px;
+    padding: 12px 14px; background: #f4f8fd;
+    border-bottom: 1px solid var(--auth-box-border);
+    white-space: nowrap;
+  }
+  table.q-tbl tbody td {
+    padding: 14px 14px; border-bottom: 1px solid var(--ink-100);
+    color: var(--bodyText); vertical-align: middle;
+  }
+  table.q-tbl tbody tr:hover td { background: var(--active-row-color); }
+  table.q-tbl tbody tr:last-child td { border-bottom: 0; }
+
+  .q-link { color: var(--brand-red); font-weight: 500; text-decoration: none; }
+  .q-link:hover { text-decoration: underline; }
+  .q-sub { font-size: 11.5px; color: var(--ink-400); margin-top: 2px; }
+  .q-num { font-variant-numeric: tabular-nums; }
+
+  .q-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 4px;
+    font-size: 11.5px; font-weight: 500;
+  }
+  .q-pill::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .q-pill.open      { background: #e3eefc; color: var(--forgot-link-color); }
+  .q-pill.awaiting  { background: #fff4dc; color: #b87410; }
+  .q-pill.closed    { background: var(--ok-bg); color: var(--ok-fg); }
+  .q-pill.allocated { background: #f3eafe; color: #6b3aa0; }
+  .q-pill.expired   { background: var(--brand-red-ghost); color: var(--brand-red); }
+
+  /* Quotes bar (mini visualization) */
+  .quotes-bar {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .quotes-bar__num { font-weight: 500; color: var(--bodyText); font-variant-numeric: tabular-nums; }
+  .quotes-bar__num small { font-weight: 400; color: var(--ink-400); }
+  .quotes-bar__track {
+    flex: 1; max-width: 110px; height: 6px; border-radius: 3px;
+    background: var(--ink-100); overflow: hidden;
+  }
+  .quotes-bar__fill { height: 100%; background: var(--ok-fg); border-radius: 3px; }
+  .quotes-bar__fill.warn { background: #b87410; }
+  .quotes-bar__fill.low { background: var(--brand-red); }
+
+  .best-cell { display: flex; flex-direction: column; gap: 2px; }
+  .best-cell__price { font-weight: 500; color: var(--ok-fg); font-variant-numeric: tabular-nums; }
+  .best-cell__sup { font-size: 11px; color: var(--ink-400); }
+  .best-cell__none { color: var(--ink-400); font-style: italic; font-size: 12px; }
+
+  .time-cell { display: flex; flex-direction: column; gap: 2px; }
+  .time-cell__primary { color: var(--bodyText); font-weight: 500; font-size: 12.5px; }
+  .time-cell__primary.red { color: var(--brand-red); }
+  .time-cell__primary.amber { color: #b87410; }
+  .time-cell__sub { font-size: 11px; color: var(--ink-400); }
+
+  .row-action {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--brand-red); background: #fff;
+    color: var(--brand-red); border-radius: 4px;
+    padding: 6px 12px; font-size: 12.5px; font-weight: 500;
+    cursor: pointer; text-decoration: none; font-family: inherit;
+  }
+  .row-action:hover { background: var(--brand-red-ghost); }
+  .row-action.muted { color: var(--ink-500); border-color: var(--form-field-border); }
+  .row-action.muted:hover { background: var(--bodyBg); }
+
+  /* Pager */
+  .q-foot { display: flex; align-items: center; margin-top: 14px; gap: 12px; }
+  .q-foot__show { display: flex; align-items: center; gap: 8px; color: var(--ink-500); font-size: 13px; }
+  .q-foot__show select {
+    border: 1px solid var(--form-field-border); padding: 6px 28px 6px 12px;
+    border-radius: 4px; background: #fff; font-family: inherit; font-size: 13px;
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%236b6b6b' d='M0 0l5 6 5-6z'/></svg>");
+    background-repeat: no-repeat; background-position: right 10px center; min-width: 60px;
+  }
+  .q-foot__nav { margin-left: auto; display: flex; gap: 4px; }
+  .pg-btn {
+    width: 30px; height: 30px; border: 1px solid var(--form-field-border);
+    border-radius: 4px; background: #fff; display: grid; place-items: center;
+    color: var(--ink-500); font-size: 14px; cursor: pointer;
+  }
+  .pg-btn:hover { background: var(--bodyBg); }
+  .pg-btn.is-active { background: var(--brand-red); color: #fff; border-color: var(--brand-red); }
+  .pg-btn:disabled { color: var(--ink-300); cursor: not-allowed; }
+</style>
 </head>
 <body data-portal="garage" data-page="claim-request" data-subpage="supplier-quotations" data-page-title="Supplier Quotations">
 <div class="app">
@@ -13,33 +165,172 @@
   <main>
     <div id="shell-topbar"></div>
     <div class="page">
-      <div class="page-card">
-        <div class="page-card__toolbar">
-          <div>
-            <div style="font-weight:700;font-size:14px">Supplier Quotations</div>
-            <div class="muted small">Compare quotations received from suppliers per RFQ</div>
-          </div>
-          <div style="margin-left:auto" class="flex gap-8">
-            <button class="btn">Export</button>
-            <button class="btn btn--primary">+ New</button>
-          </div>
+
+      <!-- KPI strip -->
+      <div class="qk-grid">
+        <div class="qk">
+          <div class="qk__ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><div class="qk__l">Open RFQs</div><div class="qk__v">12</div><div class="qk__sub">Receiving quotes from suppliers</div></div>
         </div>
-        <div class="empty" style="padding:80px 20px">
-    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="opacity:0.4;color:var(--brand-red);margin-bottom:16px">
-      <rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>
-    </svg>
-    <div style="font-size:16px;font-weight:600;color:var(--ink-700);margin-bottom:8px">Supplier Quotations</div>
-    <div class="muted small" style="max-width:480px;margin:0 auto">This screen is part of the PartsHub portal blueprint. Hook up your data source to populate it with live records.</div>
-    <div class="flex gap-8" style="justify-content:center;margin-top:20px">
-      <button class="btn">Documentation</button>
-      <button class="btn btn--primary">Connect data</button>
-    </div>
-  </div>
+        <div class="qk">
+          <div class="qk__ic amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg></div>
+          <div><div class="qk__l">Ready to allocate</div><div class="qk__v">5</div><div class="qk__sub">Have ≥1 complete bid</div></div>
+        </div>
+        <div class="qk">
+          <div class="qk__ic green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><div class="qk__l">Allocated this month</div><div class="qk__v">28</div><div class="qk__sub">AED 312k awarded · avg 3.2 days</div></div>
+        </div>
+        <div class="qk">
+          <div class="qk__ic blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 4 14 20 17 12 21 12"/></svg></div>
+          <div><div class="qk__l">Avg response time</div><div class="qk__v">3h 14m</div><div class="qk__sub">Across 28 active suppliers</div></div>
+        </div>
       </div>
+
+      <!-- Toolbar -->
+      <div class="q-toolbar">
+        <div class="q-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input placeholder="Search RFQ ID, claim, vehicle, supplier..."/>
+        </div>
+        <button class="q-icbtn" title="Download">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="q-icbtn" title="Filter">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        </button>
+        <div class="q-toolbar__sp"></div>
+        <a class="row-action" href="rfq-to-supplier-create.html" style="background:var(--brand-red);color:#fff;padding:9px 16px">+ Send New RFQ</a>
+      </div>
+
+      <!-- Tabs -->
+      <div class="q-tabs" id="qTabs">
+        <button class="q-tab is-active" data-filter="all">All <span class="q-tab__count">13</span></button>
+        <button class="q-tab" data-filter="ready">Ready to Allocate <span class="q-tab__count">5</span></button>
+        <button class="q-tab" data-filter="open">Open <span class="q-tab__count">4</span></button>
+        <button class="q-tab" data-filter="awaiting">Awaiting Responses <span class="q-tab__count">2</span></button>
+        <button class="q-tab" data-filter="allocated">Allocated <span class="q-tab__count">1</span></button>
+        <button class="q-tab" data-filter="expired">Expired <span class="q-tab__count">1</span></button>
+      </div>
+
+      <!-- List -->
+      <div class="q-card">
+        <div class="q-card__head">Total <strong id="totalCount">13</strong> RFQs found</div>
+        <div style="overflow-x:auto">
+          <table class="q-tbl" id="qTable">
+            <thead>
+              <tr>
+                <th>RFQ ID</th>
+                <th>Order / Claim</th>
+                <th>Vehicle · Insurer</th>
+                <th>Parts</th>
+                <th>Quotes received</th>
+                <th>Best total so far</th>
+                <th>Status</th>
+                <th>Deadline</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Footer pager -->
+      <div class="q-foot">
+        <div class="q-foot__show">Show <select><option>25</option><option>50</option><option>10</option></select></div>
+        <div class="q-foot__nav">
+          <button class="pg-btn" disabled>‹</button>
+          <button class="pg-btn is-active">1</button>
+          <button class="pg-btn">2</button>
+          <button class="pg-btn">›</button>
+        </div>
+      </div>
+
     </div>
   </main>
 </div>
 <script src="../shared/icons.js"></script>
 <script src="../shared/sidebar.js"></script>
+<script>
+  // Data: [rfqId, orderId, claimId, vehicle, insurer, partsCount, quotesGot, quotesInvited, bestTotal, bestSupplier, statusKey, statusLabel, deadlineDays]
+  const ROWS = [
+    ['EFHG1234U', 'ORD-4500', 'JKLMN56780', 'BMW 3 Series Black 2024',    'Oriental Insurance Ltd.', 6, 8,  24, 2840,  'Gulf Auto Parts',       'ready',     'Ready to Allocate', 1.6],
+    ['EFHG1235V', 'ORD-4499', 'JKLMN56781', 'Toyota Camry 2022',          'Emirates GI',             4, 12, 22, 1850,  'Bin Hamoodah Trading',  'ready',     'Ready to Allocate', 0.4],
+    ['EFHG1236W', 'ORD-4498', 'JKLMN56782', 'Honda Accord 2021',          'ADNIC',                   5, 6,  18, 3120,  'Emirates Spare Co.',    'open',      'Open',              2.8],
+    ['EFHG1237X', 'ORD-4495', 'JKLMN56783', 'BMW 5 Series 2023',          'Orient Insurance',        7, 5,  26, 4280,  'Falcon Parts Trading',  'open',      'Open',              3.2],
+    ['EFHG1238Y', 'ORD-4492', 'JKLMN56784', 'Mercedes E-Class 2022',      'Emirates GI',             3, 14, 20, 5400,  'Gulf Auto Parts',       'ready',     'Ready to Allocate', 0.2],
+    ['EFHG1239Z', 'ORD-4488', 'JKLMN56785', 'Lexus ES350 2023',           'Salama',                  4, 0,  16, null,  null,                    'awaiting',  'Awaiting Responses',2.5],
+    ['EFHG1240A', 'ORD-4496', 'JKLMN56786', 'Hyundai Tucson 2023',        'Tokio Marine',            3, 9,  19, 1240,  'Royal Parts Supply',    'ready',     'Ready to Allocate', 1.1],
+    ['EFHG1241B', 'ORD-4493', 'JKLMN56787', 'Audi A6 2021',               'ADNIC',                   5, 4,  22, 5680,  'Falcon Parts Trading',  'open',      'Open',              1.9],
+    ['EFHG1242C', 'ORD-4490', 'JKLMN56788', 'Toyota Land Cruiser 2023',   'Emirates GI',             6, 11, 24, 6840,  'Bin Hamoodah Trading',  'ready',     'Ready to Allocate', 0.8],
+    ['EFHG1243D', 'ORD-4487', 'JKLMN56789', 'Nissan Patrol 2022',         'Salama',                  2, 7,  14, 980,   'Emirates Spare Co.',    'open',      'Open',              2.3],
+    ['EFHG1244E', 'ORD-4485', 'JKLMN56790', 'Ford Explorer 2021',         'Tokio Marine',            4, 1,  16, null,  null,                    'awaiting',  'Awaiting Responses',1.4],
+    ['EFHG1245F', 'ORD-4480', 'JKLMN56791', 'Mitsubishi Pajero 2022',     'ADNIC',                   3, 8,  18, 1680,  'Gulf Auto Parts',       'allocated','Allocated',         -1],
+    ['EFHG1246G', 'ORD-4478', 'JKLMN56792', 'Range Rover Sport 2020',     'Orient Insurance',        5, 3,  20, 4920,  'Falcon Parts Trading',  'expired', 'Expired',           -3.2]
+  ];
+
+  function fmtDeadline(days) {
+    if (days <= -0.1) {
+      const ago = Math.abs(days);
+      return { p: ago < 1 ? `${Math.round(ago*24)}h ago` : `${Math.floor(ago)}d ago`, sub: ago < 1 ? 'closed today' : 'past deadline', cls: '' };
+    }
+    if (days < 1) return { p: `${Math.round(days*24)}h left`, sub: 'closes today', cls: 'red' };
+    if (days < 2) return { p: `${days.toFixed(1)}d left`, sub: 'soon', cls: 'amber' };
+    return { p: `${Math.floor(days)}d left`, sub: 'on track', cls: '' };
+  }
+
+  function quotesBar(got, invited) {
+    const pct = invited ? Math.round((got / invited) * 100) : 0;
+    const cls = pct === 0 ? 'low' : (pct < 30 ? 'warn' : '');
+    return `
+      <div class="quotes-bar">
+        <div class="quotes-bar__num">${got}<small> / ${invited}</small></div>
+        <div class="quotes-bar__track"><div class="quotes-bar__fill ${cls}" style="width:${pct}%"></div></div>
+      </div>`;
+  }
+
+  function rowAction(statusKey, row) {
+    const qs = new URLSearchParams({ rfq: row[0], order: row[1], claim: row[2] }).toString();
+    if (statusKey === 'ready') return `<a class="row-action" href="supplier-quotations-compare.html?${qs}">Compare →</a>`;
+    if (statusKey === 'allocated') return `<a class="row-action muted" href="supplier-orders.html">View Orders</a>`;
+    if (statusKey === 'expired') return `<a class="row-action muted" href="rfq-to-supplier-create.html">Re-send</a>`;
+    return `<a class="row-action muted" href="supplier-quotations-compare.html?${qs}">View Quotes</a>`;
+  }
+
+  function render(filter) {
+    const tbody = document.querySelector('#qTable tbody');
+    const filtered = ROWS.filter(r => filter === 'all' || r[10] === filter);
+    document.getElementById('totalCount').textContent = filtered.length;
+    tbody.innerHTML = filtered.map(r => {
+      const [rfq, order, claim, vehicle, insurer, partsCount, got, invited, bestTotal, bestSup, statusKey, statusLbl, days] = r;
+      const cmpHref = `supplier-quotations-compare.html?${new URLSearchParams({ rfq, order, claim }).toString()}`;
+      const dl = fmtDeadline(days);
+      const bestCell = bestTotal != null
+        ? `<div class="best-cell"><span class="best-cell__price">AED ${bestTotal.toLocaleString()}</span><span class="best-cell__sup">${bestSup}</span></div>`
+        : `<div class="best-cell__none">No quotes yet</div>`;
+      return `
+        <tr>
+          <td><a class="q-link" href="${cmpHref}">${rfq}</a><div class="q-sub">${invited} suppliers invited</div></td>
+          <td>${order}<div class="q-sub">${claim}</div></td>
+          <td>${vehicle}<div class="q-sub">${insurer}</div></td>
+          <td class="q-num">${partsCount} parts</td>
+          <td>${quotesBar(got, invited)}</td>
+          <td>${bestCell}</td>
+          <td><span class="q-pill ${statusKey}">${statusLbl}</span></td>
+          <td><div class="time-cell"><span class="time-cell__primary ${dl.cls}">${dl.p}</span><span class="time-cell__sub">${dl.sub}</span></div></td>
+          <td>${rowAction(statusKey, r)}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('#qTabs .q-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#qTabs .q-tab').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      render(btn.dataset.filter);
+    });
+  });
+  render('all');
+</script>
 </body>
 </html>

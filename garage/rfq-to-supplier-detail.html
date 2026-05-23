@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — RFQ to Suppliers Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  /* Topbar status pill */
+  .pill-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 13px; font-weight: 500;
+    background: var(--forgot-link-color); color: #fff;
+  }
+  .pill-status .ic { width: 18px; height: 18px; border-radius: 4px; background: rgba(255,255,255,0.2); display: grid; place-items: center; font-size: 10px; }
+  .pill-status.is-open { background: var(--forgot-link-color); }
+  .pill-status.is-closed { background: var(--ok-fg); }
+  .pill-status.is-awaiting { background: #b87410; }
+  .pill-status.is-cancelled { background: var(--brand-red); }
+
+  /* Action bar */
+  .od-actionbar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .od-back {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    padding: 9px 16px; border: 1px solid var(--form-field-border);
+    background: #fff; color: var(--bodyText); border-radius: 6px;
+    font-size: 13.5px; font-family: inherit; cursor: pointer; text-decoration: none;
+  }
+  .od-back:hover { background: var(--bodyBg); }
+  .od-actionbar__spacer { flex: 1; }
+  .od-btn-action {
+    padding: 9px 18px; white-space: nowrap; border-radius: 6px;
+    background: var(--brand-red); color: #fff; border: 0;
+    font-size: 13.5px; font-weight: 500; font-family: inherit;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .od-btn-action:hover { background: var(--brand-red-dark); }
+  .od-btn-action.outline {
+    background: #fff; color: var(--brand-red);
+    border: 1px solid var(--brand-red);
+  }
+  .od-btn-action.outline:hover { background: var(--brand-red-ghost); }
+  .od-icon-btn {
+    width: 38px; height: 38px; border-radius: 6px;
+    border: 1px solid var(--form-field-border); background: #fff;
+    display: grid; place-items: center; color: var(--ink-700);
+    cursor: pointer; font-family: inherit;
+  }
+  .od-icon-btn:hover { background: var(--bodyBg); }
+
+  /* Info tiles */
+  .info-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 16px; }
+  @media (max-width: 1280px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
+  .info-tile { background: #f4f8fd; border-radius: 8px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; }
+  .info-tile__icon { width: 38px; height: 38px; border-radius: 8px; background: #fff; color: var(--brand-red); display: grid; place-items: center; flex: none; border: 1px solid #e5edf7; }
+  .info-tile__label { font-size: 12.5px; color: var(--ink-500); margin-bottom: 4px; }
+  .info-tile__value { font-size: 14.5px; color: var(--bodyText); font-weight: 500; overflow-wrap: anywhere; }
+  .info-tile__value a { color: var(--forgot-link-color); text-decoration: none; }
+  .info-tile__value a:hover { text-decoration: underline; }
+
+  /* Progress strip */
+  .prog-strip {
+    background: linear-gradient(135deg, #fff 0%, var(--brand-red-ghost) 100%);
+    border: 1px solid var(--brand-red-light);
+    border-radius: 10px;
+    padding: 18px 22px; margin-bottom: 16px;
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr; gap: 16px;
+    align-items: center;
+  }
+  @media (max-width: 1180px) { .prog-strip { grid-template-columns: repeat(3, 1fr); } }
+  .ps-main { }
+  .ps-main__l { font-size: 11.5px; color: var(--ink-500); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; margin-bottom: 4px; }
+  .ps-main__big { font-size: 30px; font-weight: 700; color: var(--bodyText); font-family: 'Roboto', sans-serif; line-height: 1; }
+  .ps-main__big strong { color: var(--brand-red); }
+  .ps-main__bar { margin-top: 10px; height: 8px; background: #fff; border-radius: 4px; overflow: hidden; border: 1px solid var(--brand-red-light); }
+  .ps-main__fill { height: 100%; background: var(--brand-red); border-radius: 4px; }
+  .ps-cell { display: flex; flex-direction: column; gap: 4px; padding-left: 14px; border-left: 1px solid var(--ink-100); }
+  .ps-cell__l { font-size: 11.5px; color: var(--ink-500); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  .ps-cell__v { font-size: 18px; font-weight: 500; color: var(--bodyText); font-family: 'Roboto', sans-serif; }
+  .ps-cell__v.green { color: var(--ok-fg); }
+  .ps-cell__v.red { color: var(--brand-red); }
+  .ps-cell__sub { font-size: 11.5px; color: var(--ink-400); }
+
+  /* Main 2-col */
+  .rfq-grid { display: grid; grid-template-columns: 1fr 360px; gap: 16px; align-items: start; }
+  @media (max-width: 1180px) { .rfq-grid { grid-template-columns: 1fr; } }
+
+  .rfq-card { background: #fff; border: 1px solid var(--auth-box-border); border-radius: 8px; padding: 18px 20px; }
+  .rfq-card + .rfq-card { margin-top: 16px; }
+  .rfq-card__head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+  .rfq-card__title { color: var(--brand-red); font-weight: 500; font-size: 14.5px; font-family: 'Roboto', sans-serif; margin: 0; }
+  .rfq-card__sub { color: var(--ink-400); font-size: 12.5px; }
+  .rfq-card__cta { margin-left: auto; }
+
+  /* Parts table */
+  table.tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+  table.tbl thead th {
+    text-align: left; font-weight: 500; color: var(--ink-500); font-size: 12.5px;
+    padding: 10px 10px; background: #f4f8fd;
+    border-bottom: 1px solid var(--auth-box-border); white-space: nowrap;
+  }
+  table.tbl thead th:first-child { padding-left: 14px; }
+  table.tbl tbody td { padding: 12px 10px; border-bottom: 1px solid var(--ink-100); color: var(--bodyText); vertical-align: middle; }
+  table.tbl tbody td:first-child { padding-left: 14px; font-weight: 500; }
+  table.tbl tbody tr:last-child td { border-bottom: 0; }
+  table.tbl .num { font-variant-numeric: tabular-nums; }
+
+  .pt-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11.5px; font-weight: 500;
+    background: #e3eefc; color: var(--forgot-link-color);
+  }
+  .pt-tag.body { background: #fff4dc; color: #8a5a00; }
+  .pt-tag.mech { background: #f3eafe; color: #6b3aa0; }
+  .pt-tag.elec { background: var(--ok-bg); color: var(--ok-fg); }
+
+  .best-quote {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .best-quote__price { font-weight: 500; color: var(--ok-fg); font-variant-numeric: tabular-nums; }
+  .best-quote__sup { font-size: 11px; color: var(--ink-400); }
+  .best-quote--awaiting { color: var(--ink-400); font-style: italic; font-size: 12.5px; }
+
+  .responses-count {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 8px; border-radius: 4px;
+    font-size: 11.5px; font-weight: 500;
+    background: var(--bodyBg); color: var(--ink-700);
+  }
+  .responses-count.has { background: var(--ok-bg); color: var(--ok-fg); }
+  .responses-count.zero { color: var(--ink-400); }
+
+  /* Right rail rows */
+  .row { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--ink-100); font-size: 13px; }
+  .row:last-child { border-bottom: 0; }
+  .row__l { color: var(--ink-500); }
+  .row__v { color: var(--bodyText); font-weight: 500; text-align: right; }
+  .row__v.ok { color: var(--ok-fg); }
+  .row__v.red { color: var(--brand-red); }
+
+  /* Broadcast metrics */
+  .bc-hero {
+    background: var(--brand-red-ghost); border: 1px solid var(--brand-red-light); border-radius: 6px;
+    padding: 14px; display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .bc-hero__big { font-size: 28px; font-weight: 700; color: var(--brand-red); font-family: 'Roboto', sans-serif; line-height: 1; }
+  .bc-hero__lbl { font-size: 12.5px; color: var(--bodyText); line-height: 1.4; }
+  .bc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .bc-tile { background: #f4f8fd; border-radius: 6px; padding: 10px 12px; }
+  .bc-tile__l { font-size: 11px; color: var(--ink-500); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; margin-bottom: 4px; }
+  .bc-tile__v { font-size: 18px; font-weight: 500; font-family: 'Roboto', sans-serif; }
+  .bc-tile__v.green { color: var(--ok-fg); }
+  .bc-tile__v.blue { color: var(--forgot-link-color); }
+  .bc-tile__v.dark { color: var(--bodyText); }
+
+  /* Timeline */
+  .tl { display: grid; gap: 0; }
+  .tl__item { position: relative; padding: 8px 0 14px 22px; }
+  .tl__item::before { content: ""; position: absolute; left: 6px; top: 16px; bottom: -2px; width: 1.5px; background: var(--ink-100); }
+  .tl__item:last-child::before { display: none; }
+  .tl__dot { position: absolute; left: 0; top: 10px; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--ink-200); }
+  .tl__item.is-done .tl__dot { background: var(--ok-fg); border-color: var(--ok-fg); }
+  .tl__item.is-current .tl__dot { background: var(--brand-red); border-color: var(--brand-red); }
+  .tl__item.is-current .tl__dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--brand-red); opacity: 0.3; }
+  .tl__title { font-size: 13.5px; font-weight: 500; color: var(--bodyText); }
+  .tl__meta { font-size: 12px; color: var(--ink-400); margin-top: 2px; }
+
+  /* Responses sub-list (small avatars) */
+  .resp-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .resp-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px;
+    border: 1px solid var(--ink-100); border-radius: 6px;
+    font-size: 12.5px;
+  }
+  .resp-row__logo { width: 28px; height: 28px; border-radius: 5px; background: linear-gradient(135deg,#1d4f8c,#2a6fb7); color: #fff; display: grid; place-items: center; flex: none; font-weight: 700; font-size: 10.5px; }
+  .resp-row__name { flex: 1; min-width: 0; color: var(--bodyText); font-weight: 500; }
+  .resp-row__val { color: var(--ok-fg); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .resp-row__time { font-size: 11px; color: var(--ink-400); margin-left: 6px; }
+
+  /* Badge for "Lowest" */
+  .lowest-badge {
+    background: var(--ok-fg); color: #fff;
+    padding: 1px 6px; border-radius: 3px;
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body data-portal="garage" data-page="claim-request" data-subpage="rfq-to-supplier" data-page-title="">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- Action bar -->
+      <div class="od-actionbar">
+        <a class="od-back" href="rfq-to-supplier.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to RFQ List
+        </a>
+        <div class="od-actionbar__spacer"></div>
+        <button class="od-btn-action outline">Extend Deadline</button>
+        <a class="od-btn-action" href="supplier-quotations-compare.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+          Compare Quotations
+        </a>
+        <button class="od-icon-btn" title="Print">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        </button>
+        <button class="od-icon-btn" title="Cancel RFQ" style="color:var(--brand-red)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <!-- Info tiles -->
+      <div class="info-grid">
+        <div class="info-tile">
+          <div class="info-tile__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg>
+          </div>
+          <div class="info-tile__main"><div class="info-tile__label">RFQ ID</div><div class="info-tile__value" id="t-rfqid">EFHG1234U</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="info-tile__main"><div class="info-tile__label">Order ID</div><div class="info-tile__value" id="t-order"><a id="orderLink" href="claim-order-detail.html?order=ORD-4500">ORD-4500</a></div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg>
+          </div>
+          <div class="info-tile__main"><div class="info-tile__label">Claim ID</div><div class="info-tile__value" id="t-claim">JKLMN56780</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l2-6 4-3h6l4 3 2 6 0 3-4 0 0-2 -10 0 0 2 -4 0z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>
+          </div>
+          <div class="info-tile__main"><div class="info-tile__label">Vehicle</div><div class="info-tile__value">BMW 3 Series Black 2024</div></div>
+        </div>
+        <div class="info-tile">
+          <div class="info-tile__icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 7v5c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V7l-8-5z"/></svg>
+          </div>
+          <div class="info-tile__main"><div class="info-tile__label">Insurer</div><div class="info-tile__value">Oriental Insurance Ltd.</div></div>
+        </div>
+      </div>
+
+      <!-- Progress strip -->
+      <div class="prog-strip">
+        <div class="ps-main">
+          <div class="ps-main__l">Response progress</div>
+          <div class="ps-main__big"><strong>8</strong> of 24 responded</div>
+          <div class="ps-main__bar"><div class="ps-main__fill" style="width:33%"></div></div>
+        </div>
+        <div class="ps-cell">
+          <div class="ps-cell__l">Time remaining</div>
+          <div class="ps-cell__v red" id="timeLeft">1d 14h</div>
+          <div class="ps-cell__sub">closes 26/05/2026 · 18:00</div>
+        </div>
+        <div class="ps-cell">
+          <div class="ps-cell__l">Lowest bid so far</div>
+          <div class="ps-cell__v green">AED 2,840</div>
+          <div class="ps-cell__sub">Gulf Auto Parts · 14% below target</div>
+        </div>
+        <div class="ps-cell">
+          <div class="ps-cell__l">Avg. response time</div>
+          <div class="ps-cell__v">3h 22m</div>
+          <div class="ps-cell__sub">fastest: 38 min · Gulf Auto Parts</div>
+        </div>
+        <div class="ps-cell">
+          <div class="ps-cell__l">Coverage</div>
+          <div class="ps-cell__v green">100%</div>
+          <div class="ps-cell__sub">All 6 parts have at least 1 quote</div>
+        </div>
+      </div>
+
+      <!-- Body 2-col -->
+      <div class="rfq-grid">
+        <!-- LEFT: parts + timeline -->
+        <div>
+          <!-- Parts Requested -->
+          <div class="rfq-card">
+            <div class="rfq-card__head">
+              <h3 class="rfq-card__title">Parts Requested</h3>
+              <span class="rfq-card__sub">6 items · live quotes update as suppliers respond</span>
+              <div class="rfq-card__cta"><a class="od-btn-action outline" style="padding:6px 12px;font-size:12.5px" href="supplier-quotations-compare.html">Compare all →</a></div>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Part</th>
+                    <th>Type</th>
+                    <th class="num">Qty</th>
+                    <th>Condition</th>
+                    <th class="num">Target unit</th>
+                    <th class="num">Responses</th>
+                    <th>Best quote (so far)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Hood Latch</td>
+                    <td><span class="pt-tag body">Body</span></td>
+                    <td class="num">3</td>
+                    <td>Aftermarket</td>
+                    <td class="num">AED 150</td>
+                    <td class="num"><span class="responses-count has">6 of 24</span></td>
+                    <td><div class="best-quote"><span class="best-quote__price">AED 132 / unit <span class="lowest-badge">Lowest</span></span><span class="best-quote__sup">Gulf Auto Parts · 14% below target</span></div></td>
+                  </tr>
+                  <tr>
+                    <td>Battery (electrical)</td>
+                    <td><span class="pt-tag elec">Electrical</span></td>
+                    <td class="num">1</td>
+                    <td>OEM</td>
+                    <td class="num">AED 200</td>
+                    <td class="num"><span class="responses-count has">4 of 24</span></td>
+                    <td><div class="best-quote"><span class="best-quote__price">AED 195 / unit</span><span class="best-quote__sup">Bin Hamoodah · 2% below target</span></div></td>
+                  </tr>
+                  <tr>
+                    <td>Battery (body)</td>
+                    <td><span class="pt-tag body">Body</span></td>
+                    <td class="num">1</td>
+                    <td>Aftermarket</td>
+                    <td class="num">AED 700</td>
+                    <td class="num"><span class="responses-count has">3 of 24</span></td>
+                    <td><div class="best-quote"><span class="best-quote__price">AED 680 / unit</span><span class="best-quote__sup">Emirates Spare</span></div></td>
+                  </tr>
+                  <tr>
+                    <td>Radiator</td>
+                    <td><span class="pt-tag elec">Electrical</span></td>
+                    <td class="num">2</td>
+                    <td>New</td>
+                    <td class="num">AED 325</td>
+                    <td class="num"><span class="responses-count has">5 of 24</span></td>
+                    <td><div class="best-quote"><span class="best-quote__price">AED 305 / unit <span class="lowest-badge">Lowest</span></span><span class="best-quote__sup">Gulf Auto Parts · 6% below target</span></div></td>
+                  </tr>
+                  <tr>
+                    <td>Front Axle</td>
+                    <td><span class="pt-tag mech">Mechanical</span></td>
+                    <td class="num">1</td>
+                    <td>New</td>
+                    <td class="num">AED 700</td>
+                    <td class="num"><span class="responses-count has">2 of 24</span></td>
+                    <td><div class="best-quote"><span class="best-quote__price">AED 720 / unit</span><span class="best-quote__sup">Falcon Parts · 3% above target</span></div></td>
+                  </tr>
+                  <tr>
+                    <td>Headlamp</td>
+                    <td><span class="pt-tag body">Body</span></td>
+                    <td class="num">2</td>
+                    <td>Aftermarket</td>
+                    <td class="num">AED 325</td>
+                    <td class="num"><span class="responses-count has">4 of 24</span></td>
+                    <td><div class="best-quote"><span class="best-quote__price">AED 310 / unit</span><span class="best-quote__sup">Royal Parts Supply</span></div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Latest responses -->
+          <div class="rfq-card">
+            <div class="rfq-card__head">
+              <h3 class="rfq-card__title">Latest Supplier Responses</h3>
+              <span class="rfq-card__sub">8 quotes received · ordered by total value</span>
+              <div class="rfq-card__cta"><a class="rfq-link-btn" href="supplier-quotations-compare.html" style="background:var(--bodyBg);padding:6px 12px;border-radius:4px;font-size:12.5px;font-weight:500;color:var(--forgot-link-color);text-decoration:none">View all 8 →</a></div>
+            </div>
+            <div class="resp-list">
+              <div class="resp-row">
+                <div class="resp-row__logo">GP</div>
+                <div class="resp-row__name">Gulf Auto Parts LLC <span style="font-weight:400;font-size:11px;background:var(--ok-bg);color:var(--ok-fg);padding:1px 6px;border-radius:3px;margin-left:6px">OEM</span></div>
+                <div style="font-size:11px;color:var(--ink-400)">6 of 6 quoted</div>
+                <div class="resp-row__val">AED 2,840 <span class="lowest-badge">Lowest</span></div>
+                <span class="resp-row__time">38 min ago</span>
+              </div>
+              <div class="resp-row">
+                <div class="resp-row__logo" style="background:linear-gradient(135deg,#5b3aa0,#7b4ed0)">BH</div>
+                <div class="resp-row__name">Bin Hamoodah Trading <span style="font-weight:400;font-size:11px;background:var(--ok-bg);color:var(--ok-fg);padding:1px 6px;border-radius:3px;margin-left:6px">OEM</span></div>
+                <div style="font-size:11px;color:var(--ink-400)">5 of 6 quoted</div>
+                <div class="resp-row__val">AED 2,960</div>
+                <span class="resp-row__time">1h ago</span>
+              </div>
+              <div class="resp-row">
+                <div class="resp-row__logo" style="background:linear-gradient(135deg,#0a8a4f,#15a564)">ES</div>
+                <div class="resp-row__name">Emirates Spare Co.</div>
+                <div style="font-size:11px;color:var(--ink-400)">4 of 6 quoted</div>
+                <div class="resp-row__val">AED 3,180</div>
+                <span class="resp-row__time">2h ago</span>
+              </div>
+              <div class="resp-row">
+                <div class="resp-row__logo" style="background:linear-gradient(135deg,#b87410,#d68a26)">FP</div>
+                <div class="resp-row__name">Falcon Parts Trading <span style="font-weight:400;font-size:11px;background:var(--ok-bg);color:var(--ok-fg);padding:1px 6px;border-radius:3px;margin-left:6px">OEM</span></div>
+                <div style="font-size:11px;color:var(--ink-400)">6 of 6 quoted</div>
+                <div class="resp-row__val">AED 3,240</div>
+                <span class="resp-row__time">3h ago</span>
+              </div>
+              <div class="resp-row">
+                <div class="resp-row__logo" style="background:linear-gradient(135deg,#1d4f8c,#2a6fb7)">RP</div>
+                <div class="resp-row__name">Royal Parts Supply</div>
+                <div style="font-size:11px;color:var(--ink-400)">4 of 6 quoted</div>
+                <div class="resp-row__val">AED 3,310</div>
+                <span class="resp-row__time">4h ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: broadcast, settings, timeline -->
+        <div>
+          <!-- Broadcast summary -->
+          <div class="rfq-card">
+            <div class="rfq-card__head">
+              <h3 class="rfq-card__title">Broadcast</h3>
+            </div>
+            <div class="bc-hero">
+              <div class="bc-hero__big">24</div>
+              <div class="bc-hero__lbl">qualified suppliers received this RFQ</div>
+            </div>
+            <div class="bc-grid">
+              <div class="bc-tile"><div class="bc-tile__l">OEM-Authorised</div><div class="bc-tile__v green">11</div></div>
+              <div class="bc-tile"><div class="bc-tile__l">Aftermarket</div><div class="bc-tile__v blue">13</div></div>
+              <div class="bc-tile"><div class="bc-tile__l">Same Emirate</div><div class="bc-tile__v dark">16</div></div>
+              <div class="bc-tile"><div class="bc-tile__l">Out of Emirate</div><div class="bc-tile__v dark">8</div></div>
+            </div>
+          </div>
+
+          <!-- RFQ Settings (read-only) -->
+          <div class="rfq-card">
+            <div class="rfq-card__head">
+              <h3 class="rfq-card__title">RFQ Settings</h3>
+            </div>
+            <div class="row"><span class="row__l">Sent on</span><span class="row__v">24/05/2026 · 09:15</span></div>
+            <div class="row"><span class="row__l">Response deadline</span><span class="row__v red">26/05/2026 · 18:00</span></div>
+            <div class="row"><span class="row__l">Required delivery</span><span class="row__v">29/05/2026</span></div>
+            <div class="row"><span class="row__l">Bidding mode</span><span class="row__v">Open quotes</span></div>
+            <div class="row"><span class="row__l">Sent by</span><span class="row__v">Mariam Al-Maktoum</span></div>
+            <div style="padding-top:12px;margin-top:6px;border-top:1px dashed var(--ink-100);font-size:12.5px;color:var(--ink-500);line-height:1.5">
+              <div style="font-weight:500;color:var(--ink-700);margin-bottom:4px">Special instructions</div>
+              OEM only for safety items (Airbags, Battery-elec). Ship to Bay 04 — contact workshop lead Mohamed Iqbal on arrival.
+            </div>
+          </div>
+
+          <!-- Activity timeline -->
+          <div class="rfq-card">
+            <div class="rfq-card__head">
+              <h3 class="rfq-card__title">Activity</h3>
+            </div>
+            <div class="tl">
+              <div class="tl__item is-current">
+                <div class="tl__dot"></div>
+                <div class="tl__title">Latest quote received</div>
+                <div class="tl__meta">Gulf Auto Parts · AED 132/unit on Hood Latch · 38 min ago</div>
+              </div>
+              <div class="tl__item is-done">
+                <div class="tl__dot"></div>
+                <div class="tl__title">First quote received</div>
+                <div class="tl__meta">Gulf Auto Parts · 24/05 · 09:53 (38 min after broadcast)</div>
+              </div>
+              <div class="tl__item is-done">
+                <div class="tl__dot"></div>
+                <div class="tl__title">RFQ broadcast</div>
+                <div class="tl__meta">24 suppliers notified · 24/05 · 09:15</div>
+              </div>
+              <div class="tl__item is-done">
+                <div class="tl__dot"></div>
+                <div class="tl__title">RFQ created from order</div>
+                <div class="tl__meta">From <a href="claim-order-detail.html?order=ORD-4500" style="color:var(--forgot-link-color);text-decoration:none">ORD-4500</a> · 24/05 · 09:12</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  const p = new URLSearchParams(location.search);
+  const rfqId   = p.get('rfq')    || 'EFHG1234U';
+  const orderId = p.get('order')  || 'ORD-4500';
+  const claimId = p.get('claim')  || 'JKLMN56780';
+  const status  = (p.get('status') || 'open').toLowerCase();
+
+  document.getElementById('t-rfqid').textContent = rfqId;
+  document.getElementById('t-claim').textContent = claimId;
+  document.getElementById('orderLink').textContent = orderId;
+  document.getElementById('orderLink').href = `claim-order-detail.html?order=${encodeURIComponent(orderId)}&rfq=${encodeURIComponent(rfqId)}&claim=${encodeURIComponent(claimId)}`;
+
+  // Topbar title with status pill
+  const statusMap = {
+    'open':      ['is-open',      '⟳ Open · Receiving quotes'],
+    'closed':    ['is-closed',    '✓ Closed'],
+    'awaiting':  ['is-awaiting',  '⏳ Awaiting first response'],
+    'cancelled': ['is-cancelled', '✕ Cancelled']
+  };
+  const [statusCls, statusTxt] = statusMap[status] || statusMap.open;
+
+  function injectTitle() {
+    const t = document.querySelector('.topbar__title');
+    if (!t) { return setTimeout(injectTitle, 30); }
+    t.style.cssText = 'display:flex;align-items:center;gap:12px;flex-shrink:0;white-space:nowrap;margin:0;';
+    if (t.parentElement) t.parentElement.style.flexShrink = '0';
+    t.innerHTML = `<span>RFQ # <strong style="font-weight:700">${rfqId}</strong></span><span class="pill-status ${statusCls}">${statusTxt}</span>`;
+  }
+  injectTitle();
+</script>
+</body>
+</html>

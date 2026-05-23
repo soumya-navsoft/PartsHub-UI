@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Job Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<link rel="stylesheet" href="../shared/job-pages.css" />
+</head>
+<body data-portal="garage" data-page="jobs" data-page-title="">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- Action bar -->
+      <div class="j-actionbar">
+        <a class="j-back" href="jobs.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Job Cards
+        </a>
+        <div class="j-actionbar__sp"></div>
+        <button class="j-icbtn" title="Previous job">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <button class="j-icbtn" title="Next job">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+
+      <!-- 4 info tiles -->
+      <div class="j-info-grid">
+        <div class="j-info-tile">
+          <div class="j-info-tile__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg>
+          </div>
+          <div><div class="j-info-tile__l">Claim ID</div><div class="j-info-tile__v" id="t-claim">EFGHI1234U</div></div>
+        </div>
+        <div class="j-info-tile">
+          <div class="j-info-tile__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 7v5c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V7l-8-5z"/></svg>
+          </div>
+          <div><div class="j-info-tile__l">Insurance Company</div><div class="j-info-tile__v">The Oriental Insurance Ltd.</div></div>
+        </div>
+        <div class="j-info-tile">
+          <div class="j-info-tile__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l2-6 4-3h6l4 3 2 6 0 3-4 0 0-2 -10 0 0 2 -4 0z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>
+          </div>
+          <div><div class="j-info-tile__l">Vehicle</div><div class="j-info-tile__v">BMW 3 Series Black 2024</div></div>
+        </div>
+        <div class="j-info-tile">
+          <div class="j-info-tile__ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div><div class="j-info-tile__l">Target Completion</div><div class="j-info-tile__v">28/01/2025</div></div>
+        </div>
+      </div>
+
+      <!-- Body 2-col -->
+      <div class="j-grid">
+        <!-- LEFT -->
+        <div>
+          <!-- Parts Received Checklist -->
+          <div class="j-card">
+            <div class="j-card__hd">
+              <h3 class="j-card__t">Parts Received Checklist</h3>
+              <div style="margin-left:auto;font-size:12.5px;color:var(--ink-400)"><strong style="color:var(--ok-fg);font-weight:500">4 of 8</strong> complete</div>
+            </div>
+            <table class="j-tbl">
+              <thead>
+                <tr>
+                  <th style="width:30px"></th>
+                  <th>Part / Task</th>
+                  <th style="width:110px">Type</th>
+                  <th style="width:110px">Status</th>
+                  <th style="width:50px">Tech</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="j-cbx" checked></td>
+                  <td>Hood Latch — Replace (Aftermarket)</td>
+                  <td><span class="j-type-tag">Body</span></td>
+                  <td><span class="j-stat installed">Installed</span></td>
+                  <td><span class="tech-pill" style="background:#fde3e3;color:var(--brand-red)">RK</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="j-cbx" checked></td>
+                  <td>Battery — Repair / Re-seat (OEM)</td>
+                  <td><span class="j-type-tag">Electrical</span></td>
+                  <td><span class="j-stat done">Done</span></td>
+                  <td><span class="tech-pill" style="background:#e3eefc;color:var(--forgot-link-color)">SA</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="j-cbx" checked></td>
+                  <td>Radiator — Replace (Aftermarket)</td>
+                  <td><span class="j-type-tag">Electrical</span></td>
+                  <td><span class="j-stat installed">Installed</span></td>
+                  <td><span class="tech-pill" style="background:#fde3e3;color:var(--brand-red)">RK</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="j-cbx" checked></td>
+                  <td>Headlamp — Repair (New)</td>
+                  <td><span class="j-type-tag">Body</span></td>
+                  <td><span class="j-stat done">Done</span></td>
+                  <td><span class="tech-pill" style="background:#fde3e3;color:var(--brand-red)">RK</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="j-cbx"></td>
+                  <td>Front Axle — Repair (New)</td>
+                  <td><span class="j-type-tag">Mechanical</span></td>
+                  <td><span class="j-stat progress">In Progress</span></td>
+                  <td><span class="tech-pill" style="background:#f3eafe;color:#6b3aa0">MI</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="j-cbx"></td>
+                  <td>Front bumper repaint &amp; polish</td>
+                  <td><span class="j-type-tag">Labour</span></td>
+                  <td><span class="j-stat progress">In Progress</span></td>
+                  <td><span class="tech-pill" style="background:#e3eefc;color:var(--forgot-link-color)">SA</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="j-cbx"></td>
+                  <td>Wheel alignment &amp; balancing</td>
+                  <td><span class="j-type-tag">Labour</span></td>
+                  <td><span class="j-stat queued">Queued</span></td>
+                  <td><span style="color:var(--ink-400)">—</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="j-cbx"></td>
+                  <td>Pre-handover detailing &amp; QC</td>
+                  <td><span class="j-type-tag">Labour</span></td>
+                  <td><span class="j-stat queued">Queued</span></td>
+                  <td><span style="color:var(--ink-400)">—</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RIGHT rail -->
+        <div>
+          <!-- Vehicle & Customer -->
+          <div class="j-card">
+            <h3 class="j-card__t" style="margin-bottom:14px">Vehicle &amp; Customer</h3>
+            <div class="j-rail-row"><span class="j-rail-row__l">Plate Number</span><span class="j-rail-row__v">AD 65217</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">VIN</span><span class="j-rail-row__v"><code>WBA3B5G59ENS12345</code></span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Odometer (in)</span><span class="j-rail-row__v">38,420 km</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Fuel Level (in)</span><span class="j-rail-row__v">3/4</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Owner</span><span class="j-rail-row__v">Ahmed Al-Mansouri</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Contact</span><span class="j-rail-row__v">+971 555-345-678</span></div>
+            <div class="j-rail-row"><span class="j-rail-row__l">Inspection Photos</span><span class="j-rail-row__v"><a href="#">View 12 files</a></span></div>
+          </div>
+
+          <!-- Activity Timeline -->
+          <div class="j-card">
+            <h3 class="j-card__t" style="margin-bottom:14px">Activity Timeline</h3>
+            <div class="j-tl">
+              <div class="j-tl__item is-progress">
+                <div class="j-tl__dot"></div>
+                <div class="j-tl__title">QC moved <strong>Radiator</strong> to <strong>Installed</strong></div>
+                <div class="j-tl__meta">Today, 11:42 AM · Rajesh K.</div>
+              </div>
+              <div class="j-tl__item is-done">
+                <div class="j-tl__dot"></div>
+                <div class="j-tl__title">Parts received from <strong>Auto Spares LLC</strong> (3 items)</div>
+                <div class="j-tl__meta">Today, 09:18 AM</div>
+              </div>
+              <div class="j-tl__item is-warn">
+                <div class="j-tl__dot"></div>
+                <div class="j-tl__title">Disassembly completed · 4 parts logged for replacement</div>
+                <div class="j-tl__meta">Yesterday, 04:21 PM</div>
+              </div>
+              <div class="j-tl__item is-progress">
+                <div class="j-tl__dot"></div>
+                <div class="j-tl__title">Vehicle received from customer · odometer 38,420 km</div>
+                <div class="j-tl__meta">19/01/2025, 09:42 AM</div>
+              </div>
+              <div class="j-tl__item is-done">
+                <div class="j-tl__dot"></div>
+                <div class="j-tl__title">Job Card created from approved quotation</div>
+                <div class="j-tl__meta">18/01/2025, 02:11 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky bottom action bar -->
+      <div class="j-bottom">
+        <div class="j-bottom__sp"></div>
+        <button class="j-btn blue">Update Stage</button>
+        <a class="j-btn primary" href="job-stage-detail.html?job=JC-20250118-0042&stage=4">Advance to Quality Check →</a>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  const p = new URLSearchParams(location.search);
+  const jobId  = p.get('job')   || 'JC-20250118-0042';
+  const claim  = p.get('claim') || 'EFGHI1234U';
+  document.getElementById('t-claim').textContent = claim;
+
+  function injectTitle() {
+    const t = document.querySelector('.topbar__title');
+    if (!t) { return setTimeout(injectTitle, 30); }
+    t.style.cssText = 'display:flex;align-items:center;gap:12px;flex-shrink:0;white-space:nowrap;margin:0;';
+    if (t.parentElement) t.parentElement.style.flexShrink = '0';
+    t.innerHTML = `<span>Job Card # <strong style="font-weight:700">${jobId}</strong></span><span class="pill-status is-progress">⟳ In Progress</span>`;
+  }
+  injectTitle();
+</script>
+</body>
+</html>
