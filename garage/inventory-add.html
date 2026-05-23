@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Add Parts to Inventory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<link rel="stylesheet" href="../shared/inventory-add.css" />
+</head>
+<body data-portal="garage" data-page="inventory" data-page-title="Add Parts to Inventory">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div id="aivHost"></div>
+    </div>
+  </main>
+</div>
+<script>
+  window.__addInvConfig = { portal: 'garage', backHref: 'inventory.html' };
+</script>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script src="../shared/inventory-add.js"></script>
+</body>
+</html>

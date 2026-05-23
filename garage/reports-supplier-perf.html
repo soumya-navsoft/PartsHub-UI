@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Reports — Supplier Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="reports" data-page-title="Reports — Supplier Performance">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <a class="tab" href="reports.html" style="text-decoration:none">Claim Lifecycle</a>
+            <a class="tab" href="reports-insurance-perf.html" style="text-decoration:none">Insurance Performance</a>
+            <div class="tab is-active">Supplier Performance</div>
+            <a class="tab" href="reports-revenue.html" style="text-decoration:none">Revenue Summary</a>
+            <a class="tab" href="reports-auction-part.html" style="text-decoration:none">Auction Participation</a>
+            <a class="tab" href="reports-hotdeal-part.html" style="text-decoration:none">Hot Deal Participation</a>
+          </div>
+        </div>
+      </div>
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <table class="data">
+          <thead><tr><th>Supplier</th><th>RFQs sent</th><th>Quotes received</th><th>Avg response time</th><th>Avg delivery time</th><th>Replacements</th><th>Returns</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Gulf Auto Parts LLC</strong></td><td>184</td><td><strong>180</strong> (98%)</td><td>2.1 hours</td><td>3.2 days</td><td>2</td><td>1</td></tr>
+            <tr><td><strong>Emirates Spare Co.</strong></td><td>98</td><td><strong>94</strong> (96%)</td><td>4.8 hours</td><td>4.6 days</td><td>1</td><td>0</td></tr>
+            <tr><td><strong>Bin Hamoodah Trading</strong></td><td>142</td><td><strong>132</strong> (93%)</td><td>6.2 hours</td><td>3.8 days</td><td>4</td><td>2</td></tr>
+            <tr><td><strong>Royal Parts Supply</strong></td><td>84</td><td><strong>76</strong> (90%)</td><td>8.4 hours</td><td>5.1 days</td><td>3</td><td>1</td></tr>
+            <tr><td><strong>Speedway Components</strong></td><td>68</td><td><strong>58</strong> (85%)</td><td>12.1 hours</td><td>6.4 days</td><td>5</td><td>3</td></tr>
+            <tr><td><strong>Desert Spares Co.</strong></td><td>42</td><td><strong>38</strong> (90%)</td><td>9.8 hours</td><td>5.8 days</td><td>2</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

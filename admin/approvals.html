@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Approvals Queue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="admin" data-page="approvals" data-page-title="Approvals Queue">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon" style="background:var(--warn-bg);color:var(--warn-fg)">⏱</div><div><div class="kpi__label">Awaiting review</div><div class="kpi__value">42</div><div class="kpi__delta">▲ 8 today</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">Approved this week</div><div class="kpi__value">186</div></div></div>
+        <div class="kpi"><div class="kpi__icon" style="background:var(--danger-bg);color:var(--danger-fg)">×</div><div><div class="kpi__label">Rejected this week</div><div class="kpi__value">14</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">⏱</div><div><div class="kpi__label">Avg approval time</div><div class="kpi__value">3.2 hrs</div></div></div>
+      </div>
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All <span class="badge" style="margin-left:6px">42</span></div>
+          <div class="tab">Garage <span class="badge" style="margin-left:6px">18</span></div>
+          <div class="tab">Supplier <span class="badge" style="margin-left:6px">14</span></div>
+          <div class="tab">Insurance <span class="badge" style="margin-left:6px">4</span></div>
+          <div class="tab">Profile changes <span class="badge" style="margin-left:6px">6</span></div>
+        </div>
+        <div class="page-card__toolbar" style="border-top:1px solid var(--ink-100)">
+          <div class="search"><input placeholder="Search applicant..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Bulk approve</button>
+            <button class="btn">Bulk reject</button>
+          </div>
+        </div>
+        <table class="data" id="t">
+          <thead><tr><th class="check"><input type="checkbox" class="cbx"/></th><th>Application ID</th><th>Applicant</th><th>Type</th><th>Trade License</th><th>Authority</th><th>Submitted</th><th>SLA</th><th>Action</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+<script>
+const APPS = [
+  ['APP-4812','Al Wasl Auto Garage','Garage','CN-12349P','Dubai DED','22h ago','High',['Garage','badge--info']],
+  ['APP-4811','Falcon Parts Trading','Supplier','CN-89201T','Dubai DED','1d ago','Med',['Supplier','badge']],
+  ['APP-4810','Sharjah Mechanic Hub','Garage','CN-71029K','Sharjah SEDD','2d ago','Med',['Garage','badge--info']],
+  ['APP-4809','Emirates General Insurance','Insurance','EI-1024-Q','UAE Insurance Authority','3d ago','Critical',['Insurer','badge--danger']],
+  ['APP-4808','Desert Spares Co.','Supplier','CN-30210R','Dubai DED','3d ago','Med',['Supplier','badge']],
+  ['APP-4807','Royal Swiss — Al Quoz Br','Branch','CN-12349P-B','Dubai DED','5d ago','Low',['Branch','badge--warn']],
+  ['APP-4806','Sara Al-Hashimi (Profile)','Profile change','Address update','—','7d ago','Low',['Profile','']],
+];
+document.querySelector('#t tbody').innerHTML = APPS.map(a => `
+  <tr>
+    <td><input type="checkbox" class="cbx"/></td>
+    <td><a class="id-link" href="approval-detail.html">${a[0]}</a></td>
+    <td><span class="avatar-sm"></span><strong>${a[1]}</strong></td>
+    <td><span class="badge ${a[7][1]}">${a[7][0]}</span></td>
+    <td class="muted">${a[3]}</td>
+    <td>${a[4]}</td>
+    <td>${a[5]}</td>
+    <td>${a[6]==='Critical' ? '<span class="badge badge--danger">Critical</span>' : a[6]==='High' ? '<span class="badge badge--warn">High</span>' : '<span class="badge">'+a[6]+'</span>'}</td>
+    <td><button class="btn btn--sm">Review</button> <button class="btn btn--primary btn--sm">Approve</button></td>
+  </tr>
+`).join('');
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

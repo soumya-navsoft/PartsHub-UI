@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — Claim Finalization Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  /* ============ Page header ============ */
+  .fd-head {
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding: 16px 20px; background:#fff;
+    border: 1px solid var(--auth-box-border); border-radius:8px;
+    margin-bottom: 16px;
+  }
+  .fd-head__title { font-size: 18px; font-weight: 500; color: var(--bodyText); font-family:'Roboto', sans-serif; margin:0; }
+  .fd-head__title .muted { color: var(--ink-400); font-weight:400; margin-left:8px; }
+  .fd-head__pill {
+    display:inline-flex; align-items:center; gap:6px;
+    background: #fff4dc; color:#8a5a00;
+    padding: 5px 12px; border-radius: 4px; font-size: 12.5px; font-weight: 500;
+  }
+  .fd-head__pill::before { content:""; width:6px; height:6px; border-radius:50%; background: currentColor; }
+  .fd-head__pill.is-ready { background: var(--ok-bg); color: var(--ok-fg); }
+  .fd-head__spacer { flex:1; }
+  .fd-head__back, .fd-head__nav {
+    display:inline-flex; align-items:center; gap:6px;
+    border: 1px solid var(--form-field-border); background:#fff;
+    color: var(--bodyText); border-radius: 4px;
+    padding: 7px 14px; font-size: 13px; font-family: inherit; cursor:pointer; text-decoration:none;
+  }
+  .fd-head__back:hover, .fd-head__nav:hover { background: var(--bodyBg); }
+  .fd-head__nav { padding: 7px 10px; }
+
+  /* ============ Stepper ============ */
+  .fd-stepper {
+    display:flex; align-items:center; gap:0;
+    padding: 18px 22px; background:#fff;
+    border: 1px solid var(--auth-box-border); border-radius:8px;
+    margin-bottom: 16px; overflow-x:auto;
+  }
+  .fd-step { display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+  .fd-step__bullet {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--ink-200); background:#fff;
+    display:grid; place-items:center; color: var(--ink-400);
+    font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums;
+  }
+  .fd-step.is-done .fd-step__bullet { border-color: var(--ok-fg); color: var(--ok-fg); background: #fff; }
+  .fd-step.is-active .fd-step__bullet { border-color: var(--forgot-link-color); color:#fff; background: var(--forgot-link-color); }
+  .fd-step__label { font-size: 13.5px; color: var(--ink-500); }
+  .fd-step.is-done .fd-step__label { color: var(--ok-fg); }
+  .fd-step.is-active .fd-step__label { color: var(--forgot-link-color); font-weight: 500; }
+  .fd-step__sep {
+    flex: 1 1 30px; height: 1px;
+    border-top: 1.5px dotted var(--ink-200);
+    margin: 0 14px; min-width: 24px;
+  }
+  .fd-step.is-done + .fd-step__sep,
+  .fd-step__sep.is-done { border-top-color: var(--ok-fg); }
+
+  /* ============ Layout ============ */
+  .fd-grid {
+    display:grid; grid-template-columns: 1fr 360px;
+    gap: 16px; align-items: start;
+  }
+  @media (max-width: 1280px) { .fd-grid { grid-template-columns: 1fr; } }
+
+  .fd-cards { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+  .fd-card {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius:8px;
+    padding: 16px 18px;
+  }
+  .fd-card__head {
+    display:flex; align-items:flex-start; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .fd-card__title {
+    font-size: 14px; font-weight: 500; color: var(--bodyText);
+    font-family: 'Roboto', sans-serif; margin:0; line-height:1.35;
+  }
+  .fd-card__title .req { color: var(--brand-red); }
+  .fd-card__meta { margin-left:auto; font-size:12.5px; color: var(--ink-400); white-space:nowrap; }
+
+  /* photo grid */
+  .ph-grid {
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  }
+  .ph-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .ph-tile {
+    aspect-ratio: 1; border-radius:6px; overflow:hidden;
+    background: var(--ink-100); position:relative;
+    border: 1px solid var(--auth-box-border);
+  }
+  .ph-tile img { width:100%; height:100%; object-fit:cover; display:block; }
+  .ph-tile__more {
+    position:absolute; inset:0; background: rgba(0,0,0,0.55);
+    display:grid; place-items:center; color:#fff; font-weight:500; font-size: 16px;
+  }
+  .ph-note {
+    margin-top: 12px;
+    border: 1px solid var(--form-field-border); border-radius: 6px;
+    padding: 10px 12px; font-size: 13px; color: var(--bodyText); line-height: 1.5;
+    background:#fff;
+  }
+  .ph-tags { margin-top: 10px; font-size: 12px; color: var(--ink-400); }
+  .ph-tags strong { color: var(--ink-500); font-weight: 500; }
+
+  /* video card */
+  .video-row { display:flex; gap:12px; align-items:flex-start; }
+  .video-thumb {
+    width: 150px; height: 96px; border-radius: 6px; flex: none;
+    background: #1f1f1f; display:grid; place-items:center; color:#fff;
+    border: 1px solid var(--auth-box-border); cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .video-thumb::after {
+    content:""; position:absolute; inset:0; background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent 60%);
+  }
+  .video-thumb__play {
+    width:38px; height:38px; border-radius:50%; background: rgba(255,255,255,0.92);
+    display:grid; place-items:center; position:relative; z-index:1;
+  }
+  .video-thumb__play::after {
+    content:""; width:0; height:0;
+    border-left: 12px solid var(--bodyText);
+    border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+    margin-left: 4px;
+  }
+  .video-meta { flex: 1; min-width:0; }
+  .video-meta__file { font-size: 13px; font-weight: 500; color: var(--bodyText); }
+  .video-meta__sub { font-size: 12px; color: var(--ink-400); margin-top: 2px; }
+  .video-checks { margin-top: 8px; display: grid; gap: 4px; }
+  .video-checks li {
+    list-style:none; color: var(--ok-fg); font-size: 12.5px; display:flex; gap:6px;
+  }
+  .video-checks li::before { content: "✓"; font-weight: 700; }
+
+  /* Final Cost & Job Summary */
+  .fd-summary {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius:8px;
+    padding: 18px 20px; margin-top: 16px;
+  }
+  .fd-summary__title {
+    color: var(--brand-red); font-weight: 500; font-size: 14px;
+    font-family:'Roboto', sans-serif; margin: 0 0 14px;
+  }
+  .fd-summary-grid {
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  }
+  .fd-tile {
+    background: #f5f9fe; border:1px solid #e3eefc; border-radius:6px;
+    padding: 12px 14px;
+  }
+  .fd-tile__label { font-size: 12px; color: var(--ink-500); margin-bottom: 6px; font-weight: 400; }
+  .fd-tile__value { font-size: 18px; font-weight: 500; color: var(--forgot-link-color); font-family:'Roboto', sans-serif; }
+  .fd-tile.is-final { background: var(--ok-bg); border-color: #c8e8d5; }
+  .fd-tile.is-final .fd-tile__value { color: var(--ok-fg); }
+
+  /* ============ Right rail ============ */
+  .fd-rail { display:grid; gap: 16px; }
+  .fd-panel {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .fd-panel__title {
+    color: var(--brand-red); font-weight: 500; font-size: 14px;
+    font-family:'Roboto', sans-serif; margin: 0 0 14px;
+  }
+  .check-row {
+    display:flex; gap: 10px; align-items: flex-start;
+    padding: 10px 0; border-bottom: 1px dashed var(--ink-100);
+  }
+  .check-row:last-child { border-bottom: 0; }
+  .check-row__box {
+    width: 18px; height: 18px; flex: none; border-radius: 4px;
+    background: var(--ok-fg); display:grid; place-items:center; color:#fff;
+    font-size: 11px; font-weight: 700;
+  }
+  .check-row__box::after { content:"✓"; }
+  .check-row__box.is-empty {
+    background: #fff; border: 1.5px solid var(--ink-300);
+  }
+  .check-row__box.is-empty::after { content: none; }
+  .check-row__main { min-width: 0; }
+  .check-row__title { font-size: 13.5px; font-weight: 500; color: var(--bodyText); }
+  .check-row__sub { font-size: 12px; color: var(--ink-500); margin-top: 2px; }
+
+  /* signature */
+  .esig {
+    border: 1px dashed var(--ink-200); border-radius: 6px;
+    padding: 16px; text-align: center; margin-top: 4px;
+  }
+  .esig__name {
+    font-family: 'Brush Script MT', cursive; font-style: italic;
+    color: var(--brand-red); font-size: 26px; line-height: 1;
+  }
+  .esig__sub { font-size: 11.5px; color: var(--ink-400); margin-top: 8px; }
+
+  /* handover details */
+  .hand-row {
+    display:flex; justify-content: space-between; gap: 10px;
+    padding: 8px 0; border-bottom: 1px dashed var(--ink-100);
+    font-size: 13px;
+  }
+  .hand-row:last-child { border-bottom: 0; }
+  .hand-row__label { color: var(--ink-500); }
+  .hand-row__value { color: var(--bodyText); font-weight: 500; text-align:right; }
+  .hand-row__value.ok { color: var(--ok-fg); }
+
+  /* Finalized parts table */
+  .fd-parts {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius:8px;
+    padding: 18px 20px; margin-top: 16px;
+  }
+  .fd-parts__head { display:flex; align-items:center; margin-bottom: 12px; gap: 10px; }
+  .fd-parts__title {
+    color: var(--brand-red); font-weight: 500; font-size: 14px; margin:0;
+    font-family:'Roboto', sans-serif;
+  }
+  .fd-parts__sub { color: var(--ink-400); font-size: 12.5px; }
+  table.parts { width:100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+  table.parts thead th {
+    text-align:left; font-weight:500; color: var(--ink-500); font-size: 12.5px;
+    padding: 10px 12px; background: #f4f8fd; border-bottom: 1px solid var(--auth-box-border);
+    white-space: nowrap;
+  }
+  table.parts tbody td { padding: 12px; border-bottom: 1px solid var(--grid-field-border); color: var(--bodyText); }
+  table.parts tbody tr:nth-child(even) td { background: #fafbfd; }
+  table.parts tfoot td { padding: 10px 12px; font-weight: 500; }
+  .badge--info { background: #e3eefc; color: var(--forgot-link-color); padding: 3px 8px; border-radius: 4px; font-size: 11.5px; }
+  .badge--ok { background: var(--ok-bg); color: var(--ok-fg); padding: 3px 8px; border-radius: 4px; font-size: 11.5px; }
+
+  /* Sticky action bar */
+  .fd-actionbar {
+    position: sticky; bottom: 0;
+    margin: 16px -24px -24px;
+    padding: 14px 24px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--auth-box-border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .fd-actionbar__back {
+    background: var(--ink-900); color:#fff; border:0;
+    padding: 10px 18px; border-radius: 4px; font-size: 13px; font-weight: 500;
+    cursor:pointer; font-family: inherit;
+  }
+  .fd-actionbar__spacer { flex: 1; }
+  .fd-actionbar .btn-line {
+    border: 1px solid var(--form-field-border); background:#fff; color: var(--bodyText);
+    padding: 10px 18px; border-radius: 4px; font-size: 13px; cursor:pointer;
+    font-family: inherit;
+  }
+  .fd-actionbar .btn-line:hover { background: var(--bodyBg); }
+  .fd-actionbar .btn-primary {
+    background: var(--brand-red); color:#fff; border:0;
+    padding: 10px 22px; border-radius: 4px; font-size: 13px; font-weight: 500;
+    cursor:pointer; font-family: inherit;
+  }
+  .fd-actionbar .btn-primary:hover { background: var(--brand-red-dark); }
+  .fd-actionbar .btn-dispute {
+    background:#fff; color: var(--brand-red); border:1px solid var(--brand-red);
+    padding: 10px 18px; border-radius: 4px; font-size: 13px; cursor:pointer; font-family: inherit;
+  }
+  .fd-actionbar .btn-dispute:hover { background: var(--brand-red-ghost); }
+
+  /* placeholder thumbs that match the reference's color squares */
+  .tile-a { background: linear-gradient(135deg, #2a2b2a 0%, #1c1d1c 100%); }
+  .tile-b { background: linear-gradient(135deg, #2c3247 0%, #1f253a 100%); }
+  .tile-c { background: linear-gradient(135deg, #1f3528 0%, #16241c 100%); }
+  .tile-d { background: linear-gradient(135deg, #3a2329 0%, #2a1a1e 100%); }
+  .tile-e { background: linear-gradient(135deg, #4a2b2f 0%, #3a2225 100%); }
+  .tile-f { background: linear-gradient(135deg, #29303a 0%, #1f262e 100%); }
+
+</style>
+</head>
+<body data-portal="insurance" data-page="claims" data-subpage="finalized-claims" data-page-title="Claim Finalization">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- Page Header -->
+      <div class="fd-head">
+        <h2 class="fd-head__title">Claim <strong>CLM00318</strong> · Job Card <span class="muted">JC-20250118-0042</span> · Completion Evidence</h2>
+        <span class="fd-head__pill is-ready">Ready to Finalize</span>
+        <a class="fd-head__back" href="finalized-claims.html">← Back to Claims</a>
+        <div class="fd-head__spacer"></div>
+        <button class="fd-head__nav" title="Previous claim">←</button>
+        <button class="fd-head__nav" title="Next claim">→</button>
+      </div>
+
+      <!-- Stepper -->
+      <div class="fd-stepper">
+        <div class="fd-step is-done"><div class="fd-step__bullet">✓</div><div class="fd-step__label">Vehicle Received</div></div>
+        <div class="fd-step__sep is-done"></div>
+        <div class="fd-step is-done"><div class="fd-step__bullet">✓</div><div class="fd-step__label">Disassembly</div></div>
+        <div class="fd-step__sep is-done"></div>
+        <div class="fd-step is-done"><div class="fd-step__bullet">✓</div><div class="fd-step__label">Repair &amp; Install</div></div>
+        <div class="fd-step__sep is-done"></div>
+        <div class="fd-step is-done"><div class="fd-step__bullet">✓</div><div class="fd-step__label">Quality Check</div></div>
+        <div class="fd-step__sep is-done"></div>
+        <div class="fd-step is-active"><div class="fd-step__bullet">05</div><div class="fd-step__label">Completion Evidence</div></div>
+      </div>
+
+      <!-- 2-column grid: evidence + right rail -->
+      <div class="fd-grid">
+        <div>
+          <!-- Top row: Exterior + Interior -->
+          <div class="fd-cards">
+            <div class="fd-card">
+              <div class="fd-card__head">
+                <h3 class="fd-card__title">Repaired Vehicle — Exterior<span class="req">*</span></h3>
+                <div class="fd-card__meta">8 / min 6</div>
+              </div>
+              <div class="ph-grid">
+                <div class="ph-tile tile-a"></div>
+                <div class="ph-tile tile-b"></div>
+                <div class="ph-tile tile-c"></div>
+                <div class="ph-tile tile-d"></div>
+                <div class="ph-tile tile-e"></div>
+                <div class="ph-tile tile-f"></div>
+                <div class="ph-tile tile-a"></div>
+                <div class="ph-tile tile-b"><div class="ph-tile__more">+1</div></div>
+              </div>
+              <div class="ph-note">All exterior panels repainted; front bumper alignment verified within 3 mm tolerance. Headlamp beam check passed.</div>
+              <div class="ph-tags"><strong>Angles:</strong> Front · Front-Left · Front-Right · Rear · Rear-Left · Rear-Right · Left-Side · Right-Side</div>
+            </div>
+
+            <div class="fd-card">
+              <div class="fd-card__head">
+                <h3 class="fd-card__title">Repaired Vehicle — Interior<span class="req">*</span></h3>
+                <div class="fd-card__meta">4 / min 3</div>
+              </div>
+              <div class="ph-grid">
+                <div class="ph-tile tile-b"></div>
+                <div class="ph-tile tile-c"></div>
+                <div class="ph-tile tile-d"></div>
+                <div class="ph-tile tile-f"></div>
+              </div>
+              <div class="ph-note">Dashboard cleaned and verified; airbag warning cleared; seat foam un-damaged.</div>
+              <div class="ph-tags"><strong>Areas:</strong> Dashboard · Seats · Airbags · Chassis</div>
+            </div>
+          </div>
+
+          <!-- Bottom row: Installed Parts + Test Drive -->
+          <div class="fd-cards" style="margin-top: 16px;">
+            <div class="fd-card">
+              <div class="fd-card__head">
+                <h3 class="fd-card__title">Installed Parts — Proof of Installation<span class="req">*</span></h3>
+                <div class="fd-card__meta">6 photos · 6 part QRs scanned</div>
+              </div>
+              <div class="ph-grid cols-3">
+                <div class="ph-tile tile-a"></div>
+                <div class="ph-tile tile-b"></div>
+                <div class="ph-tile tile-f"></div>
+                <div class="ph-tile tile-d"></div>
+                <div class="ph-tile tile-c"></div>
+                <div class="ph-tile tile-b"></div>
+              </div>
+              <div class="ph-tags"><strong>Parts:</strong> Shock absorbers (4) · Battery · Headlamp LH · Radiator · Transmission</div>
+            </div>
+
+            <div class="fd-card">
+              <div class="fd-card__head">
+                <h3 class="fd-card__title">Test Drive &amp; QC Report<span class="req">*</span></h3>
+                <div class="fd-card__meta">video 1:42 · checklist 24/24</div>
+              </div>
+              <div class="video-row">
+                <div class="video-thumb"><div class="video-thumb__play"></div></div>
+                <div class="video-meta">
+                  <div class="video-meta__file">Road test 8 km · uploaded</div>
+                  <div class="video-meta__sub">test-drive-jc0042.mp4 · 1:42 · 18.4 MB</div>
+                  <ul class="video-checks">
+                    <li>Steering: no pull · brakes even</li>
+                    <li>No warning lights on cluster</li>
+                    <li>Cabin / engine noise within baseline</li>
+                    <li>Wheel alignment within tolerance</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="ph-note" style="margin-top: 12px;">Vehicle ready for handover. No anomalies during 8 km test loop including highway.</div>
+            </div>
+          </div>
+
+          <!-- Final Cost & Job Summary -->
+          <div class="fd-summary">
+            <h3 class="fd-summary__title">Final Cost &amp; Job Summary</h3>
+            <div class="fd-summary-grid">
+              <div class="fd-tile"><div class="fd-tile__label">Parts Cost</div><div class="fd-tile__value">AED 12,750</div></div>
+              <div class="fd-tile"><div class="fd-tile__label">Labour Cost</div><div class="fd-tile__value">AED 11,900</div></div>
+              <div class="fd-tile"><div class="fd-tile__label">Sub-total</div><div class="fd-tile__value">AED 24,650</div></div>
+              <div class="fd-tile is-final"><div class="fd-tile__label">VAT 5% · Final</div><div class="fd-tile__value">AED 25,883</div></div>
+              <div class="fd-tile"><div class="fd-tile__label">Total Hours Logged</div><div class="fd-tile__value">14.0 hrs</div></div>
+              <div class="fd-tile"><div class="fd-tile__label">Parts Installed</div><div class="fd-tile__value">6 items</div></div>
+              <div class="fd-tile"><div class="fd-tile__label">Stages Completed</div><div class="fd-tile__value">5 / 5</div></div>
+              <div class="fd-tile"><div class="fd-tile__label">Vehicle In-Shop</div><div class="fd-tile__value">5 days</div></div>
+            </div>
+          </div>
+
+          <!-- Finalized Parts Table -->
+          <div class="fd-parts">
+            <div class="fd-parts__head">
+              <h3 class="fd-parts__title">Finalized Parts</h3>
+              <span class="fd-parts__sub">6 of 6 quotation line items closed</span>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="parts">
+                <thead>
+                  <tr><th>Part Name</th><th>Fitment</th><th>Condition</th><th>Action</th><th>Qty</th><th>Unit Cost</th><th>Total</th><th>Notes</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong style="font-weight:500">Shock absorbers</strong></td><td><span class="badge--info">Aftermarket</span></td><td>OEM</td><td>Replace</td><td>4</td><td>AED 350</td><td><strong>AED 1,400</strong></td><td style="color:var(--ink-400)">Bumper-mount, R&amp;L</td></tr>
+                  <tr><td><strong style="font-weight:500">Transmission</strong></td><td><span class="badge--ok">OEM</span></td><td>OEM</td><td>Repair</td><td>1</td><td>AED 4,800</td><td><strong>AED 4,800</strong></td><td style="color:var(--ink-400)">Reseal + valve body</td></tr>
+                  <tr><td><strong style="font-weight:500">Battery</strong></td><td><span class="badge--info">Aftermarket</span></td><td>OEM</td><td>Replace</td><td>1</td><td>AED 590</td><td><strong>AED 590</strong></td><td style="color:var(--ink-400)">100Ah AGM</td></tr>
+                  <tr><td><strong style="font-weight:500">Radiator</strong></td><td><span class="badge--ok">OEM</span></td><td>OEM</td><td>Repair</td><td>1</td><td>AED 920</td><td><strong>AED 920</strong></td><td style="color:var(--ink-400)">Hose set</td></tr>
+                  <tr><td><strong style="font-weight:500">Headlamp LH</strong></td><td><span class="badge--ok">OEM</span></td><td>OEM</td><td>Replace</td><td>2</td><td>AED 680</td><td><strong>AED 1,360</strong></td><td style="color:var(--ink-400)">Pair</td></tr>
+                  <tr><td><strong style="font-weight:500">Labour (14.0 hrs)</strong></td><td>—</td><td>—</td><td>Service</td><td>—</td><td>AED 850/hr</td><td><strong>AED 11,900</strong></td><td style="color:var(--ink-400)">Body + paint + QC</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ Right rail ============ -->
+        <div class="fd-rail">
+          <div class="fd-panel">
+            <h3 class="fd-panel__title">Pre-Handover Checklist</h3>
+            <div class="check-row">
+              <div class="check-row__box"></div>
+              <div class="check-row__main">
+                <div class="check-row__title">All parts installed &amp; verified</div>
+                <div class="check-row__sub">6 of 6 quotation line items closed</div>
+              </div>
+            </div>
+            <div class="check-row">
+              <div class="check-row__box"></div>
+              <div class="check-row__main">
+                <div class="check-row__title">Quality check passed by supervisor</div>
+                <div class="check-row__sub">Mohamed I. · 23/01 14:08</div>
+              </div>
+            </div>
+            <div class="check-row">
+              <div class="check-row__box"></div>
+              <div class="check-row__main">
+                <div class="check-row__title">Vehicle washed &amp; valet</div>
+                <div class="check-row__sub">Standard hand-wash · interior wipe-down</div>
+              </div>
+            </div>
+            <div class="check-row">
+              <div class="check-row__box"></div>
+              <div class="check-row__main">
+                <div class="check-row__title">Customer belongings returned</div>
+                <div class="check-row__sub">Glovebox + boot inventoried</div>
+              </div>
+            </div>
+            <div class="check-row">
+              <div class="check-row__box"></div>
+              <div class="check-row__main">
+                <div class="check-row__title">Warranty card issued</div>
+                <div class="check-row__sub">90 days on labour · OEM warranty on parts</div>
+              </div>
+            </div>
+            <div class="check-row">
+              <div class="check-row__box is-empty"></div>
+              <div class="check-row__main">
+                <div class="check-row__title" style="color: var(--ink-500); font-weight: 400;">Customer signature collected</div>
+                <div class="check-row__sub">Required before submitting to insurer</div>
+              </div>
+            </div>
+
+            <div class="esig">
+              <div style="font-size:11px; color: var(--ink-400); margin-bottom:6px;">Customer e-signature</div>
+              <div class="esig__name">Ahmed Al-Mansouri</div>
+              <div class="esig__sub">Signed 24/01/2025, 11:08 AM · IP 94.200.··.·· · Pen-tablet</div>
+            </div>
+          </div>
+
+          <div class="fd-panel">
+            <h3 class="fd-panel__title">Customer Handover</h3>
+            <div class="hand-row"><span class="hand-row__label">Customer</span><span class="hand-row__value">Ahmed Al-Mansouri</span></div>
+            <div class="hand-row"><span class="hand-row__label">Contact</span><span class="hand-row__value">+971 555-345-678</span></div>
+            <div class="hand-row"><span class="hand-row__label">Odometer (out)</span><span class="hand-row__value">38,428 km</span></div>
+            <div class="hand-row"><span class="hand-row__label">Fuel level (out)</span><span class="hand-row__value">3/4</span></div>
+            <div class="hand-row"><span class="hand-row__label">Handover slot</span><span class="hand-row__value">24/01, 11:00 AM</span></div>
+            <div class="hand-row"><span class="hand-row__label">Venue</span><span class="hand-row__value">Dubai Garage · Bay 04</span></div>
+            <div class="hand-row"><span class="hand-row__label">SMS / WhatsApp sent</span><span class="hand-row__value ok">✓ 23/01 18:02</span></div>
+          </div>
+
+          <div class="fd-panel">
+            <h3 class="fd-panel__title">Payment Summary</h3>
+            <div class="hand-row"><span class="hand-row__label">Subtotal</span><span class="hand-row__value">AED 24,650</span></div>
+            <div class="hand-row"><span class="hand-row__label">VAT (5%)</span><span class="hand-row__value">AED 1,233</span></div>
+            <div class="hand-row"><span class="hand-row__label">Additional charges</span><span class="hand-row__value">AED 0</span></div>
+            <div class="hand-row"><span class="hand-row__label">Policy excess</span><span class="hand-row__value">− AED 500</span></div>
+            <div class="hand-row"><span class="hand-row__label">Insurance coverage</span><span class="hand-row__value">− AED 25,383</span></div>
+            <div style="display:flex; justify-content: space-between; align-items:center; padding: 12px; background: var(--brand-red-ghost); border-radius: 6px; margin-top: 10px;">
+              <span style="color: var(--brand-red); font-weight: 500;">Payable by customer</span>
+              <strong style="color: var(--brand-red); font-size: 17px; font-family:'Roboto', sans-serif;">AED 500</strong>
+            </div>
+            <div style="display:flex; justify-content: space-between; align-items:center; padding: 12px; background: var(--ok-bg); border-radius: 6px; margin-top: 8px;">
+              <span style="color: var(--ok-fg); font-weight: 500;">Payout to garage</span>
+              <strong style="color: var(--ok-fg); font-size: 17px; font-family:'Roboto', sans-serif;">AED 25,383</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky action bar -->
+      <div class="fd-actionbar">
+        <button class="fd-actionbar__back" onclick="history.back()">← Back</button>
+        <div class="fd-actionbar__spacer"></div>
+        <button class="btn-dispute">Raise Dispute</button>
+        <button class="btn-line">Download PDF</button>
+        <button class="btn-line">Save &amp; Exit</button>
+        <button class="btn-primary">Confirm &amp; Authorize Payout</button>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  // Read claim id from URL if present
+  const id = new URLSearchParams(location.search).get('id');
+  if (id) {
+    document.querySelector('.fd-head__title strong').textContent = id;
+  }
+</script>
+</body>
+</html>

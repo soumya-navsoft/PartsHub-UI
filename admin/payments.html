@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Payments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="admin" data-page="payments" data-page-title="Payments">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">$</div><div><div class="kpi__label">Volume (30d)</div><div class="kpi__value">AED 4.2M</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">↗</div><div><div class="kpi__label">Payouts to garages</div><div class="kpi__value">AED 1.8M</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">↘</div><div><div class="kpi__label">Payouts to suppliers</div><div class="kpi__value">AED 1.6M</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold">%</div><div><div class="kpi__label">Platform fees</div><div class="kpi__value">AED 184K</div></div></div>
+      </div>
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All</div>
+          <div class="tab">Awaiting release <span class="badge badge--warn" style="margin-left:6px">18</span></div>
+          <div class="tab">Released</div>
+          <div class="tab">Failed <span class="badge badge--danger" style="margin-left:6px">3</span></div>
+          <div class="tab">Disputes</div>
+        </div>
+        <div class="page-card__toolbar" style="border-top:1px solid var(--ink-100)">
+          <div class="search"><input placeholder="Search payment, order, party..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Export</button>
+            <button class="btn btn--primary">Release selected</button>
+          </div>
+        </div>
+        <table class="data" id="t">
+          <thead><tr><th class="check"><input type="checkbox" class="cbx"/></th><th>Payment ID</th><th>From</th><th>To</th><th>Order</th><th>Amount (AED)</th><th>Method</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+<script>
+const ROWS = [
+  ['PAY-7621','Emirates GI','Royal Swiss Automobile','SO-5200','24,854','Bank Transfer',['Released','badge--ok'],'22/05/2026'],
+  ['PAY-7620','ADNIC','Gargash Auto Centre','SO-5198','18,240','Bank Transfer',['Awaiting release','badge--warn'],'21/05/2026'],
+  ['PAY-7619','Royal Swiss Automobile','Gulf Auto Parts LLC','SO-5197','4,935','Bank Transfer',['Released','badge--ok'],'20/05/2026'],
+  ['PAY-7618','Watania','Speedway Motors','SO-5191','12,400','Bank Transfer',['Awaiting release','badge--warn'],'19/05/2026'],
+  ['PAY-7617','Salama','Craft Auto Services','SO-5189','8,820','Bank Transfer',['Failed','badge--danger'],'18/05/2026'],
+  ['PAY-7616','Craft Auto Services','Bin Hamoodah','SO-5187','3,200','Card',['Released','badge--ok'],'17/05/2026']
+];
+document.querySelector('#t tbody').innerHTML = ROWS.map(r => `
+  <tr>
+    <td><input type="checkbox" class="cbx"/></td>
+    <td><strong>${r[0]}</strong></td>
+    <td>${r[1]}</td>
+    <td>${r[2]}</td>
+    <td>${r[3]}</td>
+    <td><strong>${r[4]}</strong></td>
+    <td>${r[5]}</td>
+    <td><span class="badge ${r[6][1]}">${r[6][0]}</span></td>
+    <td>${r[7]}</td>
+  </tr>
+`).join('');
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

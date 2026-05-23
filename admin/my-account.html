@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/>
+<style>
+  .profile-page { display:grid; grid-template-columns: 1fr 340px; gap: 16px; }
+  .profile-card {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius:8px; margin-bottom:12px;
+  }
+  .profile-card__head {
+    padding:18px 22px; border-bottom:1px solid var(--auth-box-border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .profile-card__title {
+    font-size:15px; font-weight:500; color:var(--brand-red); margin:0;
+    letter-spacing:0.02em;
+  }
+  .profile-card__body {
+    padding:18px 22px;
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:18px 24px;
+  }
+  .profile-card.is-editing .profile-card__body {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .pf-label {
+    font-size: 11.5px; color: var(--ink-500); font-weight:500;
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom:4px;
+  }
+  .pf-value {
+    font-size: 14px; color: var(--bodyText); font-weight:400; word-break: break-word;
+  }
+  .pf-value.green { color: var(--green-txt); }
+  .pf-value a { color: var(--forgot-link-color); text-decoration:underline; }
+
+  .pf-edit-btn {
+    border: 1px solid var(--form-field-border); background:#fff;
+    padding: 6px 14px; border-radius: 4px; font-size: 12.5px;
+    color: var(--brand-red); display: inline-flex; gap: 6px; align-items: center;
+    cursor: pointer; font-weight: 500;
+  }
+  .pf-edit-btn:hover { background: var(--brand-red-ghost); }
+  .pf-edit-btn:disabled, .pf-edit-btn.is-disabled {
+    color: var(--ink-400); cursor: not-allowed; opacity: 0.6;
+  }
+
+  .pf-actions { display: none; gap: 8px; }
+  .profile-card.is-editing .pf-edit-btn { display: none; }
+  .profile-card.is-editing .pf-actions { display: flex; }
+  .pf-btn-cancel {
+    padding: 8px 18px; border: 1px solid var(--form-field-border); background: #fff;
+    border-radius: 4px; font-size: 13px; font-weight: 500; color: var(--bodyText); cursor: pointer;
+  }
+  .pf-btn-update {
+    padding: 8px 18px; border: 0; background: var(--ink-300); color: #fff;
+    border-radius: 4px; font-size: 13px; font-weight: 500; cursor: not-allowed;
+  }
+  .pf-btn-update.is-active { background: var(--brand-red); cursor: pointer; }
+
+  /* Material-style outlined input with floating label (production look) */
+  .mi-field {
+    position: relative;
+    display: none;
+  }
+  .profile-card.is-editing .mi-field { display: block; }
+  .profile-card.is-editing .pf-view { display: none; }
+
+  .mi-input {
+    width: 100%;
+    padding: 16px 14px 8px;
+    border: 1.5px solid var(--green-txt);
+    border-radius: 4px;
+    background: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--bodyText);
+    outline: none;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+    height: 52px;
+  }
+  .mi-input:focus { border-color: var(--green-txt); box-shadow: 0 0 0 1px var(--green-txt); }
+  .mi-input.is-error { border-color: var(--brand-red); }
+  .mi-input:disabled { background: var(--bodyBg); color: var(--ink-400); }
+
+  .mi-label {
+    position: absolute;
+    top: -8px; left: 12px;
+    background: #fff;
+    padding: 0 6px;
+    font-size: 11.5px;
+    color: var(--green-txt);
+    font-weight: 400;
+    pointer-events: none;
+  }
+  .mi-input.is-error + .mi-label,
+  .mi-field.is-error .mi-label { color: var(--brand-red); }
+  .mi-error-text {
+    color: var(--brand-red);
+    font-size: 11.5px;
+    margin-top: 4px;
+    padding-left: 4px;
+  }
+
+  /* Code (country flag) input variant */
+  .mi-code {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mi-flag {
+    width: 28px; height: 20px; border-radius: 2px;
+    display: inline-block; vertical-align: middle;
+    background: linear-gradient(to bottom, #ff9933 0%, #ff9933 33%, #fff 33%, #fff 66%, #138808 66%, #138808 100%);
+    position: relative;
+  }
+  .mi-flag::after {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px; height: 6px; border-radius: 50%;
+    background: transparent; border: 1.2px solid #0a3d91;
+  }
+  .mi-flag-uae {
+    background: linear-gradient(to bottom, #00732f 0%, #00732f 33%, #fff 33%, #fff 66%, #000 66%, #000 100%);
+  }
+  .mi-flag-uae::after { display: none; }
+  .mi-flag-uae::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 10px; background: #ce1126;
+  }
+
+  .mi-caret {
+    display: inline-block; color: var(--ink-500); font-size: 11px;
+    margin-left: 4px;
+  }
+
+  .mi-suffix-icon {
+    position: absolute; right: 10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-400); cursor: pointer; font-size: 16px;
+  }
+
+  /* Edit-mode grid spans inside Personal Info */
+  .mi-row { display: contents; }
+
+  /* Section divider line in company info */
+  .pf-divider {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--grid-field-border);
+    margin: 0 -22px;
+  }
+
+  .map-link {
+    grid-column: 1 / -1;
+    text-align: right;
+    margin-bottom: -6px;
+    margin-top: -6px;
+  }
+  .map-link a {
+    color: var(--bodyText); font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px;
+    text-decoration: none;
+  }
+  .map-link a::before { content: '📍'; }
+
+  /* Pending banner */
+  .pending-banner {
+    margin: 0 22px 18px;
+    background: #fff7e0; border: 1px solid #f5d885;
+    border-radius: 4px; padding: 12px 16px;
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px;
+  }
+  .pending-banner__icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #e89c1a; color: #fff;
+    display: grid; place-items: center;
+    font-size: 13px; flex: none; font-weight: 700;
+  }
+  .pending-banner__title { font-weight: 500; color: #8c5b0e; margin-bottom: 2px; }
+  .pending-banner__body { color: var(--bodyText); font-size: 13px; }
+  .pending-banner__body a { color: var(--forgot-link-color); text-decoration: underline; }
+
+  .profile-head-card {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius:8px;
+    padding: 22px 24px; margin-bottom:12px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .pf-avatar {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: var(--brand-red); color: #fff;
+    display: grid; place-items: center;
+    font-size: 32px; font-weight: 700; letter-spacing: -0.02em;
+    position: relative;
+  }
+  .pf-avatar__cam {
+    position: absolute; bottom: 2px; right: 2px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--forgot-link-color); color: #fff;
+    display: grid; place-items: center; font-size: 12px;
+    border: 2px solid #fff;
+  }
+  .pf-name {
+    font-size: 22px; font-weight: 500; color: var(--bodyText);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pf-verified {
+    display: inline-grid; place-items: center;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--green-txt); color: #fff; font-size: 11px;
+  }
+  .pf-role { font-size: 13px; color: var(--ink-500); margin-top: 4px; }
+  .pf-status-row { margin-top: 6px; font-size: 12.5px; color: var(--ink-500); }
+  .pf-status-row span.pending { color: #c97a0e; font-weight: 500; }
+  .pf-head-actions { margin-left: auto; display: flex; gap: 10px; }
+  .pf-head-actions .btn { padding: 10px 18px; font-size: 13.5px; }
+
+  /* Activity sidebar */
+  .activity-card {
+    background: #fff; border: 1px solid var(--auth-box-border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .activity-card__head {
+    padding: 16px 18px; font-weight: 500; font-size: 14px;
+    color: var(--brand-red);
+  }
+  .activity-item {
+    padding: 10px 18px 12px; border-top: 1px solid var(--grid-field-border);
+    position: relative;
+  }
+  .activity-item::before {
+    content: ''; position: absolute; left: 18px; top: 18px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--forgot-link-color);
+  }
+  .activity-item__text {
+    font-size: 13px; color: var(--bodyText); padding-left: 14px;
+    margin-bottom: 4px;
+  }
+  .activity-item__time {
+    font-size: 11.5px; color: var(--ink-400);
+    padding-left: 14px;
+  }
+</style>
+</head>
+<body data-portal="admin" data-page="my-account" data-page-title="Profile">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+  <div class="profile-page">
+    <div>
+      <!-- Profile header -->
+      <div class="profile-head-card">
+        <div class="pf-avatar">
+          HA
+          <div class="pf-avatar__cam">📷</div>
+        </div>
+        <div>
+          <div class="pf-name">Hamza Al-Otaiba <span class="pf-verified">✓</span></div>
+          <div class="pf-role">Super Admin</div>
+          <div class="pf-status-row">Profile Update Status <span class="pending">Pending for approval</span></div>
+        </div>
+        <div class="pf-head-actions">
+          <a href="reset-password.html" class="btn btn--primary">Change Password</a>
+          <a href="../index.html" class="btn" onclick="if(!confirm('Logout from all active sessions across all devices?')){event.preventDefault();}">Logout from All Sessions</a>
+        </div>
+      </div>
+
+      <!-- Subscription Information -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Subscription Information</h3>
+          <a href="subscription.html" class="btn btn--primary" style="padding:8px 16px">Manage Subscription</a>
+        </div>
+        <div class="profile-card__body">
+          <div>
+            <div class="pf-label">SUBSCRIPTION PLAN</div>
+            <div class="pf-value">Internal</div>
+          </div>
+          <div>
+            <div class="pf-label">SUBSCRIPTION STATUS</div>
+            <div class="pf-value green">Active</div>
+          </div>
+          <div>
+            <div class="pf-label">SUBSCRIPTION EXPIRY DATE</div>
+            <div class="pf-value">2027-10-15T00:00:00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personal Information -->
+      <div class="profile-card" data-edit-section="personal">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Personal Information</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="pf-edit-btn">✎ Edit</button>
+            <div class="pf-actions">
+              <button class="pf-btn-cancel">Cancel</button>
+              <button class="pf-btn-update">Update</button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-card__body">
+          
+      <div class="pf-view">
+        <div class="pf-label">FIRST NAME</div>
+        <div class="pf-value">Hamza</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Hamza"/>
+        <label class="mi-label">First Name*</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">LAST NAME</div>
+        <div class="pf-value">Al-Otaiba</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Al-Otaiba"/>
+        <label class="mi-label">Last Name*</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">CODE</div>
+        <div class="pf-value">+91</div>
+      </div>
+      <div class="mi-field">
+        <div class="mi-input" style="display:flex;align-items:center;gap:8px;padding:14px 14px">
+          <span class="mi-flag"></span> <span>+91</span> <span class="mi-caret" style="margin-left:auto">▼</span>
+        </div>
+        <label class="mi-label">Code*</label>
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">MOBILE NUMBER</div>
+        <div class="pf-value">9865741230</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="9865741230"/>
+        <label class="mi-label">Mobile Number*</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">CODE</div>
+        <div class="pf-value">+91</div>
+      </div>
+      <div class="mi-field">
+        <div class="mi-input" style="display:flex;align-items:center;gap:8px;padding:14px 14px">
+          <span class="mi-flag"></span> <span>+91</span> <span class="mi-caret" style="margin-left:auto">▼</span>
+        </div>
+        <label class="mi-label">Code*</label>
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">ALTERNATE NUMBER</div>
+        <div class="pf-value">9865741231</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="9865741231"/>
+        <label class="mi-label">Alternate Number*</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">EMIRATES ID</div>
+        <div class="pf-value">784-1234-9856301-3</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="784-1234-9856301-3"/>
+        <label class="mi-label">Emirates ID</label>
+        
+        
+      </div>
+          <div></div>
+          
+      <div class="pf-view">
+        <div class="pf-label">UPLOAD EMIRATES ID COPY</div>
+        <div class="pf-value"><a href="#">e7254d_122615_219459.jpg</a> 👁</div>
+      </div>
+      <div class="mi-field">
+        <div class="mi-input" style="display:flex;align-items:center;gap:8px;padding:14px 14px;cursor:pointer">
+          <span style="flex:1;color:var(--bodyText);font-size:14px">e7254d_122615_219459.jpg</span>
+          <span class="mi-caret" style="font-size:14px">⤴</span>
+        </div>
+        <label class="mi-label">Upload Emirates ID Copy*</label>
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">ID EXPIRY DATE</div>
+        <div class="pf-value">2048-05-03</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="03/05/2048"/>
+        <label class="mi-label">ID Expiry Date*</label>
+        <span class="mi-suffix-icon">📅</span>
+      </div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- Company Information -->
+      <div class="profile-card" data-edit-section="company">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Company Information</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="pf-edit-btn">✎ Edit</button>
+            <div class="pf-actions">
+              <button class="pf-btn-cancel">Cancel</button>
+              <button class="pf-btn-update">Update</button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-card__body">
+          <div class="map-link" style="display:none"><a href="javascript:alert('Map picker opens here')">Select Location from Map</a></div>
+          
+      <div class="pf-view">
+        <div class="pf-label">COMPANY NAME</div>
+        <div class="pf-value">PartsHub Platform</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="PartsHub Platform" disabled/>
+        <label class="mi-label">Company Name</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">COMPANY ADDRESS</div>
+        <div class="pf-value">Partshub, Industrial Area, Industrial Areas</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Partshub, Industrial Area, Industrial Areas"/>
+        <label class="mi-label">Address Line 1*</label>
+        
+        
+      </div>
+          <div class="pf-view">
+            <div class="pf-label">COUNTRY</div>
+            <div class="pf-value">United Arab Emirates</div>
+          </div>
+          <div class="mi-field">
+            <input type="text" class="mi-input" value="Industrial Area" placeholder=" "/>
+            <label class="mi-label">Address Line 2</label>
+          </div>
+
+          <div class="pf-view">
+            <div class="pf-label">CITY</div>
+            <div class="pf-value">-</div>
+          </div>
+          <div class="mi-field">
+            <input type="text" class="mi-input" value="Industrial Areas"/>
+            <label class="mi-label">Area</label>
+          </div>
+
+          <div class="pf-view">
+            <div class="pf-label">WEBSITE</div>
+            <div class="pf-value">-</div>
+          </div>
+          <div class="mi-field">
+            <div class="mi-input" style="display:flex;align-items:center;justify-content:space-between;padding:14px">United Arab Emirates <span class="mi-caret">▼</span></div>
+            <label class="mi-label">Country*</label>
+          </div>
+
+          <div class="pf-view">
+            <div class="pf-label">ORGANIZATION TYPE</div>
+            <div class="pf-value">ADMIN</div>
+          </div>
+          <div class="mi-field is-error">
+            <div class="mi-input is-error" style="display:flex;align-items:center;justify-content:space-between;padding:14px;color:var(--brand-red)">City* <span class="mi-caret">▼</span></div>
+            <label class="mi-label">City*</label>
+            <div class="mi-error-text">City is required</div>
+          </div>
+
+          <div class="pf-view">
+            <div class="pf-label">EMAIL ADDRESS</div>
+            <div class="pf-value">-</div>
+          </div>
+          <div class="mi-field">
+            <input type="text" class="mi-input" value=""/>
+            <label class="mi-label">Website</label>
+          </div>
+
+          <div></div>
+          <div class="mi-field">
+            <input type="text" class="mi-input" value="GARAGE" disabled/>
+            <label class="mi-label">Organization Type</label>
+          </div>
+
+          <div></div>
+          <div class="mi-field">
+            <input type="email" class="mi-input" value=""/>
+            <label class="mi-label">Email Address</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- License Information (read-only) -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">License Information</h3>
+          <button class="pf-edit-btn is-disabled" disabled>✎ Edit</button>
+        </div>
+        <div class="profile-card__body">
+          <div><div class="pf-label">TRADE LICENSE NUMBER</div><div class="pf-value">BS123456</div></div>
+          <div><div class="pf-label">TRADE LICENSE COPY</div><div class="pf-value">—</div></div>
+          <div><div class="pf-label">LICENSING CITY</div><div class="pf-value">Abu Dhabi</div></div>
+          <div><div class="pf-label">LICENSING AUTHORITY</div><div class="pf-value">Abu Dhabi Airports Free Zone</div></div>
+          <div><div class="pf-label">LICENSE EXPIRY DATE</div><div class="pf-value">2026-04-29</div></div>
+          <div></div>
+        </div>
+        <div class="pending-banner">
+          <div class="pending-banner__icon">i</div>
+          <div>
+            <div class="pending-banner__title">Pending Approval</div>
+            <div class="pending-banner__body">Trade License Copy: <a href="#">e7254d_170628_537028.pdf</a> 👁</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VAT Information (read-only) -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">VAT Information</h3>
+          <button class="pf-edit-btn is-disabled" disabled>✎ Edit</button>
+        </div>
+        <div class="profile-card__body">
+          <div><div class="pf-label">VAT NUMBER</div><div class="pf-value">987456321074136</div></div>
+          <div><div class="pf-label">VAT CERTIFICATE</div><div class="pf-value">-</div></div>
+          <div></div>
+        </div>
+        <div class="pending-banner">
+          <div class="pending-banner__icon">i</div>
+          <div>
+            <div class="pending-banner__title">Pending Approval</div>
+            <div class="pending-banner__body"><strong>VAT Number:</strong> 123</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bank Account Information -->
+      <div class="profile-card" data-edit-section="bank">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Bank Account Information</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="pf-edit-btn">✎ Edit</button>
+            <div class="pf-actions">
+              <button class="pf-btn-cancel">Cancel</button>
+              <button class="pf-btn-update">Update</button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-card__body">
+          
+      <div class="pf-view">
+        <div class="pf-label">IBAN NUMBER</div>
+        <div class="pf-value">97112698123658964124</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="97112698123658964124"/>
+        <label class="mi-label">IBAN Number</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">ACCOUNT NAME</div>
+        <div class="pf-value">Kholoud Al-Shihini</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Kholoud Al-Shihini"/>
+        <label class="mi-label">Account Name</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">BANK NAME</div>
+        <div class="pf-value">Islamic Bank of Dubai</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Islamic Bank of Dubai"/>
+        <label class="mi-label">Bank Name</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">ACCOUNT NUMBER</div>
+        <div class="pf-value">8901234556789013</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="8901234556789013"/>
+        <label class="mi-label">Account Number</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">SWIFT CODE</div>
+        <div class="pf-value">RSTUV9012B1</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="RSTUV9012B1"/>
+        <label class="mi-label">SWIFT Code</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">IBAN LETTER</div>
+        <div class="pf-value"><a href="#">e7254d_143340_810076.jpg</a> 👁</div>
+      </div>
+      <div class="mi-field">
+        <div class="mi-input" style="display:flex;align-items:center;gap:8px;padding:14px 14px;cursor:pointer">
+          <span style="flex:1;color:var(--bodyText);font-size:14px">e7254d_143340_810076.jpg</span>
+          <span class="mi-caret" style="font-size:14px">⤴</span>
+        </div>
+        <label class="mi-label">IBAN Letter*</label>
+      </div>
+        </div>
+      </div>
+
+      
+
+      <!-- Security Information -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Security Information</h3>
+        </div>
+        <div class="profile-card__body">
+          <div><div class="pf-label">LAST LOGIN DATE & TIME</div><div class="pf-value">May 23, 2026, 1:18:36 AM</div></div>
+          <div><div class="pf-label">ACCOUNT STATUS</div><div class="pf-value green">Active</div></div>
+          <div><div class="pf-label">ACTIVE BROWSER</div><div class="pf-value">-</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right sidebar: Recent Activities -->
+    <aside>
+      <div class="activity-card">
+        <div class="activity-card__head">Recent Activities</div>
+        <div class="activity-item"><div class="activity-item__text">Create garage rfq acceptance</div><div class="activity-item__time">7 hours ago</div></div>
+        <div class="activity-item"><div class="activity-item__text">RFQ_ACCEPTED: Garage BS Garage accepted the RFQ</div><div class="activity-item__time">7 hours ago</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create garage rfq acceptance</div><div class="activity-item__time">14/05/2026 08:23 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">RFQ_ACCEPTED: Garage BS Garage accepted the RFQ</div><div class="activity-item__time">14/05/2026 08:23 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">14/05/2026 04:07 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">14/05/2026 04:07 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">14/05/2026 03:25 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">14/05/2026 03:20 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">13/05/2026 08:29 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">13/05/2026 08:28 PM</div></div>
+      </div>
+    </aside>
+  </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+<script>
+  // Inline edit mode toggle per section
+  document.querySelectorAll('[data-edit-section]').forEach(card => {
+    const editBtn = card.querySelector('.pf-edit-btn');
+    const cancelBtn = card.querySelector('.pf-btn-cancel');
+    const updateBtn = card.querySelector('.pf-btn-update');
+    if (!editBtn || editBtn.disabled) return;
+    editBtn.addEventListener('click', () => {
+      card.classList.add('is-editing');
+    });
+    cancelBtn && cancelBtn.addEventListener('click', () => {
+      card.classList.remove('is-editing');
+    });
+    // Watch inputs to enable Update
+    card.querySelectorAll('.mi-input').forEach(inp => {
+      inp.addEventListener('input', () => {
+        updateBtn.classList.add('is-active');
+      });
+    });
+    updateBtn && updateBtn.addEventListener('click', () => {
+      if (!updateBtn.classList.contains('is-active')) return;
+      alert('✓ Changes saved. Some changes may require admin approval.');
+      card.classList.remove('is-editing');
+      updateBtn.classList.remove('is-active');
+    });
+  });
+</script>
+</body></html>

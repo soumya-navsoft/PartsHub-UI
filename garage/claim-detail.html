@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Claim Request — Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="claim-request" data-subpage="claim-detail" data-page-title="Claim Request — Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar">
+          <div>
+            <div class="muted small">Incoming RFQ from Emirates General Insurance</div>
+            <div style="font-weight:700;font-size:18px">Claim JKLMN56780 · Toyota Camry 2022 · Sulaiman Al-Zayoudi</div>
+            <div class="muted small mt-8">Submitted 18/01/2025 · Deadline to respond: <strong style="color:var(--brand-red)">27/01/2025</strong> · 4 days remaining</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn btn--ghost-red" id="rejectBtn">Reject claim</button>
+            <button class="btn btn--primary" id="acceptBtn">Accept &amp; quote</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid mb-16" style="grid-template-columns: 1fr 380px">
+        <div>
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Damage photos &amp; documents</h3></div>
+            <div class="panel__body">
+              <div class="photo-grid mb-16">
+                <div class="photo-tile" style="background:linear-gradient(135deg,#6b5a4a,#3a2e23)"></div>
+                <div class="photo-tile" style="background:linear-gradient(135deg,#5a4a3a,#2a1f15)"></div>
+                <div class="photo-tile" style="background:linear-gradient(135deg,#8a7560,#4a3a2a)"></div>
+                <div class="photo-tile" style="background:linear-gradient(135deg,#7a6450,#3a2a1a)"></div>
+              </div>
+              <div class="flex gap-8" style="flex-wrap:wrap">
+                <a class="btn btn--sm">📄 Police_Report_5523.pdf</a>
+                <a class="btn btn--sm">📄 Witness_Statement.pdf</a>
+                <a class="btn btn--sm">🎥 Dashcam_video.mp4</a>
+                <a class="btn btn--sm">📋 Insurer_Notes.pdf</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel__head"><h3 class="panel__title">Insurer's part list — add labor &amp; quote</h3><span class="panel__sub">You can mark any part as "supplied by garage" or "request from supplier"</span></div>
+            <div class="table-wrap">
+              <table class="data">
+                <thead><tr><th>Part</th><th>Qty</th><th>Insurer condition</th><th>Action</th><th>Source</th><th>Unit price</th><th>Line total</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Shock absorbers</strong></td><td>4</td><td>OEM</td><td><select class="select"><option>Replace</option></select></td><td><select class="select"><option>RFQ to Supplier</option><option>From own inventory</option></select></td><td><input class="input" value="350" style="width:80px;padding:6px"/></td><td><strong>AED 1,400</strong></td></tr>
+                  <tr><td><strong>Transmission</strong></td><td>1</td><td>OEM</td><td><select class="select"><option>Repair</option></select></td><td><select class="select"><option>From own inventory</option></select></td><td><input class="input" value="4,800" style="width:80px;padding:6px"/></td><td><strong>AED 4,800</strong></td></tr>
+                  <tr><td><strong>Battery 100Ah AGM</strong></td><td>1</td><td>Aftermarket</td><td><select class="select"><option>Replace</option></select></td><td><select class="select"><option>RFQ to Supplier</option></select></td><td><input class="input" value="590" style="width:80px;padding:6px"/></td><td><strong>AED 590</strong></td></tr>
+                  <tr><td><strong>Radiator</strong></td><td>1</td><td>OEM</td><td><select class="select"><option>Repair</option></select></td><td><select class="select"><option>RFQ to Supplier</option></select></td><td><input class="input" value="920" style="width:80px;padding:6px"/></td><td><strong>AED 920</strong></td></tr>
+                  <tr><td><strong>Headlamp LH</strong></td><td>2</td><td>OEM</td><td><select class="select"><option>Replace</option></select></td><td><select class="select"><option>RFQ to Supplier</option></select></td><td><input class="input" value="680" style="width:80px;padding:6px"/></td><td><strong>AED 1,360</strong></td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><td colspan="6" class="text-right">Parts subtotal</td><td><strong>AED 9,070</strong></td></tr>
+                  <tr><td colspan="6" class="text-right">Labor (12 hrs × AED 120)</td><td><strong>AED 14,600</strong></td></tr>
+                  <tr style="background:#FEF3F4"><td colspan="6" class="text-right" style="font-weight:700">Quotation total (excl. VAT)</td><td><strong style="color:var(--brand-red);font-size:16px">AED 23,670</strong></td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <button class="btn btn--ghost-red" style="margin:16px">+ Add part missed by insurer</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Claim summary</h3></div>
+            <div class="panel__body">
+              <div class="detail-grid" style="grid-template-columns:1fr 1fr">
+                <div><div class="label">Insurer</div><strong>Emirates GI</strong></div>
+                <div><div class="label">Policy No.</div><strong>89KLMN6789</strong></div>
+                <div><div class="label">Holder</div><strong>Sulaiman Al-Zayoudi</strong></div>
+                <div><div class="label">Contact</div><strong>+971 555 345 678</strong></div>
+                <div><div class="label">Vehicle</div><strong>Toyota Camry 2022</strong></div>
+                <div><div class="label">Plate</div><strong>A 12345</strong></div>
+                <div><div class="label">VIN</div><strong>JTDBR32E430123456</strong></div>
+                <div><div class="label">Accident date</div><strong>18/01/2025, 03:15 PM</strong></div>
+                <div style="grid-column:1/-1"><div class="label">Accident location</div><strong>Sheikh Zayed Road, Abu Dhabi</strong></div>
+              </div>
+              <div class="divider"></div>
+              <h4 style="font-size:13px;color:var(--ink-500);font-weight:600">Damage description</h4>
+              <p class="muted small">Front-end collision with stationary vehicle at low speed. Bumper, headlamps, hood and radiator visibly damaged. Driver reported transmission warning light post-collision.</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel__head"><h3 class="panel__title">Workshop appointment</h3></div>
+            <div class="panel__body">
+              <label class="label">Venue</label>
+              <select class="select"><option>Jebel Ali Workshop (Mariam M.)</option><option>Al Quoz Workshop</option></select>
+              <label class="label mt-16">Inspection slot</label>
+              <input class="input" type="datetime-local"/>
+              <label class="label mt-16">Estimated repair duration</label>
+              <select class="select"><option>5-7 days</option><option>7-10 days</option><option>10-14 days</option></select>
+              <label class="label mt-16">Pickup &amp; delivery</label>
+              <select class="select"><option>Included (free)</option><option>+ AED 250</option><option>Customer drop-off</option></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accept modal -->
+      <div class="modal-backdrop" id="m-accept">
+        <div class="modal">
+          <div class="modal__head"><h3 class="modal__title">Accept claim &amp; submit quotation?</h3><button class="modal__close" onclick="document.getElementById('m-accept').classList.remove('is-open')">×</button></div>
+          <div class="modal__body">
+            <p>You're about to submit a <strong>AED 23,670</strong> quotation to Emirates General Insurance for Claim JKLMN56780.</p>
+            <div style="background:var(--bg-row-alt);padding:12px;border-radius:8px;font-size:13px">
+              <div class="flex-between mb-8"><span class="muted">Parts subtotal</span><strong>AED 9,070</strong></div>
+              <div class="flex-between mb-8"><span class="muted">Labor</span><strong>AED 14,600</strong></div>
+              <div class="flex-between mb-8"><span class="muted">VAT (5%)</span><strong>AED 1,184</strong></div>
+              <div class="flex-between"><span style="font-weight:700">Total</span><strong style="color:var(--brand-red)">AED 24,854</strong></div>
+            </div>
+            <label class="label mt-16">Note to insurer (optional)</label>
+            <textarea class="textarea" rows="3"></textarea>
+          </div>
+          <div class="modal__foot">
+            <button class="btn" onclick="document.getElementById('m-accept').classList.remove('is-open')">Cancel</button>
+            <a class="btn btn--primary" href="quotation-list.html">Accept &amp; Submit</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reject modal -->
+      <div class="modal-backdrop" id="m-reject">
+        <div class="modal">
+          <div class="modal__head"><h3 class="modal__title" style="color:var(--brand-red)">Reject this claim?</h3><button class="modal__close" onclick="document.getElementById('m-reject').classList.remove('is-open')">×</button></div>
+          <div class="modal__body">
+            <p>Let the insurer know why you can't take this claim. They'll re-route to another garage.</p>
+            <label class="label">Reason *</label>
+            <select class="select"><option>Capacity full</option><option>Outside our specialisation</option><option>Vehicle make not serviced</option><option>Distance / pickup logistics</option><option>Other</option></select>
+            <label class="label mt-16">Additional notes</label>
+            <textarea class="textarea" rows="3" placeholder="Any context that helps the insurer..."></textarea>
+          </div>
+          <div class="modal__foot">
+            <button class="btn" onclick="document.getElementById('m-reject').classList.remove('is-open')">Cancel</button>
+            <button class="btn btn--primary">Confirm rejection</button>
+          </div>
+        </div>
+      </div>
+<script>
+document.getElementById('acceptBtn').addEventListener('click', () => document.getElementById('m-accept').classList.add('is-open'));
+document.getElementById('rejectBtn').addEventListener('click', () => document.getElementById('m-reject').classList.add('is-open'));
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

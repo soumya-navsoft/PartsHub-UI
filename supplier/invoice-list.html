@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Invoices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="invoices" data-page-title="Invoices">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">📑</div><div><div class="kpi__label">Invoices issued</div><div class="kpi__value">218</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">$</div><div><div class="kpi__label">Total invoiced</div><div class="kpi__value">AED 1.84M</div></div></div>
+        <div class="kpi"><div class="kpi__icon" style="background:var(--warn-bg);color:var(--warn-fg)">⏰</div><div><div class="kpi__label">Outstanding</div><div class="kpi__value">AED 142K</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">⏱</div><div><div class="kpi__label">Avg payment cycle</div><div class="kpi__value">18 days</div></div></div>
+      </div>
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All</div>
+          <div class="tab">Draft</div>
+          <div class="tab">Pending payment</div>
+          <div class="tab">Paid</div>
+          <div class="tab">Overdue</div>
+        </div>
+        <div class="page-card__toolbar" style="border-top:1px solid var(--ink-100)">
+          <div class="search"><input placeholder="Search invoice or buyer..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Export</button>
+            <button class="btn btn--primary">+ Generate Invoice</button>
+          </div>
+        </div>
+        <table class="data" id="t">
+          <thead><tr><th class="check"><input type="checkbox" class="cbx"/></th><th>Invoice ID</th><th>Order</th><th>Buyer</th><th>Amount (AED)</th><th>Issued</th><th>Due</th><th>Status</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+<script>
+const BUY = ['Royal Swiss Automobile','Craft Auto Services','Gargash Auto Centre','Speedway Motors','Bin Hamoodah Garage','Emirates GI'];
+const ST = [['Paid','badge--ok'],['Pending','badge--warn'],['Overdue','badge--danger'],['Draft','badge']];
+let html='';
+for (let i=0;i<10;i++){
+  const s=ST[i%ST.length];
+  html+=`<tr>
+    <td><input type="checkbox" class="cbx"/></td>
+    <td><a class="id-link" href="invoice-detail.html">INV-71${20+i}</a></td>
+    <td>SO-${5200+i}</td>
+    <td>${BUY[i%BUY.length]}</td>
+    <td><strong>${(2400+i*420).toLocaleString()}</strong></td>
+    <td>${(2+i).toString().padStart(2,'0')}/05/2026</td>
+    <td>${(15+i).toString().padStart(2,'0')}/05/2026</td>
+    <td><span class="badge ${s[1]}">${s[0]}</span></td>
+    <td class="more">⋯</td>
+  </tr>`;
+}
+document.querySelector('#t tbody').innerHTML = html;
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

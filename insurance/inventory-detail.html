@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Inventory Item Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="inventory" data-page-title="Inventory Item Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="profile-head" style="background:linear-gradient(120deg,#1a1f2b,#2a2e38)">
+          <div style="width:80px;height:80px;border-radius:12px;background:#DEE3EE"></div>
+          <div style="flex:1">
+            <div class="profile-head__name">Premium Brake Pad Set</div>
+            <div class="profile-head__sub">INV-2401 · Braking System · Brembo · 12 units available</div>
+            <div class="flex gap-16 mt-8" style="font-size:12px;opacity:0.85">
+              <span>📦 Warehouse 2, Shelf B-12</span>
+              <span>📅 Added 18 May 2026</span>
+              <span>🚗 Toyota Camry 2018-2024</span>
+            </div>
+          </div>
+          <div class="flex gap-8" style="flex-direction:column">
+            <a class="btn" style="background:#fff;color:var(--ink-900)" href="inventory-edit.html">Edit</a>
+            <button class="btn btn--ghost-red">Delete</button>
+          </div>
+        </div>
+
+        <div class="tabs" style="padding:0 28px">
+          <div class="tab is-active">Details</div>
+          <div class="tab">Stock movements (4)</div>
+          <div class="tab">Listed deals (1)</div>
+          <div class="tab">Source claims (1)</div>
+        </div>
+        <div class="panel__body">
+          <div class="dash-grid" style="grid-template-columns: 2fr 1fr">
+            <div>
+              <h3 class="panel__title mb-16">Item details</h3>
+              <div class="detail-grid" style="grid-template-columns:1fr 1fr 1fr">
+                <div><div class="label">Item ID</div><strong>INV-2401</strong></div>
+                <div><div class="label">Type</div><strong>Part</strong></div>
+                <div><div class="label">Category</div><strong>Braking System</strong></div>
+                <div><div class="label">Brand</div><strong>Brembo</strong></div>
+                <div><div class="label">SKU</div><strong>PAR0182</strong></div>
+                <div><div class="label">Condition</div><strong>OEM new</strong></div>
+                <div><div class="label">Vehicle fitment</div><strong>Toyota Camry 2018-2024</strong></div>
+                <div><div class="label">Source</div><strong>Closed claim JKLMN56770</strong></div>
+                <div><div class="label">Storage</div><strong>Warehouse 2 · Shelf B-12</strong></div>
+              </div>
+              <h3 class="panel__title mt-24 mb-16">Pricing &amp; quantity</h3>
+              <div class="detail-grid" style="grid-template-columns:1fr 1fr 1fr">
+                <div><div class="label">Available quantity</div><strong style="font-size:18px">12</strong></div>
+                <div><div class="label">Unit price (estimated)</div><strong style="font-size:18px">AED 180</strong></div>
+                <div><div class="label">Total inventory value</div><strong style="font-size:18px;color:var(--brand-red)">AED 2,160</strong></div>
+              </div>
+            </div>
+            <div>
+              <div class="panel" style="border:1px solid var(--ink-100);box-shadow:none">
+                <div class="panel__head"><h3 class="panel__title">Status</h3></div>
+                <div class="panel__body">
+                  <div class="flex-between mb-8"><span class="muted small">Listing status</span><span class="badge badge--ok">Available</span></div>
+                  <div class="flex-between mb-8"><span class="muted small">In active hot deal</span><a href="hot-deal-detail.html" class="id-link">HD-2410</a></div>
+                  <div class="flex-between mb-8"><span class="muted small">Reserved (in deals)</span><strong>8 units</strong></div>
+                  <div class="flex-between"><span class="muted small">Free stock</span><strong>4 units</strong></div>
+                  <div class="divider"></div>
+                  <button class="btn btn--primary btn--block mb-8">+ Add to new Hot Deal</button>
+                  <button class="btn btn--block">+ Add to new Auction</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="panel__title mt-24 mb-16">Recent stock movements</h3>
+          <table class="data">
+            <thead><tr><th>Date</th><th>Type</th><th>Quantity</th><th>Reference</th><th>By</th></tr></thead>
+            <tbody>
+              <tr><td>22/05/2026</td><td><span class="badge badge--danger">Outbound</span></td><td>−3</td><td>HD-ORD-8121 (Royal Swiss)</td><td>System</td></tr>
+              <tr><td>21/05/2026</td><td><span class="badge badge--danger">Outbound</span></td><td>−2</td><td>HD-ORD-8120 (Craft Auto)</td><td>System</td></tr>
+              <tr><td>20/05/2026</td><td><span class="badge badge--danger">Outbound</span></td><td>−2</td><td>HD-ORD-8119 (Gargash)</td><td>System</td></tr>
+              <tr><td>18/05/2026</td><td><span class="badge badge--ok">Inbound</span></td><td>+12</td><td>Closed claim JKLMN56770</td><td>Mariam Al-Naqbi</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — 2fa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body>
+<div class="auth">
+  <div class="auth__bg" style="background:linear-gradient(135deg,#2d2520,#0a0807);"></div>
+  <div class="auth__wrap">
+    <div class="auth__card">
+      <div class="auth__brand"><img src="../shared/main-logo.png" style="width:100px;height:auto"/></div>
+      
+      <h2 class="auth__title">Verify your identity</h2>
+      <p style="text-align:center;color:var(--ink-500);margin:0 0 24px;font-size:13.5px">Enter the 6-digit code from your authenticator app.</p>
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px">
+        <input class="input" maxlength="1" style="width:48px;height:56px;text-align:center;font-size:22px;font-weight:700"/>
+        <input class="input" maxlength="1" style="width:48px;height:56px;text-align:center;font-size:22px;font-weight:700"/>
+        <input class="input" maxlength="1" style="width:48px;height:56px;text-align:center;font-size:22px;font-weight:700"/>
+        <input class="input" maxlength="1" style="width:48px;height:56px;text-align:center;font-size:22px;font-weight:700"/>
+        <input class="input" maxlength="1" style="width:48px;height:56px;text-align:center;font-size:22px;font-weight:700"/>
+        <input class="input" maxlength="1" style="width:48px;height:56px;text-align:center;font-size:22px;font-weight:700"/>
+      </div>
+      <a class="btn btn--primary btn--block btn--lg" href="dashboard.html">Verify &amp; continue</a>
+      <p style="text-align:center;font-size:13px;margin-top:16px;color:var(--ink-500)">Didn't get a code? <a href="javascript:alert('Code resent to your email.')" class="auth__link">Resend</a> · <a href="javascript:alert('Switched to SMS verification — code sent.')" class="auth__link">Use SMS instead</a></p>
+    
+    </div>
+  </div>
+</div></body></html>

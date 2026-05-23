@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/>
+<style>
+  .profile-page { display:grid; grid-template-columns: 1fr 340px; gap: 16px; }
+  .profile-card {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius:8px; margin-bottom:12px;
+  }
+  .profile-card__head {
+    padding:18px 22px; border-bottom:1px solid var(--auth-box-border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .profile-card__title {
+    font-size:15px; font-weight:500; color:var(--brand-red); margin:0;
+    letter-spacing:0.02em;
+  }
+  .profile-card__body {
+    padding:18px 22px;
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:18px 24px;
+  }
+  .profile-card.is-editing .profile-card__body {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .pf-label {
+    font-size: 11.5px; color: var(--ink-500); font-weight:500;
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom:4px;
+  }
+  .pf-value {
+    font-size: 14px; color: var(--bodyText); font-weight:400; word-break: break-word;
+  }
+  .pf-value.green { color: var(--green-txt); }
+  .pf-value a { color: var(--forgot-link-color); text-decoration:underline; }
+
+  .pf-edit-btn {
+    border: 1px solid var(--form-field-border); background:#fff;
+    padding: 6px 14px; border-radius: 4px; font-size: 12.5px;
+    color: var(--brand-red); display: inline-flex; gap: 6px; align-items: center;
+    cursor: pointer; font-weight: 500;
+  }
+  .pf-edit-btn:hover { background: var(--brand-red-ghost); }
+  .pf-edit-btn:disabled, .pf-edit-btn.is-disabled {
+    color: var(--ink-400); cursor: not-allowed; opacity: 0.6;
+  }
+
+  .pf-actions { display: none; gap: 8px; }
+  .profile-card.is-editing .pf-edit-btn { display: none; }
+  .profile-card.is-editing .pf-actions { display: flex; }
+  .pf-btn-cancel {
+    padding: 8px 18px; border: 1px solid var(--form-field-border); background: #fff;
+    border-radius: 4px; font-size: 13px; font-weight: 500; color: var(--bodyText); cursor: pointer;
+  }
+  .pf-btn-update {
+    padding: 8px 18px; border: 0; background: var(--ink-300); color: #fff;
+    border-radius: 4px; font-size: 13px; font-weight: 500; cursor: not-allowed;
+  }
+  .pf-btn-update.is-active { background: var(--brand-red); cursor: pointer; }
+
+  /* Material-style outlined input with floating label (production look) */
+  .mi-field {
+    position: relative;
+    display: none;
+  }
+  .profile-card.is-editing .mi-field { display: block; }
+  .profile-card.is-editing .pf-view { display: none; }
+
+  .mi-input {
+    width: 100%;
+    padding: 16px 14px 8px;
+    border: 1.5px solid var(--green-txt);
+    border-radius: 4px;
+    background: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--bodyText);
+    outline: none;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+    height: 52px;
+  }
+  .mi-input:focus { border-color: var(--green-txt); box-shadow: 0 0 0 1px var(--green-txt); }
+  .mi-input.is-error { border-color: var(--brand-red); }
+  .mi-input:disabled { background: var(--bodyBg); color: var(--ink-400); }
+
+  .mi-label {
+    position: absolute;
+    top: -8px; left: 12px;
+    background: #fff;
+    padding: 0 6px;
+    font-size: 11.5px;
+    color: var(--green-txt);
+    font-weight: 400;
+    pointer-events: none;
+  }
+  .mi-input.is-error + .mi-label,
+  .mi-field.is-error .mi-label { color: var(--brand-red); }
+  .mi-error-text {
+    color: var(--brand-red);
+    font-size: 11.5px;
+    margin-top: 4px;
+    padding-left: 4px;
+  }
+
+  /* Code (country flag) input variant */
+  .mi-code {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mi-flag {
+    width: 28px; height: 20px; border-radius: 2px;
+    display: inline-block; vertical-align: middle;
+    background: linear-gradient(to bottom, #ff9933 0%, #ff9933 33%, #fff 33%, #fff 66%, #138808 66%, #138808 100%);
+    position: relative;
+  }
+  .mi-flag::after {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px; height: 6px; border-radius: 50%;
+    background: transparent; border: 1.2px solid #0a3d91;
+  }
+  .mi-flag-uae {
+    background: linear-gradient(to bottom, #00732f 0%, #00732f 33%, #fff 33%, #fff 66%, #000 66%, #000 100%);
+  }
+  .mi-flag-uae::after { display: none; }
+  .mi-flag-uae::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 10px; background: #ce1126;
+  }
+
+  .mi-caret {
+    display: inline-block; color: var(--ink-500); font-size: 11px;
+    margin-left: 4px;
+  }
+
+  .mi-suffix-icon {
+    position: absolute; right: 10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-400); cursor: pointer; font-size: 16px;
+  }
+
+  /* Edit-mode grid spans inside Personal Info */
+  .mi-row { display: contents; }
+
+  /* Section divider line in company info */
+  .pf-divider {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--grid-field-border);
+    margin: 0 -22px;
+  }
+
+  .map-link {
+    grid-column: 1 / -1;
+    text-align: right;
+    margin-bottom: -6px;
+    margin-top: -6px;
+  }
+  .map-link a {
+    color: var(--bodyText); font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px;
+    text-decoration: none;
+  }
+  .map-link a::before { content: '📍'; }
+
+  /* Pending banner */
+  .pending-banner {
+    margin: 0 22px 18px;
+    background: #fff7e0; border: 1px solid #f5d885;
+    border-radius: 4px; padding: 12px 16px;
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px;
+  }
+  .pending-banner__icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #e89c1a; color: #fff;
+    display: grid; place-items: center;
+    font-size: 13px; flex: none; font-weight: 700;
+  }
+  .pending-banner__title { font-weight: 500; color: #8c5b0e; margin-bottom: 2px; }
+  .pending-banner__body { color: var(--bodyText); font-size: 13px; }
+  .pending-banner__body a { color: var(--forgot-link-color); text-decoration: underline; }
+
+  .profile-head-card {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius:8px;
+    padding: 22px 24px; margin-bottom:12px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .pf-avatar {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: var(--brand-red); color: #fff;
+    display: grid; place-items: center;
+    font-size: 32px; font-weight: 700; letter-spacing: -0.02em;
+    position: relative;
+  }
+  .pf-avatar__cam {
+    position: absolute; bottom: 2px; right: 2px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--forgot-link-color); color: #fff;
+    display: grid; place-items: center; font-size: 12px;
+    border: 2px solid #fff;
+  }
+  .pf-name {
+    font-size: 22px; font-weight: 500; color: var(--bodyText);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pf-verified {
+    display: inline-grid; place-items: center;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--green-txt); color: #fff; font-size: 11px;
+  }
+  .pf-role { font-size: 13px; color: var(--ink-500); margin-top: 4px; }
+  .pf-status-row { margin-top: 6px; font-size: 12.5px; color: var(--ink-500); }
+  .pf-status-row span.pending { color: #c97a0e; font-weight: 500; }
+  .pf-head-actions { margin-left: auto; display: flex; gap: 10px; }
+  .pf-head-actions .btn { padding: 10px 18px; font-size: 13.5px; }
+
+  /* Activity sidebar */
+  .activity-card {
+    background: #fff; border: 1px solid var(--auth-box-border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .activity-card__head {
+    padding: 16px 18px; font-weight: 500; font-size: 14px;
+    color: var(--brand-red);
+  }
+  .activity-item {
+    padding: 10px 18px 12px; border-top: 1px solid var(--grid-field-border);
+    position: relative;
+  }
+  .activity-item::before {
+    content: ''; position: absolute; left: 18px; top: 18px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--forgot-link-color);
+  }
+  .activity-item__text {
+    font-size: 13px; color: var(--bodyText); padding-left: 14px;
+    margin-bottom: 4px;
+  }
+  .activity-item__time {
+    font-size: 11.5px; color: var(--ink-400);
+    padding-left: 14px;
+  }
+
+  .vh-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  }
+  .vh-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 10px 6px 12px;
+    background: #eef4fc;
+    border: 1px solid #b3d0ee;
+    color: #1d4f8c;
+    border-radius: 999px;
+    font-size: 12.5px; font-weight: 500;
+  }
+  .vh-chip__close {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #b3d0ee; color: #1d4f8c;
+    display: grid; place-items: center;
+    font-size: 11px; cursor: pointer;
+  }
+  .vh-chip__close:hover { background: var(--brand-red); color: #fff; }
+  .vh-add-pill {
+    padding: 6px 14px; border: 1px dashed var(--brand-red);
+    background: #fff; color: var(--brand-red);
+    border-radius: 999px; font-size: 12.5px; font-weight: 500;
+    cursor: pointer;
+  }
+  .vh-add-pill:hover { background: var(--brand-red-ghost); }
+
+  .vh-quick {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .vh-quick-btn {
+    padding: 8px 14px; border: 1px solid var(--form-field-border);
+    background: #fff; border-radius: 999px;
+    font-size: 13px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--bodyText); font-family: inherit;
+  }
+  .vh-quick-btn:hover { border-color: var(--brand-red); color: var(--brand-red); }
+  .vh-quick-emoji { font-size: 14px; }
+
+  /* Service category groups */
+  .vh-service-group { margin-bottom: 16px; }
+  .vh-service-group:last-child { margin-bottom: 0; }
+  .vh-service-cat {
+    font-size: 12px; color: var(--ink-500);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    font-weight: 500; margin-bottom: 8px;
+  }
+  .vh-service-items { display: flex; flex-wrap: wrap; gap: 6px; }
+  .vh-service-chip {
+    padding: 6px 12px; border: 1px solid var(--form-field-border);
+    border-radius: 999px; font-size: 12.5px;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+    color: var(--ink-500); background: #fff;
+  }
+  .vh-service-chip:hover { border-color: var(--brand-red); }
+  .vh-service-chip.is-selected {
+    background: var(--brand-red); color: #fff; border-color: var(--brand-red);
+  }
+  .vh-service-chip .vh-tick { display: none; font-size: 11px; }
+  .vh-service-chip.is-selected .vh-tick { display: inline; }
+
+  /* Picker modal */
+  .vh-tabs {
+    display: flex; border-bottom: 1px solid var(--auth-box-border);
+    padding: 0 22px;
+  }
+  .vh-tab {
+    padding: 14px 18px; font-size: 13.5px; font-weight: 500;
+    color: var(--ink-500); cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .vh-tab.is-active { color: var(--brand-red); border-bottom-color: var(--brand-red); }
+
+  .vh-pane { padding: 0; }
+  .vh-pane.is-active { display: block; }
+
+  .vh-breadcrumbs {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+    padding: 14px 22px; background: var(--bodyBg);
+    border-bottom: 1px solid var(--grid-field-border);
+    font-size: 12px;
+  }
+  .vh-bc {
+    padding: 4px 10px; border-radius: 999px;
+    color: var(--ink-400); cursor: pointer;
+  }
+  .vh-bc:hover { background: #fff; color: var(--bodyText); }
+  .vh-bc.is-active {
+    background: var(--brand-red); color: #fff; font-weight: 500;
+  }
+  .vh-bc.is-done {
+    color: var(--green-txt); font-weight: 500;
+  }
+  .vh-bc-sep { color: var(--ink-300); }
+
+  .vh-cascade-body {
+    padding: 20px 22px;
+    min-height: 320px;
+  }
+  .vh-options-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .vh-option {
+    padding: 12px 14px; border: 1px solid var(--form-field-border);
+    border-radius: 6px; font-size: 13px;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    color: var(--bodyText); background: #fff;
+  }
+  .vh-option:hover { border-color: var(--brand-red); background: var(--brand-red-ghost); }
+  .vh-option.is-selected {
+    border-color: var(--brand-red); background: var(--brand-red-ghost);
+    color: var(--brand-red); font-weight: 500;
+  }
+  .vh-option__check {
+    width: 18px; height: 18px; border: 1.5px solid var(--ink-300);
+    border-radius: 4px; display: grid; place-items: center;
+    flex: none;
+  }
+  .vh-option.is-selected .vh-option__check {
+    background: var(--brand-red); border-color: var(--brand-red);
+    color: #fff; font-size: 12px;
+  }
+
+  .vh-select-all {
+    margin-bottom: 12px;
+    font-size: 12.5px;
+    color: var(--forgot-link-color);
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .vh-select-all:hover { text-decoration: underline; }
+
+  .vh-step-title {
+    font-size: 14px; font-weight: 500; color: var(--bodyText);
+    margin: 0 0 8px;
+  }
+  .vh-step-help {
+    font-size: 12.5px; color: var(--ink-500); margin-bottom: 14px;
+  }
+
+  /* Quick preset cards */
+  .vh-preset {
+    display: block; padding: 14px;
+    border: 1px solid var(--form-field-border); border-radius: 6px;
+    cursor: pointer;
+  }
+  .vh-preset:hover { border-color: var(--brand-red); }
+  .vh-preset .cbx { float: right; margin-top: 2px; }
+  .vh-preset strong { display: block; font-size: 13.5px; }
+
+</style>
+</head>
+<body data-portal="supplier" data-page="my-account" data-page-title="Profile">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+  <div class="profile-page">
+    <div>
+      <!-- Profile header -->
+      <div class="profile-head-card">
+        <div class="pf-avatar">
+          OM
+          <div class="pf-avatar__cam">📷</div>
+        </div>
+        <div>
+          <div class="pf-name">Omar Al-Mansouri <span class="pf-verified">✓</span></div>
+          <div class="pf-role">Owner</div>
+          <div class="pf-status-row">Profile Update Status <span class="pending">Pending for approval</span></div>
+        </div>
+        <div class="pf-head-actions">
+          <a href="reset-password.html" class="btn btn--primary">Change Password</a>
+          <a href="../index.html" class="btn" onclick="if(!confirm('Logout from all active sessions across all devices?')){event.preventDefault();}">Logout from All Sessions</a>
+        </div>
+      </div>
+
+      <!-- Subscription Information -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Subscription Information</h3>
+          <a href="subscription.html" class="btn btn--primary" style="padding:8px 16px">Manage Subscription</a>
+        </div>
+        <div class="profile-card__body">
+          <div>
+            <div class="pf-label">SUBSCRIPTION PLAN</div>
+            <div class="pf-value">Business Plan</div>
+          </div>
+          <div>
+            <div class="pf-label">SUBSCRIPTION STATUS</div>
+            <div class="pf-value green">Active</div>
+          </div>
+          <div>
+            <div class="pf-label">SUBSCRIPTION EXPIRY DATE</div>
+            <div class="pf-value">2027-10-15T00:00:00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personal Information -->
+      <div class="profile-card" data-edit-section="personal">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Personal Information</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="pf-edit-btn">✎ Edit</button>
+            <div class="pf-actions">
+              <button class="pf-btn-cancel">Cancel</button>
+              <button class="pf-btn-update">Update</button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-card__body">
+          
+      <div class="pf-view">
+        <div class="pf-label">FIRST NAME</div>
+        <div class="pf-value">Omar</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Omar"/>
+        <label class="mi-label">First Name*</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">LAST NAME</div>
+        <div class="pf-value">Al-Mansouri</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Al-Mansouri"/>
+        <label class="mi-label">Last Name*</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">CODE</div>
+        <div class="pf-value">+91</div>
+      </div>
+      <div class="mi-field">
+        <div class="mi-input" style="display:flex;align-items:center;gap:8px;padding:14px 14px">
+          <span class="mi-flag"></span> <span>+91</span> <span class="mi-caret" style="margin-left:auto">▼</span>
+        </div>
+        <label class="mi-label">Code*</label>
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">MOBILE NUMBER</div>
+        <div class="pf-value">9865741230</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="9865741230"/>
+        <label class="mi-label">Mobile Number*</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">CODE</div>
+        <div class="pf-value">+91</div>
+      </div>
+      <div class="mi-field">
+        <div class="mi-input" style="display:flex;align-items:center;gap:8px;padding:14px 14px">
+          <span class="mi-flag"></span> <span>+91</span> <span class="mi-caret" style="margin-left:auto">▼</span>
+        </div>
+        <label class="mi-label">Code*</label>
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">ALTERNATE NUMBER</div>
+        <div class="pf-value">9865741231</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="9865741231"/>
+        <label class="mi-label">Alternate Number*</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">EMIRATES ID</div>
+        <div class="pf-value">784-1234-9856301-3</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="784-1234-9856301-3"/>
+        <label class="mi-label">Emirates ID</label>
+        
+        
+      </div>
+          <div></div>
+          
+      <div class="pf-view">
+        <div class="pf-label">UPLOAD EMIRATES ID COPY</div>
+        <div class="pf-value"><a href="#">e7254d_122615_219459.jpg</a> 👁</div>
+      </div>
+      <div class="mi-field">
+        <div class="mi-input" style="display:flex;align-items:center;gap:8px;padding:14px 14px;cursor:pointer">
+          <span style="flex:1;color:var(--bodyText);font-size:14px">e7254d_122615_219459.jpg</span>
+          <span class="mi-caret" style="font-size:14px">⤴</span>
+        </div>
+        <label class="mi-label">Upload Emirates ID Copy*</label>
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">ID EXPIRY DATE</div>
+        <div class="pf-value">2048-05-03</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="03/05/2048"/>
+        <label class="mi-label">ID Expiry Date*</label>
+        <span class="mi-suffix-icon">📅</span>
+      </div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- Company Information -->
+      <div class="profile-card" data-edit-section="company">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Company Information</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="pf-edit-btn">✎ Edit</button>
+            <div class="pf-actions">
+              <button class="pf-btn-cancel">Cancel</button>
+              <button class="pf-btn-update">Update</button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-card__body">
+          <div class="map-link" style="display:none"><a href="javascript:alert('Map picker opens here')">Select Location from Map</a></div>
+          
+      <div class="pf-view">
+        <div class="pf-label">COMPANY NAME</div>
+        <div class="pf-value">Gulf Auto Parts LLC</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Gulf Auto Parts LLC" disabled/>
+        <label class="mi-label">Company Name</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">COMPANY ADDRESS</div>
+        <div class="pf-value">Partshub, Industrial Area, Industrial Areas</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Partshub, Industrial Area, Industrial Areas"/>
+        <label class="mi-label">Address Line 1*</label>
+        
+        
+      </div>
+          <div class="pf-view">
+            <div class="pf-label">COUNTRY</div>
+            <div class="pf-value">United Arab Emirates</div>
+          </div>
+          <div class="mi-field">
+            <input type="text" class="mi-input" value="Industrial Area" placeholder=" "/>
+            <label class="mi-label">Address Line 2</label>
+          </div>
+
+          <div class="pf-view">
+            <div class="pf-label">CITY</div>
+            <div class="pf-value">-</div>
+          </div>
+          <div class="mi-field">
+            <input type="text" class="mi-input" value="Industrial Areas"/>
+            <label class="mi-label">Area</label>
+          </div>
+
+          <div class="pf-view">
+            <div class="pf-label">WEBSITE</div>
+            <div class="pf-value">-</div>
+          </div>
+          <div class="mi-field">
+            <div class="mi-input" style="display:flex;align-items:center;justify-content:space-between;padding:14px">United Arab Emirates <span class="mi-caret">▼</span></div>
+            <label class="mi-label">Country*</label>
+          </div>
+
+          <div class="pf-view">
+            <div class="pf-label">ORGANIZATION TYPE</div>
+            <div class="pf-value">SUPPLIER</div>
+          </div>
+          <div class="mi-field is-error">
+            <div class="mi-input is-error" style="display:flex;align-items:center;justify-content:space-between;padding:14px;color:var(--brand-red)">City* <span class="mi-caret">▼</span></div>
+            <label class="mi-label">City*</label>
+            <div class="mi-error-text">City is required</div>
+          </div>
+
+          <div class="pf-view">
+            <div class="pf-label">EMAIL ADDRESS</div>
+            <div class="pf-value">-</div>
+          </div>
+          <div class="mi-field">
+            <input type="text" class="mi-input" value=""/>
+            <label class="mi-label">Website</label>
+          </div>
+
+          <div></div>
+          <div class="mi-field">
+            <input type="text" class="mi-input" value="GARAGE" disabled/>
+            <label class="mi-label">Organization Type</label>
+          </div>
+
+          <div></div>
+          <div class="mi-field">
+            <input type="email" class="mi-input" value=""/>
+            <label class="mi-label">Email Address</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- License Information (read-only) -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">License Information</h3>
+          <button class="pf-edit-btn is-disabled" disabled>✎ Edit</button>
+        </div>
+        <div class="profile-card__body">
+          <div><div class="pf-label">TRADE LICENSE NUMBER</div><div class="pf-value">BS123456</div></div>
+          <div><div class="pf-label">TRADE LICENSE COPY</div><div class="pf-value">—</div></div>
+          <div><div class="pf-label">LICENSING CITY</div><div class="pf-value">Abu Dhabi</div></div>
+          <div><div class="pf-label">LICENSING AUTHORITY</div><div class="pf-value">Abu Dhabi Airports Free Zone</div></div>
+          <div><div class="pf-label">LICENSE EXPIRY DATE</div><div class="pf-value">2026-04-29</div></div>
+          <div></div>
+        </div>
+        <div class="pending-banner">
+          <div class="pending-banner__icon">i</div>
+          <div>
+            <div class="pending-banner__title">Pending Approval</div>
+            <div class="pending-banner__body">Trade License Copy: <a href="#">e7254d_170628_537028.pdf</a> 👁</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VAT Information (read-only) -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">VAT Information</h3>
+          <button class="pf-edit-btn is-disabled" disabled>✎ Edit</button>
+        </div>
+        <div class="profile-card__body">
+          <div><div class="pf-label">VAT NUMBER</div><div class="pf-value">987456321074136</div></div>
+          <div><div class="pf-label">VAT CERTIFICATE</div><div class="pf-value">-</div></div>
+          <div></div>
+        </div>
+        <div class="pending-banner">
+          <div class="pending-banner__icon">i</div>
+          <div>
+            <div class="pending-banner__title">Pending Approval</div>
+            <div class="pending-banner__body"><strong>VAT Number:</strong> 123</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bank Account Information -->
+      <div class="profile-card" data-edit-section="bank">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Bank Account Information</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="pf-edit-btn">✎ Edit</button>
+            <div class="pf-actions">
+              <button class="pf-btn-cancel">Cancel</button>
+              <button class="pf-btn-update">Update</button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-card__body">
+          
+      <div class="pf-view">
+        <div class="pf-label">IBAN NUMBER</div>
+        <div class="pf-value">97112698123658964124</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="97112698123658964124"/>
+        <label class="mi-label">IBAN Number</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">ACCOUNT NAME</div>
+        <div class="pf-value">Kholoud Al-Shihini</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Kholoud Al-Shihini"/>
+        <label class="mi-label">Account Name</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">BANK NAME</div>
+        <div class="pf-value">Islamic Bank of Dubai</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="Islamic Bank of Dubai"/>
+        <label class="mi-label">Bank Name</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">ACCOUNT NUMBER</div>
+        <div class="pf-value">8901234556789013</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="8901234556789013"/>
+        <label class="mi-label">Account Number</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">SWIFT CODE</div>
+        <div class="pf-value">RSTUV9012B1</div>
+      </div>
+      <div class="mi-field">
+        <input type="text" class="mi-input" value="RSTUV9012B1"/>
+        <label class="mi-label">SWIFT Code</label>
+        
+        
+      </div>
+          
+      <div class="pf-view">
+        <div class="pf-label">IBAN LETTER</div>
+        <div class="pf-value"><a href="#">e7254d_143340_810076.jpg</a> 👁</div>
+      </div>
+      <div class="mi-field">
+        <div class="mi-input" style="display:flex;align-items:center;gap:8px;padding:14px 14px;cursor:pointer">
+          <span style="flex:1;color:var(--bodyText);font-size:14px">e7254d_143340_810076.jpg</span>
+          <span class="mi-caret" style="font-size:14px">⤴</span>
+        </div>
+        <label class="mi-label">IBAN Letter*</label>
+      </div>
+        </div>
+      </div>
+
+      
+      
+      <!-- Vehicle Coverage card -->
+      <div class="profile-card vh-card">
+        <div class="profile-card__head">
+          <div>
+            <h3 class="profile-card__title">Vehicle Compatibility</h3>
+            <div style="font-size:12px;color:var(--ink-400);margin-top:4px">
+              Which vehicles your parts fit. Buyers filter suppliers by these.
+            </div>
+          </div>
+          <button class="pf-edit-btn" id="vhAddBtn">+ Add Coverage</button>
+        </div>
+        <div class="profile-card__body" style="display:block;padding:18px 22px">
+          <div class="vh-chips">
+            
+    <span class="vh-chip">
+      All Japanese vehicles
+      <span class="vh-chip__close" data-chip="0">×</span>
+    </span>
+  
+    <span class="vh-chip">
+      All Toyota Camry (2018-2025)
+      <span class="vh-chip__close" data-chip="1">×</span>
+    </span>
+  
+    <span class="vh-chip">
+      All BMW 5 Series
+      <span class="vh-chip__close" data-chip="2">×</span>
+    </span>
+  
+    <span class="vh-chip">
+      BYD (all models)
+      <span class="vh-chip__close" data-chip="3">×</span>
+    </span>
+  
+    <span class="vh-chip">
+      All Mercedes-Benz E-Class
+      <span class="vh-chip__close" data-chip="4">×</span>
+    </span>
+  
+            <button class="vh-add-pill" id="vhAddPill">+ Add</button>
+          </div>
+
+          <!-- Quick shortcuts -->
+          <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--grid-field-border)">
+            <div style="font-size:12px;color:var(--ink-500);font-weight:500;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em">Quick Add</div>
+            <div class="vh-quick">
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🇯🇵</span> Japanese</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🇩🇪</span> German</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🇺🇸</span> American</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🇰🇷</span> Korean</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🇨🇳</span> Chinese</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🏎</span> Luxury</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">⚡</span> EV</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🚙</span> All SUVs</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🚗</span> All Sedans</button>
+              <button class="vh-quick-btn"><span class="vh-quick-emoji">🛻</span> All Pickups</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services / Parts categories card -->
+      <div class="profile-card vh-card">
+        <div class="profile-card__head">
+          <div>
+            <h3 class="profile-card__title">Parts Categories You Supply</h3>
+            <div style="font-size:12px;color:var(--ink-400);margin-top:4px">
+              Part categories your inventory covers — used for RFQ matching.
+            </div>
+          </div>
+          <button class="pf-edit-btn">✎ Manage</button>
+        </div>
+        <div class="profile-card__body" style="display:block;padding:18px 22px">
+          
+    <div class="vh-service-group">
+      <div class="vh-service-cat">Engine & Drivetrain</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Engine parts
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Pistons & rings
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Timing belts/chains
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Gaskets & seals
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Fuel injectors
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Turbo / supercharger
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Filters
+          </label>
+        
+      </div>
+    </div>
+  
+    <div class="vh-service-group">
+      <div class="vh-service-cat">Transmission</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Gearboxes
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Clutch kits
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Driveshafts
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> CV joints
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Transmission fluid
+          </label>
+        
+      </div>
+    </div>
+  
+    <div class="vh-service-group">
+      <div class="vh-service-cat">Braking System</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Brake pads
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Brake discs / rotors
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Brake calipers
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Master cylinders
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Brake lines
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> ABS modules
+          </label>
+        
+      </div>
+    </div>
+  
+    <div class="vh-service-group">
+      <div class="vh-service-cat">Suspension & Steering</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Shock absorbers
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Struts
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Control arms
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Bushings
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Tie rods
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Steering racks
+          </label>
+        
+      </div>
+    </div>
+  
+    <div class="vh-service-group">
+      <div class="vh-service-cat">Electrical</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Batteries
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Alternators
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Starters
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Wiring harnesses
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> ECUs
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Sensors
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Fuses & relays
+          </label>
+        
+      </div>
+    </div>
+  
+    <div class="vh-service-group">
+      <div class="vh-service-cat">Body & Trim</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Bumpers
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Hoods
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Fenders
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Doors
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Mirrors
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Glass
+          </label>
+        
+      </div>
+    </div>
+  
+    <div class="vh-service-group">
+      <div class="vh-service-cat">Lighting</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Headlamps
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Taillamps
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Fog lights
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Indicators
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Interior lights
+          </label>
+        
+      </div>
+    </div>
+  
+    <div class="vh-service-group">
+      <div class="vh-service-cat">EV Components</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Battery packs
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Inverters
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Charging modules
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> EV motors
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> BMS
+          </label>
+        
+      </div>
+    </div>
+  
+    <div class="vh-service-group">
+      <div class="vh-service-cat">Cooling</div>
+      <div class="vh-service-items">
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Radiators
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Hoses
+          </label>
+        
+          <label class="vh-service-chip is-selected">
+            <input type="checkbox" class="cbx" checked hidden/>
+            <span class="vh-tick">✓</span> Water pumps
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Thermostats
+          </label>
+        
+          <label class="vh-service-chip">
+            <input type="checkbox" class="cbx"  hidden/>
+            <span class="vh-tick">✓</span> Fans
+          </label>
+        
+      </div>
+    </div>
+  
+        </div>
+      </div>
+
+      <!-- Vehicle Coverage Picker Modal -->
+      <div class="modal-backdrop" id="vhModal">
+        <div class="modal modal--xl" style="max-width:900px;max-height:90vh">
+          <div class="modal__head">
+            <h3 class="modal__title">Add Vehicle Coverage</h3>
+            <button class="modal__close" id="vhClose">×</button>
+          </div>
+
+          <div class="vh-tabs">
+            <div class="vh-tab is-active" data-vhtab="cascade">Detailed (10-level)</div>
+            <div class="vh-tab" data-vhtab="quick">Quick Shortcuts</div>
+            <div class="vh-tab" data-vhtab="import">Bulk Import (CSV)</div>
+          </div>
+
+          <div class="modal__body" id="vhBody" style="padding:0">
+
+            <!-- Tab: Cascade -->
+            <div class="vh-pane is-active" data-pane="cascade">
+              <div class="vh-breadcrumbs">
+                <span class="vh-bc is-active" data-step="1">1. Type</span>
+                <span class="vh-bc-sep">›</span>
+                <span class="vh-bc" data-step="2">2. Origin</span>
+                <span class="vh-bc-sep">›</span>
+                <span class="vh-bc" data-step="3">3. Segment</span>
+                <span class="vh-bc-sep">›</span>
+                <span class="vh-bc" data-step="4">4. Brand</span>
+                <span class="vh-bc-sep">›</span>
+                <span class="vh-bc" data-step="5">5. Model</span>
+                <span class="vh-bc-sep">›</span>
+                <span class="vh-bc" data-step="6">6. Year</span>
+                <span class="vh-bc-sep">›</span>
+                <span class="vh-bc" data-step="7">7. Body</span>
+                <span class="vh-bc-sep">›</span>
+                <span class="vh-bc" data-step="8">8. Engine</span>
+                <span class="vh-bc-sep">›</span>
+                <span class="vh-bc" data-step="9">9. Trans.</span>
+              </div>
+
+              <div class="vh-cascade-body" id="vhCascadeBody">
+                <!-- Will be filled by JS based on selected step -->
+              </div>
+            </div>
+
+            <!-- Tab: Quick Shortcuts -->
+            <div class="vh-pane" data-pane="quick" style="padding:20px;display:none">
+              <p class="muted small">Select one or more presets to add coverage in bulk.</p>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px">
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All Japanese</strong><div class="muted small">Toyota, Honda, Nissan, Mazda…</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All German</strong><div class="muted small">BMW, Mercedes, Audi, VW, Porsche</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All American</strong><div class="muted small">Ford, Chevy, Jeep, Tesla, Cadillac</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All Korean</strong><div class="muted small">Hyundai, Kia, Genesis</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All Chinese</strong><div class="muted small">BYD, Geely, Chery, MG</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All Luxury</strong><div class="muted small">Premium + luxury segment only</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All EVs</strong><div class="muted small">Battery electric vehicles only</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All Sedans</strong><div class="muted small">Across all brands &amp; origins</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All SUVs</strong><div class="muted small">Across all brands &amp; origins</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All Pickup Trucks</strong><div class="muted small">Commercial &amp; consumer</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>All Commercial</strong><div class="muted small">Vans, buses, trucks</div></label>
+                <label class="vh-preset"><input type="checkbox" class="cbx"/> <strong>4x4 / Off-Road</strong><div class="muted small">Land Cruiser, Patrol, Wrangler…</div></label>
+              </div>
+            </div>
+
+            <!-- Tab: Bulk import -->
+            <div class="vh-pane" data-pane="import" style="padding:20px;display:none">
+              <p class="muted small">Upload a CSV with columns: Type, Origin, Brand, Model, Year-from, Year-to.</p>
+              <a href="javascript:alert('Sample CSV downloaded')" class="auth__link">↓ Download sample template</a>
+              <div class="dropzone mt-16">
+                <div class="dropzone__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+                <div class="dropzone__title">Drop your coverage CSV</div>
+                <div class="dropzone__sub">or click to browse</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal__foot">
+            <div style="margin-right:auto;font-size:12.5px;color:var(--ink-500)">
+              <strong id="vhSelectedCount">0</strong> new coverage rules will be added
+            </div>
+            <button class="btn" id="vhCancel">Cancel</button>
+            <button class="btn btn--primary" id="vhConfirm">Add to coverage</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Security Information -->
+      <div class="profile-card">
+        <div class="profile-card__head">
+          <h3 class="profile-card__title">Security Information</h3>
+        </div>
+        <div class="profile-card__body">
+          <div><div class="pf-label">LAST LOGIN DATE & TIME</div><div class="pf-value">May 23, 2026, 1:18:36 AM</div></div>
+          <div><div class="pf-label">ACCOUNT STATUS</div><div class="pf-value green">Active</div></div>
+          <div><div class="pf-label">ACTIVE BROWSER</div><div class="pf-value">-</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right sidebar: Recent Activities -->
+    <aside>
+      <div class="activity-card">
+        <div class="activity-card__head">Recent Activities</div>
+        <div class="activity-item"><div class="activity-item__text">Create garage rfq acceptance</div><div class="activity-item__time">7 hours ago</div></div>
+        <div class="activity-item"><div class="activity-item__text">RFQ_ACCEPTED: Garage BS Garage accepted the RFQ</div><div class="activity-item__time">7 hours ago</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create garage rfq acceptance</div><div class="activity-item__time">14/05/2026 08:23 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">RFQ_ACCEPTED: Garage BS Garage accepted the RFQ</div><div class="activity-item__time">14/05/2026 08:23 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">14/05/2026 04:07 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">14/05/2026 04:07 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">14/05/2026 03:25 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">14/05/2026 03:20 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">13/05/2026 08:29 PM</div></div>
+        <div class="activity-item"><div class="activity-item__text">Create user column preferences</div><div class="activity-item__time">13/05/2026 08:28 PM</div></div>
+      </div>
+    </aside>
+  </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+<script>
+  // Inline edit mode toggle per section
+  document.querySelectorAll('[data-edit-section]').forEach(card => {
+    const editBtn = card.querySelector('.pf-edit-btn');
+    const cancelBtn = card.querySelector('.pf-btn-cancel');
+    const updateBtn = card.querySelector('.pf-btn-update');
+    if (!editBtn || editBtn.disabled) return;
+    editBtn.addEventListener('click', () => {
+      card.classList.add('is-editing');
+    });
+    cancelBtn && cancelBtn.addEventListener('click', () => {
+      card.classList.remove('is-editing');
+    });
+    // Watch inputs to enable Update
+    card.querySelectorAll('.mi-input').forEach(inp => {
+      inp.addEventListener('input', () => {
+        updateBtn.classList.add('is-active');
+      });
+    });
+    updateBtn && updateBtn.addEventListener('click', () => {
+      if (!updateBtn.classList.contains('is-active')) return;
+      alert('✓ Changes saved. Some changes may require admin approval.');
+      card.classList.remove('is-editing');
+      updateBtn.classList.remove('is-active');
+    });
+  });
+</script>
+
+<script>
+(function() {
+  const VH = {"types":["Sedan","SUV","Hatchback","Coupe","Pickup Truck","Crossover","4x4 / Off-Road","MPV / Van","Commercial","Bus / Coach"],"origins":["Japan","Germany","USA","UK","Italy","France","Korea","China","India","Sweden"],"segments":["Mass Market","Premium","Luxury","Performance","EV Mass Market","EV Premium","EV Luxury"],"brands":{"Japan":["Toyota","Honda","Nissan","Mazda","Subaru","Mitsubishi","Suzuki","Lexus","Infiniti"],"Germany":["Volkswagen","BMW","Mercedes-Benz","Audi","Porsche","Opel"],"USA":["Ford","Chevrolet","GMC","Dodge","Jeep","Chrysler","Cadillac","Tesla"],"UK":["Land Rover","Range Rover","Jaguar","Bentley","Rolls-Royce","Mini","Aston Martin"],"Italy":["Fiat","Alfa Romeo","Ferrari","Lamborghini","Maserati"],"France":["Renault","Peugeot","Citroën","DS Automobiles"],"Korea":["Hyundai","Kia","Genesis","SsangYong"],"China":["BYD","Geely","Chery","Great Wall","MG","Haval"],"India":["Tata","Mahindra","Maruti Suzuki"],"Sweden":["Volvo","Polestar","Saab"]},"models":{"Toyota":["Camry","Corolla","Land Cruiser","Hilux","Yaris","RAV4","Prado"],"Honda":["Accord","Civic","CR-V","HR-V","Pilot","Odyssey"],"BMW":["3 Series","5 Series","7 Series","X3","X5","X7"],"Mercedes-Benz":["C-Class","E-Class","S-Class","GLC","GLE","G-Class"],"BYD":["Atto 3","Han","Seal","Tang","Dolphin"],"Lexus":["ES","IS","LS","RX","NX","LX"]},"years":["2026","2025","2024","2023","2022","2021","2020","2019","2018","2017","2016 or older"],"bodyTypes":["4-door sedan","5-door hatch","3-door hatch","SUV","Coupe","Convertible","Wagon","Pickup"],"engines":["1.5L Petrol","2.0L Petrol","2.5L Petrol","3.0L V6","3.5L V6","4.0L V8","5.0L V8","2.0L Diesel","3.0L Diesel","Hybrid","Plug-in Hybrid","Full EV"],"transmissions":["Manual","Automatic (5-spd)","Automatic (6-spd)","Automatic (8-spd)","Automatic (10-spd)","CVT","DCT","eCVT","Single-speed (EV)"]};
+  const modal = document.getElementById('vhModal');
+  const addBtn = document.getElementById('vhAddBtn');
+  const addPill = document.getElementById('vhAddPill');
+  const closeBtn = document.getElementById('vhClose');
+  const cancelBtn = document.getElementById('vhCancel');
+  const confirmBtn = document.getElementById('vhConfirm');
+  const cascadeBody = document.getElementById('vhCascadeBody');
+  const selectedCount = document.getElementById('vhSelectedCount');
+
+  function openModal() { modal.classList.add('is-open'); renderStep(1); }
+  function closeModal() { modal.classList.remove('is-open'); }
+
+  if (addBtn) addBtn.addEventListener('click', openModal);
+  if (addPill) addPill.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+  if (confirmBtn) confirmBtn.addEventListener('click', () => {
+    alert('✓ Coverage added. Buyers can now match RFQs to your selections.');
+    closeModal();
+  });
+
+  // Tab switching
+  document.querySelectorAll('.vh-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.vh-tab').forEach(t => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      const pane = tab.dataset.vhtab;
+      document.querySelectorAll('.vh-pane').forEach(p => {
+        p.style.display = p.dataset.pane === pane ? 'block' : 'none';
+        p.classList.toggle('is-active', p.dataset.pane === pane);
+      });
+    });
+  });
+
+  // Breadcrumb click → jump to step
+  document.querySelectorAll('.vh-bc').forEach(bc => {
+    bc.addEventListener('click', () => renderStep(parseInt(bc.dataset.step)));
+  });
+
+  // Track selections per step
+  const sel = { 1: ['Sedan'], 2: ['Japan'], 3: [], 4: ['Toyota'], 5: ['Camry'] };
+
+  function renderStep(step) {
+    document.querySelectorAll('.vh-bc').forEach(bc => {
+      const s = parseInt(bc.dataset.step);
+      bc.classList.toggle('is-active', s === step);
+      bc.classList.toggle('is-done', s < step && sel[s] && sel[s].length);
+    });
+
+    let options = [], title = '', help = '';
+    switch(step) {
+      case 1:
+        options = VH.types; title = 'Vehicle Types you cover';
+        help = 'Select the body styles your workshop services.'; break;
+      case 2:
+        options = VH.origins; title = 'Country of Origin';
+        help = 'Narrow by manufacturing region.'; break;
+      case 3:
+        options = VH.segments; title = 'Brand Segment';
+        help = 'Mass market, premium or luxury tier.'; break;
+      case 4:
+        options = sel[2] && sel[2].length ? sel[2].flatMap(o => VH.brands[o] || []) : Object.values(VH.brands).flat();
+        title = 'Brand'; help = 'Specific manufacturers within your selected origins.'; break;
+      case 5:
+        options = sel[4] && sel[4].length ? sel[4].flatMap(b => VH.models[b] || ['(generic models — add more in admin)']) : ['Pick brands first']; 
+        title = 'Model'; help = 'Specific models you service.'; break;
+      case 6:
+        options = VH.years; title = 'Year Range';
+        help = 'Production year(s) you service.'; break;
+      case 7:
+        options = VH.bodyTypes; title = 'Body Type';
+        help = 'Optional — only if you specialise by body.'; break;
+      case 8:
+        options = VH.engines; title = 'Engine';
+        help = 'Optional — for engine-specific specialists.'; break;
+      case 9:
+        options = VH.transmissions; title = 'Transmission';
+        help = 'Optional — for transmission specialists.'; break;
+    }
+
+    const selected = sel[step] || [];
+    cascadeBody.innerHTML = `
+      <h4 class="vh-step-title">${title}</h4>
+      <div class="vh-step-help">${help}</div>
+      <a class="vh-select-all" data-action="all">Select all</a> ·
+      <a class="vh-select-all" data-action="none">Clear</a>
+      <div class="vh-options-grid mt-16">
+        ${options.map(o => `
+          <label class="vh-option${selected.includes(o) ? ' is-selected' : ''}" data-opt="${o}">
+            <span class="vh-option__check">${selected.includes(o) ? '✓' : ''}</span>
+            <span>${o}</span>
+          </label>
+        `).join('')}
+      </div>
+      <div class="flex gap-8 mt-24" style="justify-content:space-between">
+        <button class="btn" ${step <= 1 ? 'disabled' : ''} data-prev>← Previous</button>
+        <button class="btn btn--primary" ${step >= 9 ? 'disabled' : ''} data-next>Next →</button>
+      </div>
+    `;
+
+    cascadeBody.querySelectorAll('.vh-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const v = opt.dataset.opt;
+        sel[step] = sel[step] || [];
+        const i = sel[step].indexOf(v);
+        if (i === -1) sel[step].push(v); else sel[step].splice(i, 1);
+        renderStep(step); // re-render to update visual state
+        updateCount();
+      });
+    });
+    cascadeBody.querySelectorAll('[data-action="all"]')[0].addEventListener('click', () => {
+      sel[step] = options.slice(); renderStep(step); updateCount();
+    });
+    cascadeBody.querySelectorAll('[data-action="none"]')[0].addEventListener('click', () => {
+      sel[step] = []; renderStep(step); updateCount();
+    });
+    const next = cascadeBody.querySelector('[data-next]'), prev = cascadeBody.querySelector('[data-prev]');
+    if (next) next.addEventListener('click', () => renderStep(step + 1));
+    if (prev) prev.addEventListener('click', () => renderStep(step - 1));
+
+    updateCount();
+  }
+
+  function updateCount() {
+    let count = 1;
+    [1,2,3,4,5,6,7,8,9].forEach(s => {
+      if (sel[s] && sel[s].length) count *= sel[s].length;
+    });
+    selectedCount.textContent = count.toLocaleString();
+  }
+
+  // Service chip toggle
+  document.querySelectorAll('.vh-service-chip').forEach(chip => {
+    chip.addEventListener('click', e => {
+      e.preventDefault();
+      chip.classList.toggle('is-selected');
+    });
+  });
+
+  // Chip remove
+  document.querySelectorAll('.vh-chip__close').forEach(c => {
+    c.addEventListener('click', () => {
+      c.closest('.vh-chip').style.transition = 'opacity 0.2s';
+      c.closest('.vh-chip').style.opacity = '0';
+      setTimeout(() => c.closest('.vh-chip').remove(), 200);
+    });
+  });
+
+  // Quick add buttons
+  document.querySelectorAll('.vh-quick-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      const label = b.textContent.trim().replace(/^[^\s]+\s+/, '');
+      alert('✓ Added "All ' + label + '" to your coverage. Edit individual entries in the chips above.');
+    });
+  });
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Supplier — Quotation Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="supplier" data-page="quotations" data-page-title="My Quotations">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <div class="dash-grid mb-16" style="grid-template-columns: 1fr 380px">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Build quotation — RFQ EFHG1234U</h3>
+            <span class="panel__sub">From Royal Swiss Automobile · Toyota Camry 2022 · Deadline 27/01/2025</span>
+          </div>
+          <div class="panel__body">
+            <table class="data" id="qt">
+              <thead>
+                <tr>
+                  <th>Part</th>
+                  <th>Qty</th>
+                  <th>Unit Cost</th>
+                  <th>Margin %</th>
+                  <th>Unit Price</th>
+                  <th>Line Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5" class="text-right" style="font-weight:600">Subtotal</td>
+                  <td><strong>AED 5,260</strong></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="text-right">VAT (5%)</td>
+                  <td>AED 263</td>
+                  <td></td>
+                </tr>
+                <tr style="background:#FEF3F4">
+                  <td colspan="5" class="text-right" style="font-weight:700">Total</td>
+                  <td><strong style="color:var(--brand-red);font-size:16px">AED 5,523</strong></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Terms &amp; submission</h3></div>
+          <div class="panel__body" style="display:grid;gap:12px">
+            <div>
+              <label class="label">Delivery Time</label>
+              <select class="select"><option>5 Days (Standard)</option><option>3 Days (Express +AED 250)</option><option>7 Days (Economy)</option></select>
+            </div>
+            <div>
+              <label class="label">Warranty</label>
+              <select class="select"><option>12 months parts &amp; labor</option><option>6 months parts only</option><option>24 months OEM warranty</option></select>
+            </div>
+            <div>
+              <label class="label">Pickup &amp; Delivery</label>
+              <select class="select"><option>Included</option><option>+ AED 250</option><option>Customer pickup</option></select>
+            </div>
+            <div>
+              <label class="label">Payment terms</label>
+              <select class="select"><option>50% advance, 50% on delivery</option><option>Net 30</option><option>Net 15</option></select>
+            </div>
+            <div>
+              <label class="label">Notes to garage</label>
+              <textarea class="textarea" rows="3" placeholder="Add any conditions or alternatives..."></textarea>
+            </div>
+            <div class="flex gap-8 mt-8">
+              <button class="btn">Save draft</button>
+              <button class="btn btn--primary" style="flex:1;justify-content:center">Submit Quote</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head"><h3 class="panel__title">My recent quotations</h3></div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>Quote ID</th><th>RFQ</th><th>Garage</th><th>Total (AED)</th><th>Status</th><th>Submitted</th><th>Decision by</th></tr></thead>
+            <tbody>
+              <tr><td class="id-link">Q-9024</td><td>EFHG1234U</td><td>Royal Swiss Automobile</td><td><strong>5,523</strong></td><td><span class="badge badge--info">Under review</span></td><td>20/01/2025</td><td>27/01/2025</td></tr>
+              <tr><td class="id-link">Q-9023</td><td>EFHG1235V</td><td>Craft Auto Services</td><td><strong>4,820</strong></td><td><span class="badge badge--ok">Won</span></td><td>19/01/2025</td><td>—</td></tr>
+              <tr><td class="id-link">Q-9022</td><td>EFHG1232P</td><td>Speedway Motors</td><td><strong>2,140</strong></td><td><span class="badge badge--danger">Lost</span></td><td>18/01/2025</td><td>—</td></tr>
+              <tr><td class="id-link">Q-9021</td><td>EFHG1231N</td><td>Gargash Auto Centre</td><td><strong>11,200</strong></td><td><span class="badge badge--ok">Won</span></td><td>17/01/2025</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  const LINES = [
+    ['Shock absorbers (×4)', 4, 280, 25, 350, 1400],
+    ['Brake Pad Set Front',  1, 120, 50, 180, 180],
+    ['Brake Pad Set Rear',   1, 110, 50, 165, 165],
+    ['Headlamp Assembly LH', 1, 420, 62, 680, 680],
+    ['Battery 100Ah AGM',    1, 360, 64, 590, 590],
+    ['Radiator Hose Set',    1, 60,  100,120, 120]
+  ];
+  document.querySelector('#qt tbody').innerHTML = LINES.map(l => `
+    <tr>
+      <td><strong>${l[0]}</strong></td>
+      <td><input class="input" value="${l[1]}" style="width:60px;padding:6px"/></td>
+      <td>AED ${l[2]}</td>
+      <td><input class="input" value="${l[3]}%" style="width:70px;padding:6px"/></td>
+      <td>AED ${l[4]}</td>
+      <td><strong>AED ${l[5].toLocaleString()}</strong></td>
+      <td class="more">${PHIcon('trash', 16)}</td>
+    </tr>
+  `).join('');
+</script>
+</body>
+</html>

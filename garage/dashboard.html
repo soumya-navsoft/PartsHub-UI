@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="garage" data-page="dashboard" data-page-title="Dashboard">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- KPIs -->
+      <section class="kpi-grid mb-16">
+        <div class="kpi">
+          <div class="kpi__icon" id="kpi-i1"></div>
+          <div>
+            <div class="kpi__label">New Claim Requests</div>
+            <div class="kpi__value">8</div>
+            <div class="kpi__delta">▲ 3 today</div>
+          </div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__icon blue" id="kpi-i2"></div>
+          <div>
+            <div class="kpi__label">Pending Acceptance</div>
+            <div class="kpi__value">5</div>
+            <div class="kpi__delta">SLA: 18 hrs avg.</div>
+          </div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__icon green" id="kpi-i3"></div>
+          <div>
+            <div class="kpi__label">In-Progress Repairs</div>
+            <div class="kpi__value">14</div>
+          </div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__icon gold" id="kpi-i4"></div>
+          <div>
+            <div class="kpi__label">Revenue (AED)</div>
+            <div class="kpi__value">284,600</div>
+            <div class="kpi__delta down">▼ 2% vs last month</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Job pipeline -->
+      <div class="panel mb-16">
+        <div class="panel__head">
+          <h3 class="panel__title">Job pipeline</h3>
+          <span class="panel__sub">142 active jobs across 7 stages</span>
+        </div>
+        <div class="panel__body">
+          <div class="pipeline">
+            <div class="pipeline__stage is-done"><span class="pipeline__count">42</span>New requests</div>
+            <div class="pipeline__stage is-done"><span class="pipeline__count">38</span>Accepted</div>
+            <div class="pipeline__stage is-active"><span class="pipeline__count">24</span>Inspection</div>
+            <div class="pipeline__stage"><span class="pipeline__count">12</span>Waiting parts</div>
+            <div class="pipeline__stage"><span class="pipeline__count">14</span>Repair</div>
+            <div class="pipeline__stage"><span class="pipeline__count">8</span>Completed</div>
+            <div class="pipeline__stage"><span class="pipeline__count">4</span>Invoiced</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Required -->
+      <div class="panel mb-16">
+        <div class="panel__head"><h3 class="panel__title">Action Required</h3><span class="badge badge--danger" style="margin-left:8px">5 urgent</span></div>
+        <div class="panel__body" style="padding:8px">
+          <div class="flex-between" style="padding:12px 14px;border-bottom:1px solid var(--ink-100)"><div><strong>Claim JKLMN56784</strong> · Battery 100Ah AGM<div class="muted small">Accept / reject by 17:00 today</div></div><div class="flex gap-8"><button class="btn btn--sm">View</button><button class="btn btn--primary btn--sm">Accept</button></div></div>
+          <div class="flex-between" style="padding:12px 14px;border-bottom:1px solid var(--ink-100)"><div><strong>Parts not received</strong> · ORD-4498<div class="muted small">Gulf Auto Parts — overdue by 1 day</div></div><div class="flex gap-8"><button class="btn btn--sm">Open</button><button class="btn btn--ghost-red btn--sm">Escalate</button></div></div>
+          <div class="flex-between" style="padding:12px 14px;border-bottom:1px solid var(--ink-100)"><div><strong>Inspection due</strong> · Claim JKLMN56782<div class="muted small">Customer arriving in 30 min</div></div><div class="flex gap-8"><button class="btn btn--primary btn--sm">Start</button></div></div>
+          <div class="flex-between" style="padding:12px 14px"><div><strong>Invoice pending submission</strong> · ORD-4494<div class="muted small">Repair completed 2 days ago</div></div><div class="flex gap-8"><button class="btn btn--primary btn--sm">Raise invoice</button></div></div>
+        </div>
+      </div>
+
+      <div class="dash-grid mb-16">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Claim activity</h3>
+            <span class="panel__sub">Last 30 days</span>
+            <div style="margin-left:auto" class="flex gap-8">
+              <button class="btn btn--sm">Daily</button>
+              <button class="btn btn--sm" style="background:var(--brand-red);color:#fff;border-color:var(--brand-red)">Weekly</button>
+              <button class="btn btn--sm">Monthly</button>
+            </div>
+          </div>
+          <div class="panel__body">
+            <div class="chart-area">
+              <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#E11D2A" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#E11D2A" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,160 C50,140 80,100 130,110 C180,120 210,80 260,90 C310,100 340,60 390,70 C440,80 480,40 530,55 L600,40 L600,220 L0,220 Z" fill="url(#g1)"/>
+                <path d="M0,160 C50,140 80,100 130,110 C180,120 210,80 260,90 C310,100 340,60 390,70 C440,80 480,40 530,55 L600,40" stroke="#E11D2A" stroke-width="2.5" fill="none"/>
+                <g fill="#E11D2A">
+                  <circle cx="130" cy="110" r="3.5"/>
+                  <circle cx="260" cy="90" r="3.5"/>
+                  <circle cx="390" cy="70" r="3.5"/>
+                  <circle cx="530" cy="55" r="3.5"/>
+                </g>
+              </svg>
+            </div>
+            <div class="flex gap-16 mt-16 muted small">
+              <div>● Submitted: 142</div>
+              <div>● Quoted: 98</div>
+              <div>● Won: 64</div>
+              <div>● Lost: 18</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Quotation win rate</h3>
+          </div>
+          <div class="panel__body" style="text-align:center;padding:24px 18px;">
+            <svg viewBox="0 0 160 160" width="160" height="160">
+              <circle cx="80" cy="80" r="64" fill="none" stroke="#EAECF1" stroke-width="14"/>
+              <circle cx="80" cy="80" r="64" fill="none" stroke="#E11D2A" stroke-width="14"
+                stroke-dasharray="270 402" stroke-dashoffset="0"
+                transform="rotate(-90 80 80)" stroke-linecap="round"/>
+              <text x="80" y="76" text-anchor="middle" font-size="28" font-weight="700" fill="#16181D">67%</text>
+              <text x="80" y="96" text-anchor="middle" font-size="11" fill="#7C8497">Win rate</text>
+            </svg>
+            <div class="mt-16" style="text-align:left;">
+              <div class="flex-between mb-8"><span class="muted small">Submitted</span><strong>142</strong></div>
+              <div class="flex-between mb-8"><span class="muted small">Selected by insurer</span><strong>95</strong></div>
+              <div class="flex-between"><span class="muted small">Avg. response time</span><strong>2h 12m</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Recent claim requests</h3>
+            <a href="claim-requests.html" style="margin-left:auto;color:var(--brand-red);font-weight:600;font-size:12.5px">View all →</a>
+          </div>
+          <div class="table-wrap">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th>Claim ID</th>
+                  <th>Policy Holder</th>
+                  <th>Item</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="id-link">JKLMN56780</td><td>Sulaiman Al-Zayoudi</td><td>Premium Viewlite Rear Brake Disc Pad</td><td><span class="badge badge--ok">Submitted</span></td><td>18/01/2025</td></tr>
+                <tr><td class="id-link">JKLMN56781</td><td>Yasmeen Al-Ghafli</td><td>Shock absorbers (set of 4)</td><td><span class="badge badge--warn">Pending</span></td><td>17/01/2025</td></tr>
+                <tr><td class="id-link">JKLMN56782</td><td>Omar Al-Mansouri</td><td>Transmission rebuild kit</td><td><span class="badge badge--info">Quoted</span></td><td>16/01/2025</td></tr>
+                <tr><td class="id-link">JKLMN56783</td><td>Aisha Al-Hashimi</td><td>Headlamp assembly LH</td><td><span class="badge badge--ok">Submitted</span></td><td>15/01/2025</td></tr>
+                <tr><td class="id-link">JKLMN56784</td><td>Mohammed Al-Falasi</td><td>Battery 100Ah AGM</td><td><span class="badge badge--danger">Rejected</span></td><td>14/01/2025</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Hot deals</h3>
+            <a href="hot-deals.html" style="margin-left:auto;color:var(--brand-red);font-weight:600;font-size:12.5px">View all →</a>
+          </div>
+          <div class="panel__body" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="deal">
+              <img src="../shared/hot-deals.png" alt="Hot Deals" style="height:60px;width:auto;margin-bottom:8px"/>
+              <div class="deal__title">Front Brake Pad Set</div>
+              <div class="deal__row"><span>SKU</span><span>BR-FP-2025</span></div>
+              <div class="deal__row"><span>Available</span><span>72</span></div>
+              <div class="deal__price">AED 350</div>
+              <div class="deal__actions">
+                <button class="btn btn--primary btn--sm">Add to Cart</button>
+              </div>
+            </div>
+            <div class="deal">
+              <img src="../shared/hot-deals.png" alt="Hot Deals" style="height:60px;width:auto;margin-bottom:8px"/>
+              <div class="deal__title">Premium Shock Absorber</div>
+              <div class="deal__row"><span>SKU</span><span>SH-AB-118</span></div>
+              <div class="deal__row"><span>Available</span><span>34</span></div>
+              <div class="deal__price">AED 420</div>
+              <div class="deal__actions">
+                <button class="btn btn--primary btn--sm">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('kpi-i1').innerHTML = PHIcon('claim', 22);
+  document.getElementById('kpi-i2').innerHTML = PHIcon('quote', 22);
+  document.getElementById('kpi-i3').innerHTML = PHIcon('orders', 22);
+  document.getElementById('kpi-i4').innerHTML = PHIcon('wallet', 22);
+</script>
+</body>
+</html>

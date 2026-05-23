@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Send RFQ to Suppliers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="claim-request" data-subpage="rfq-to-supplier" data-page-title="Send RFQ to Suppliers">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar">
+          <div>
+            <div style="font-weight:500">Source parts for Claim JKLMN56780 — Toyota Camry 2022</div>
+            <div class="muted small">Send RFQ to multiple suppliers and pick the best response per part.</div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-grid" style="grid-template-columns: 1fr 380px">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Parts to source</h3></div>
+          <table class="data">
+            <thead><tr><th class="check"><input type="checkbox" class="cbx" checked/></th><th>Part</th><th>Qty</th><th>Condition</th><th>Vehicle fit</th></tr></thead>
+            <tbody>
+              <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Shock absorbers</strong></td><td>4</td><td>OEM</td><td>Toyota Camry 2022</td></tr>
+              <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Battery 100Ah AGM</strong></td><td>1</td><td>OEM</td><td>Universal</td></tr>
+              <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Radiator</strong></td><td>1</td><td>OEM</td><td>Toyota Camry 2022</td></tr>
+              <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Headlamp LH</strong></td><td>2</td><td>OEM</td><td>Toyota Camry 2022</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Suppliers to invite</h3></div>
+          <div class="panel__body">
+            <p class="muted small mb-16">Suppliers shortlisted by part fitment. Select up to 6.</p>
+            <div style="display:grid;gap:6px">
+              <label class="checkrow" style="padding:10px;border:1px solid var(--auth-box-border);border-radius:4px"><input type="checkbox" class="cbx" checked/> &nbsp;<strong>Gulf Auto Parts LLC</strong> · ★4.8 OEM</label>
+              <label class="checkrow" style="padding:10px;border:1px solid var(--auth-box-border);border-radius:4px"><input type="checkbox" class="cbx" checked/> &nbsp;<strong>Bin Hamoodah Trading</strong> · ★4.4 OEM</label>
+              <label class="checkrow" style="padding:10px;border:1px solid var(--auth-box-border);border-radius:4px"><input type="checkbox" class="cbx" checked/> &nbsp;<strong>Emirates Spare Co.</strong> · ★4.6</label>
+              <label class="checkrow" style="padding:10px;border:1px solid var(--auth-box-border);border-radius:4px"><input type="checkbox" class="cbx"/> &nbsp;<strong>Royal Parts Supply</strong> · ★4.3</label>
+            </div>
+            <label class="label mt-16">Response deadline</label>
+            <input class="input" type="date"/>
+            <a class="btn btn--primary btn--block mt-16" href="supplier-quotations.html" onclick="alert('RFQ sent to 3 suppliers')">Send RFQ to 3 suppliers</a>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — Orders · Select Claim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .lst-page { background: var(--bg-common); border-radius: 8px; border: 1px solid var(--auth-box-border); padding: 22px 24px; }
+  .lst-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; justify-content: flex-end; }
+  .lst-toolbar .search-box {
+    width: 280px; height: 40px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px; background: #fff;
+    display: flex; align-items: center; padding: 0 12px; gap: 8px; color: var(--ink-400);
+  }
+  .lst-toolbar .search-box input {
+    border: 0; outline: 0; background: transparent;
+    flex: 1; font-size: 14px; color: var(--bodyText); font-family: inherit;
+  }
+  .lst-toolbar .ic-btn {
+    width: 40px; height: 40px;
+    border-radius: 4px;
+    border: 1px solid var(--form-field-border);
+    background: #fff;
+    display: grid; place-items: center;
+    color: var(--forgot-link-color);
+    cursor: pointer;
+  }
+  .intro-banner {
+    background: #eef4fc;
+    border: 1px solid #b3d0ee;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .intro-banner__icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--forgot-link-color); color: #fff;
+    display: grid; place-items: center; font-size: 14px;
+    flex: none; font-weight: 700;
+  }
+  .intro-banner__title { font-weight: 500; color: #1d4f8c; font-size: 13.5px; margin-bottom: 2px; }
+  .intro-banner__body { font-size: 12.5px; color: var(--bodyText); }
+
+  .lst-total { font-size: 13.5px; color: var(--bodyText); margin-bottom: 12px; }
+  .lst-total strong { font-weight: 500; }
+
+  table.lst-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+  table.lst-table thead th {
+    text-align: left; font-weight: 500; color: var(--ink-500);
+    padding: 12px 14px; background: var(--bg-common);
+    border-bottom: 1px solid var(--grid-field-border);
+    white-space: nowrap; font-size: 13.5px;
+  }
+  table.lst-table tbody td {
+    padding: 16px 14px; border-bottom: 1px solid var(--grid-field-border);
+    vertical-align: middle; color: var(--bodyText); background: #fff;
+    cursor: pointer;
+  }
+  table.lst-table tbody tr:hover td { background: var(--active-row-color); }
+  table.lst-table .cl-id { color: var(--brand-red); font-weight: 500; cursor: pointer; text-decoration: none; }
+  table.lst-table .cl-id:hover { text-decoration: underline; }
+  table.lst-table .cl-sl { color: var(--forgot-link-color); font-variant-numeric: tabular-nums; width: 60px; }
+  .order-count {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 3px 10px 3px 6px;
+    background: var(--brand-red-ghost);
+    color: var(--brand-red);
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 12.5px;
+  }
+  .order-count__pill {
+    background: var(--brand-red); color: #fff;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 11px;
+  }
+  .breakdown {
+    display: inline-flex; gap: 8px;
+    font-size: 12px; color: var(--ink-500);
+  }
+  .breakdown__chip {
+    padding: 2px 8px;
+    background: var(--bodyBg);
+    border-radius: 999px;
+    color: var(--ink-700);
+  }
+  .breakdown__chip strong { font-weight: 500; color: var(--bodyText); }
+  .row-arrow {
+    color: var(--ink-400);
+    font-size: 18px;
+    text-align: right;
+  }
+  .lst-footer { display: flex; align-items: center; margin-top: 16px; gap: 12px; }
+  .lst-show { display: flex; align-items: center; gap: 10px; color: var(--ink-500); font-size: 13px; }
+  .lst-show select {
+    border: 1px solid var(--form-field-border);
+    padding: 6px 28px 6px 12px; border-radius: 4px; background: #fff;
+    font-family: inherit; font-size: 13px; color: var(--bodyText);
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%236b6b6b' d='M0 0l5 6 5-6z'/></svg>");
+    background-repeat: no-repeat; background-position: right 10px center;
+    min-width: 60px;
+  }
+  .lst-show-divider { color: var(--ink-300); }
+  .lst-pagination { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .pg-btn {
+    width: 30px; height: 30px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px; background: #fff;
+    display: grid; place-items: center;
+    color: var(--ink-500); font-size: 14px; cursor: pointer;
+  }
+  .pg-btn.is-active { background: var(--brand-red); color: #fff; border-color: var(--brand-red); }
+  .pg-btn:disabled { color: var(--ink-300); cursor: not-allowed; }
+</style>
+</head>
+<body data-portal="insurance" data-page="orders" data-page-title="Orders">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <div class="intro-banner">
+        <div class="intro-banner__icon">i</div>
+        <div>
+          <div class="intro-banner__title">Pick a claim to view its orders</div>
+          <div class="intro-banner__body">Each claim can generate multiple orders — garage repair orders, supplier parts orders, and orders from auctions or hot deals. Select a claim below to see all its orders in one place.</div>
+        </div>
+      </div>
+
+      <div class="lst-toolbar">
+        <div class="search-box">
+          <span id="searchIcon"></span>
+          <input placeholder="Search by Claim ID, holder, vehicle..." />
+        </div>
+        <button class="ic-btn" id="filterBtn" title="Filter"></button>
+      </div>
+
+      <div class="lst-page">
+        <div class="lst-total">Total <strong>10</strong> claims with orders</div>
+        <table class="lst-table" id="claimTable">
+          <thead>
+            <tr>
+              <th>SL No.</th>
+              <th>Claim ID</th>
+              <th>Policy Holder</th>
+              <th>Vehicle</th>
+              <th>Total Orders</th>
+              <th>Order Breakdown</th>
+              <th>Last Order Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="lst-footer">
+          <div class="lst-show">
+            Show
+            <span class="lst-show-divider">|</span>
+            <select><option>50</option><option>25</option><option>10</option></select>
+          </div>
+          <div class="lst-pagination">
+            <button class="pg-btn" disabled>‹</button>
+            <button class="pg-btn is-active">1</button>
+            <button class="pg-btn" disabled>›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('searchIcon').innerHTML = PHIcon('search', 16);
+  document.getElementById('filterBtn').innerHTML = PHIcon('filter', 18);
+
+  // [SL, ClaimID, Holder, Vehicle, total, garage, supplier, auction, hotdeal, lastDate]
+  const ROWS = [
+    [1, 'JKLMN56780', 'Sulaiman Al-Zayoudi', 'Toyota Camry 2022', 3, 1, 2, '22/05/2026'],
+    [2, 'JKLMN56781', 'Yasmeen Al-Ghafli', 'Honda Accord 2021', 3, 1, 2, '21/05/2026'],
+    [3, 'JKLMN56782', 'Omar Al-Mansouri', 'BMW 5-Series F10', 4, 1, 3, '20/05/2026'],
+    [4, 'JKLMN56783', 'Aisha Al-Hashimi', 'Mercedes E-Class', 2, 1, 1, '19/05/2026'],
+    [5, 'JKLMN56784', 'Mohammed Al-Falasi', 'Lexus ES350', 3, 1, 2, '18/05/2026'],
+    [6, 'JKLMN56775', 'Fatima Al-Suwaidi', 'Range Rover Sport', 5, 2, 3, '17/05/2026'],
+    [7, 'JKLMN56776', 'Khalid Al-Nuaimi', 'Audi A6 2022', 3, 1, 2, '16/05/2026'],
+    [8, 'JKLMN56777', 'Mariam Al-Maktoum', 'Toyota Land Cruiser', 5, 1, 4, '15/05/2026'],
+    [9, 'JKLMN56778', 'Hassan Al-Hammadi', 'Honda CR-V 2023', 2, 1, 1, '14/05/2026'],
+    [10,'JKLMN56779', 'Layla Al-Khouri', 'Nissan Patrol Y62', 3, 1, 2, '12/05/2026']
+  ];
+
+  function breakdown(g, s) {
+    const parts = [];
+    if (g) parts.push(`<span class="breakdown__chip"><strong>${g}</strong> Garage</span>`);
+    if (s) parts.push(`<span class="breakdown__chip"><strong>${s}</strong> Supplier</span>`);
+    return `<div class="breakdown">${parts.join('')}</div>`;
+  }
+
+  document.querySelector('#claimTable tbody').innerHTML = ROWS.map(r => `
+    <tr onclick="window.location='orders-list.html?claim=${r[1]}'">
+      <td class="cl-sl">${r[0]}</td>
+      <td><a class="cl-id" href="orders-list.html?claim=${r[1]}">${r[1]}</a></td>
+      <td>${r[2]}</td>
+      <td>${r[3]}</td>
+      <td><span class="order-count"><span class="order-count__pill">${r[4]}</span> orders</span></td>
+      <td>${breakdown(r[5], r[6])}</td>
+      <td>${r[7]}</td><td class="row-arrow">›</td>
+    </tr>
+  `).join('');
+</script>
+</body>
+</html>

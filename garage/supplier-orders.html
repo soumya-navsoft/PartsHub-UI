@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Supplier Orders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="orders" data-subpage="supplier-orders" data-page-title="Supplier Orders">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All <span class="badge" style="margin-left:6px">42</span></div>
+          <div class="tab">Pending</div>
+          <div class="tab">In Transit</div>
+          <div class="tab">Received</div>
+          <div class="tab">Disputed</div>
+        </div>
+        <div class="page-card__toolbar" style="border-top:1px solid var(--auth-box-border)">
+          <div class="search"><input placeholder="Search supplier orders..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Export</button>
+          </div>
+        </div>
+        <table class="data">
+          <thead><tr><th>PO #</th><th>Supplier</th><th>Items</th><th>Total (AED)</th><th>For Claim</th><th>ETA</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><a class="id-link">PO-7201</a></td><td>Gulf Auto Parts LLC</td><td>5 items</td><td><strong>4,935</strong></td><td>JKLMN56780</td><td>23/05/2026</td><td><span class="badge badge--info">In Transit</span></td></tr>
+            <tr><td><a class="id-link">PO-7200</a></td><td>Bin Hamoodah Trading</td><td>3 items</td><td><strong>3,200</strong></td><td>JKLMN56779</td><td>—</td><td><span class="badge badge--ok">Received</span></td></tr>
+            <tr><td><a class="id-link">PO-7199</a></td><td>Emirates Spare Co.</td><td>2 items</td><td><strong>1,420</strong></td><td>JKLMN56778</td><td>24/05/2026</td><td><span class="badge badge--warn">Pending</span></td></tr>
+            <tr><td><a class="id-link">PO-7198</a></td><td>Speedway Components</td><td>1 item</td><td><strong>5,200</strong></td><td>JKLMN56777</td><td>25/05/2026</td><td><span class="badge badge--info">In Transit</span></td></tr>
+            <tr><td><a class="id-link">PO-7197</a></td><td>Royal Parts Supply</td><td>4 items</td><td><strong>2,160</strong></td><td>JKLMN56776</td><td>—</td><td><span class="badge badge--ok">Received</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

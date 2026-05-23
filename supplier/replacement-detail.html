@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Replacement Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="replacements" data-page-title="Replacement Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div class="panel">
+          <div class="panel__head">
+            <div>
+              <div class="muted small">REP-310 · Replacement request</div>
+              <h3 class="panel__title">From Royal Swiss Automobile · for Order SO-5200</h3>
+              <div class="muted small mt-8">Raised 15 May 2026 · <span class="badge badge--warn">Pending your approval</span></div>
+            </div>
+            <div style="margin-left:auto" class="flex gap-8">
+              <button class="btn btn--ghost-red">Reject</button>
+              <button class="btn btn--primary">Approve replacement</button>
+            </div>
+          </div>
+          <div class="panel__body">
+            <h3 class="panel__title mb-16">Affected item</h3>
+            <table class="data mb-16">
+              <thead><tr><th>Item</th><th>Original qty</th><th>Affected qty</th><th>Refund value</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Shock absorber (SH-AB-118)</strong></td><td>4</td><td>1</td><td>AED 350</td></tr>
+              </tbody>
+            </table>
+
+            <h3 class="panel__title mb-16">Reason &amp; description</h3>
+            <div style="background:var(--bg-row-alt);padding:14px;border-radius:10px">
+              <strong>Defective part</strong>
+              <p class="muted small mt-8" style="margin-bottom:0">"One shock absorber arrived with a damaged seal; visible oil leak on installation. Garage technician confirms it failed pressure test on first install attempt. Photos attached."</p>
+            </div>
+
+            <h3 class="panel__title mt-24 mb-16">Evidence</h3>
+            <div class="photo-grid">
+              <div class="photo-tile" style="background:linear-gradient(135deg,#666,#222)"></div>
+              <div class="photo-tile" style="background:linear-gradient(135deg,#555,#111)"></div>
+              <div class="photo-tile" style="background:linear-gradient(135deg,#777,#333)"></div>
+            </div>
+
+            <h3 class="panel__title mt-24 mb-16">Your response</h3>
+            <label class="label">Decision</label>
+            <select class="select"><option>Approve replacement (ship new unit)</option><option>Approve refund instead</option><option>Reject — claim outside terms</option><option>Request more info</option></select>
+            <label class="label mt-16">Notes to buyer</label>
+            <textarea class="textarea" rows="3" placeholder="We'll ship a replacement on next-day delivery..."></textarea>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Return timeline</h3></div>
+          <div class="panel__body">
+            <div class="timeline">
+              <div class="timeline__item"><div class="timeline__dot is-current"></div><div class="timeline__title">Pending your approval</div><div class="timeline__meta">Step 2 — Now</div></div>
+              <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">Request raised by buyer</div><div class="timeline__meta">15 May 2026, 11:42 AM</div></div>
+              <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__title">Defective unit collected</div><div class="timeline__meta">Step 3</div></div>
+              <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__title">Replacement / refund issued</div><div class="timeline__meta">Step 4</div></div>
+            </div>
+            <div class="divider"></div>
+            <div class="muted small">Per ORD-009, all replacement requests require supplier approval and a logged reason for audit.</div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

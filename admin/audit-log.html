@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Audit Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="admin" data-page="audit-log" data-page-title="Audit Log">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div class="search"><input placeholder="Search by user, action, entity..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <select class="select" style="width:auto"><option>All actions</option><option>Create</option><option>Update</option><option>Delete</option><option>Approve</option><option>Reject</option><option>Login</option></select>
+            <select class="select" style="width:auto"><option>All entities</option><option>Garage</option><option>Supplier</option><option>Insurer</option><option>Claim</option><option>Order</option><option>Payment</option></select>
+            <button class="btn">Export</button>
+          </div>
+        </div>
+        <table class="data">
+          <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Entity</th><th>Entity ID</th><th>Diff / Reason</th><th>IP</th></tr></thead>
+          <tbody>
+            <tr><td>23/05/2026 11:42</td><td><strong>Hamza Al-Otaiba</strong></td><td><span class="badge badge--ok">Approve</span></td><td>Application</td><td>APP-4812</td><td>License verified · KYC complete</td><td>185.142.0.12</td></tr>
+            <tr><td>23/05/2026 11:14</td><td><strong>Noura Al-Hammadi</strong></td><td><span class="badge badge--info">Update</span></td><td>Role</td><td>support-lead</td><td>Permissions changed (3 added, 1 removed)</td><td>185.142.0.18</td></tr>
+            <tr><td>23/05/2026 10:42</td><td><strong>System</strong></td><td><span class="badge badge--ok">Create</span></td><td>Order</td><td>ORD-4501</td><td>Auto-generated from auction AUC-1042 closure</td><td>—</td></tr>
+            <tr><td>23/05/2026 09:14</td><td><strong>Mariam Al-Naqbi</strong></td><td><span class="badge badge--ok">Approve</span></td><td>Claim</td><td>JKLMN56780</td><td>Selected Royal Swiss · AED 19,900</td><td>94.205.8.42</td></tr>
+            <tr><td>22/05/2026 18:24</td><td><strong>Khalid Al-Nuaimi</strong></td><td><span class="badge">Login</span></td><td>User</td><td>khalid@craftauto.ae</td><td>—</td><td>94.205.16.88</td></tr>
+            <tr><td>22/05/2026 16:11</td><td><strong>Hamza Al-Otaiba</strong></td><td><span class="badge badge--danger">Reject</span></td><td>Application</td><td>APP-4805</td><td>Trade license expired</td><td>185.142.0.12</td></tr>
+            <tr><td>22/05/2026 14:42</td><td><strong>System</strong></td><td><span class="badge badge--info">Update</span></td><td>Inventory</td><td>INV-2401</td><td>Quantity 15 → 12 (HD-ORD-8121)</td><td>—</td></tr>
+            <tr><td>22/05/2026 11:00</td><td><strong>Sara Al-Hashimi</strong></td><td><span class="badge badge--ok">Create</span></td><td>Claim</td><td>JKLMN56784</td><td>—</td><td>94.205.32.14</td></tr>
+            <tr><td>22/05/2026 10:42</td><td><strong>Noura Al-Hammadi</strong></td><td><span class="badge badge--danger">Delete</span></td><td>Review</td><td>REV-28491</td><td>Abusive language; admin discretion</td><td>185.142.0.18</td></tr>
+            <tr><td>21/05/2026 22:14</td><td><strong>System</strong></td><td><span class="badge badge--danger">Failed</span></td><td>Payment</td><td>PAY-7617</td><td>Bank rejection: invalid IBAN</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

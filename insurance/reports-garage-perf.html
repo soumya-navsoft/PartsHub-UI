@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Reports — Garage Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="reports" data-page-title="Reports — Garage Performance">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <a class="tab" href="reports.html" style="text-decoration:none">Claims Analytics</a>
+            <div class="tab is-active">Garage Performance</div>
+            <a class="tab" href="reports-supplier-perf.html" style="text-decoration:none">Supplier Performance</a>
+            <a class="tab" href="reports-auction.html" style="text-decoration:none">Auction Effectiveness</a>
+            <a class="tab" href="reports-hotdeals.html" style="text-decoration:none">Hot Deal Utilization</a>
+            <a class="tab" href="reports-outstanding.html" style="text-decoration:none">Outstanding Payments</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <select class="select" style="width:auto"><option>All Emirates</option><option>Dubai</option><option>Abu Dhabi</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>Garage</th><th>Location</th><th>Claims Assigned</th><th>Accepted</th><th>Rejected</th><th>Rating</th><th>Avg Payment Cycle</th><th>Outstanding (AED)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Royal Swiss Automobile</strong></td><td>Dubai</td><td>42</td><td><strong>40</strong></td><td>2</td><td><span class="rating">★★★★★</span> 4.9</td><td>4.2 days</td><td><strong>0</strong></td></tr>
+              <tr><td><strong>Craft Auto Services</strong></td><td>Dubai</td><td>28</td><td><strong>26</strong></td><td>2</td><td><span class="rating">★★★★★</span> 4.7</td><td>5.1 days</td><td><strong>AED 4,200</strong></td></tr>
+              <tr><td><strong>Gargash Auto Centre</strong></td><td>Abu Dhabi</td><td>86</td><td><strong>82</strong></td><td>4</td><td><span class="rating">★★★★☆</span> 4.5</td><td>6.4 days</td><td><strong>AED 12,800</strong></td></tr>
+              <tr><td><strong>Speedway Motors</strong></td><td>Sharjah</td><td>18</td><td><strong>15</strong></td><td>3</td><td><span class="rating">★★★★☆</span> 4.2</td><td>7.8 days</td><td><strong>AED 24,400</strong></td></tr>
+              <tr><td><strong>Al Habtoor Motors</strong></td><td>Dubai</td><td>64</td><td><strong>62</strong></td><td>2</td><td><span class="rating">★★★★★</span> 4.8</td><td>3.9 days</td><td><strong>AED 1,800</strong></td></tr>
+              <tr><td><strong>Bin Hamoodah Garage</strong></td><td>Abu Dhabi</td><td>32</td><td><strong>30</strong></td><td>2</td><td><span class="rating">★★★★★</span> 4.4</td><td>5.4 days</td><td><strong>AED 8,200</strong></td></tr>
+              <tr><td><strong>Falcon Garage Network</strong></td><td>Dubai</td><td>98</td><td><strong>94</strong></td><td>4</td><td><span class="rating">★★★★★</span> 4.6</td><td>4.8 days</td><td><strong>AED 6,400</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

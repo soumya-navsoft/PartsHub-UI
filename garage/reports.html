@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Reports — Claim Lifecycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="reports" data-page-title="Reports — Claim Lifecycle">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <div class="tab is-active">Claim Lifecycle</div>
+            <a class="tab" href="reports-insurance-perf.html" style="text-decoration:none">Insurance Performance</a>
+            <a class="tab" href="reports-supplier-perf.html" style="text-decoration:none">Supplier Performance</a>
+            <a class="tab" href="reports-revenue.html" style="text-decoration:none">Revenue Summary</a>
+            <a class="tab" href="reports-auction-part.html" style="text-decoration:none">Auction Participation</a>
+            <a class="tab" href="reports-hotdeal-part.html" style="text-decoration:none">Hot Deal Participation</a>
+          </div>
+        </div>
+      </div>
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <div class="panel__body">
+          <div class="kpi-grid mb-16">
+            <div class="kpi"><div class="kpi__icon">📋</div><div><div class="kpi__label">Total jobs (90d)</div><div class="kpi__value">142</div></div></div>
+            <div class="kpi"><div class="kpi__icon blue">⏱</div><div><div class="kpi__label">Avg repair time</div><div class="kpi__value">5.2 days</div></div></div>
+            <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">Completed</div><div class="kpi__value">128</div></div></div>
+            <div class="kpi"><div class="kpi__icon gold">↻</div><div><div class="kpi__label">Re-work rate</div><div class="kpi__value">1.4%</div></div></div>
+          </div>
+        </div>
+        <table class="data" id="t">
+          <thead><tr><th>Claim ID</th><th>Status</th><th>Assigned</th><th>Inspection</th><th>Repair start</th><th>Repair end</th><th>Completion</th><th>Total cycle</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+<script>
+const ST = [['Completed','badge--ok'],['Repair in progress','badge--info'],['Inspection','badge--warn'],['Waiting parts','badge']];
+let html='';
+for (let i=0;i<10;i++){
+  const s = ST[i%ST.length];
+  const ad=(10+i).toString().padStart(2,'0'), insp=(11+i).toString().padStart(2,'0'), rs=(12+i).toString().padStart(2,'0'), re=(15+i).toString().padStart(2,'0'), c=(16+i).toString().padStart(2,'0');
+  html+=`<tr><td class="id-link">JKLMN567${80+i}</td><td><span class="badge ${s[1]}">${s[0]}</span></td><td>${ad}/04/2026</td><td>${insp}/04/2026</td><td>${rs}/04/2026</td><td>${re}/04/2026</td><td>${c}/04/2026</td><td><strong>${(3.4+(i%6)*0.4).toFixed(1)}d</strong></td></tr>`;
+}
+document.querySelector('#t tbody').innerHTML = html;
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

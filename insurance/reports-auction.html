@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Reports — Auction Effectiveness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="reports" data-page-title="Reports — Auction Effectiveness">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <a class="tab" href="reports.html" style="text-decoration:none">Claims Analytics</a>
+            <a class="tab" href="reports-garage-perf.html" style="text-decoration:none">Garage Performance</a>
+            <a class="tab" href="reports-supplier-perf.html" style="text-decoration:none">Supplier Performance</a>
+            <div class="tab is-active">Auction Effectiveness</div>
+            <a class="tab" href="reports-hotdeals.html" style="text-decoration:none">Hot Deal Utilization</a>
+            <a class="tab" href="reports-outstanding.html" style="text-decoration:none">Outstanding Payments</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">🔨</div><div><div class="kpi__label">Auctions created</div><div class="kpi__value">42</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">Completed</div><div class="kpi__value">36</div></div></div>
+        <div class="kpi"><div class="kpi__icon" style="background:var(--danger-bg);color:var(--danger-fg)">×</div><div><div class="kpi__label">Failed (no reserve)</div><div class="kpi__value">6</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold">$</div><div><div class="kpi__label">Total recovery</div><div class="kpi__value">AED 1.2M</div></div></div>
+      </div>
+
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <select class="select" style="width:auto"><option>All Emirates</option><option>Dubai</option><option>Abu Dhabi</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>Auction ID</th><th>Item</th><th>Reserve</th><th>Winning Bid</th><th>Winner</th><th>Savings vs. scrap</th><th>Date</th></tr></thead>
+            <tbody>
+              <tr><td class="id-link">AUC-1042</td><td>Salvage Camry 2018</td><td>AED 24,000</td><td><strong>AED 28,400</strong></td><td>Falcon Garage</td><td><strong style="color:var(--ok-fg)">+AED 8,400</strong></td><td>26/05/2026</td></tr>
+              <tr><td class="id-link">AUC-1040</td><td>BMW transmission + harness</td><td>AED 4,500</td><td><strong>AED 5,200</strong></td><td>Gulf Auto Parts</td><td><strong style="color:var(--ok-fg)">+AED 1,200</strong></td><td>24/05/2026</td></tr>
+              <tr><td class="id-link">AUC-1039</td><td>Honda Accord 2017</td><td>AED 15,000</td><td><strong>AED 17,800</strong></td><td>Bin Hamoodah</td><td><strong style="color:var(--ok-fg)">+AED 5,800</strong></td><td>22/05/2026</td></tr>
+              <tr><td class="id-link">AUC-1037</td><td>Used parts lot — Apr</td><td>AED 8,000</td><td>—</td><td>—</td><td><span class="muted">No reserve met</span></td><td>10/05/2026</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

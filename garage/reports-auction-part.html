@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Reports — Auction Participation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="reports" data-page-title="Reports — Auction Participation">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <a class="tab" href="reports.html" style="text-decoration:none">Claim Lifecycle</a>
+            <a class="tab" href="reports-insurance-perf.html" style="text-decoration:none">Insurance Performance</a>
+            <a class="tab" href="reports-supplier-perf.html" style="text-decoration:none">Supplier Performance</a>
+            <a class="tab" href="reports-revenue.html" style="text-decoration:none">Revenue Summary</a>
+            <div class="tab is-active">Auction Participation</div>
+            <a class="tab" href="reports-hotdeal-part.html" style="text-decoration:none">Hot Deal Participation</a>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">🔨</div><div><div class="kpi__label">Auctions available</div><div class="kpi__value">186</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">👁</div><div><div class="kpi__label">Participated</div><div class="kpi__value">42</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">Won</div><div class="kpi__value">14</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold">$</div><div><div class="kpi__label">Total spent</div><div class="kpi__value">AED 142K</div></div></div>
+      </div>
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <table class="data">
+          <thead><tr><th>Auction ID</th><th>Item / Lot</th><th>Bids placed</th><th>My highest</th><th>Winning bid</th><th>Outcome</th><th>Date</th></tr></thead>
+          <tbody>
+            <tr><td class="id-link">AUC-1042</td><td>Salvage Camry 2018</td><td>3</td><td>AED 27,400</td><td>AED 28,400</td><td><span class="badge badge--danger">Lost</span></td><td>26/05/2026</td></tr>
+            <tr><td class="id-link">AUC-1040</td><td>BMW transmission lot</td><td>2</td><td>AED 5,200</td><td>AED 5,200</td><td><span class="badge badge--ok">Won</span></td><td>24/05/2026</td></tr>
+            <tr><td class="id-link">AUC-1037</td><td>Honda Accord parts</td><td>4</td><td>AED 8,400</td><td>AED 8,400</td><td><span class="badge badge--ok">Won</span></td><td>18/05/2026</td></tr>
+            <tr><td class="id-link">AUC-1034</td><td>Camry parts batch</td><td>5</td><td>AED 3,800</td><td>AED 3,800</td><td><span class="badge badge--ok">Won</span></td><td>10/05/2026</td></tr>
+            <tr><td class="id-link">AUC-1029</td><td>Lexus body kit</td><td>2</td><td>AED 9,800</td><td>AED 11,200</td><td><span class="badge badge--danger">Lost</span></td><td>05/05/2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

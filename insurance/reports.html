@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Reports — Claims Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="reports" data-page-title="Reports — Claims Analytics">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <div class="tab is-active">Claims Analytics</div>
+            <a class="tab" href="reports-garage-perf.html" style="text-decoration:none">Garage Performance</a>
+            <a class="tab" href="reports-supplier-perf.html" style="text-decoration:none">Supplier Performance</a>
+            <a class="tab" href="reports-auction.html" style="text-decoration:none">Auction Effectiveness</a>
+            <a class="tab" href="reports-hotdeals.html" style="text-decoration:none">Hot Deal Utilization</a>
+            <a class="tab" href="reports-outstanding.html" style="text-decoration:none">Outstanding Payments</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <select class="select" style="width:auto"><option>All Emirates</option><option>Dubai</option><option>Abu Dhabi</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <div class="panel__body">
+          <div class="kpi-grid mb-16">
+            <div class="kpi"><div class="kpi__icon">📋</div><div><div class="kpi__label">Total claims</div><div class="kpi__value">2,184</div></div></div>
+            <div class="kpi"><div class="kpi__icon blue">⏱</div><div><div class="kpi__label">Avg cycle</div><div class="kpi__value">3.6 days</div></div></div>
+            <div class="kpi"><div class="kpi__icon green">$</div><div><div class="kpi__label">Avg payout</div><div class="kpi__value">AED 13,400</div></div></div>
+            <div class="kpi"><div class="kpi__icon gold">↑</div><div><div class="kpi__label">Approval rate</div><div class="kpi__value">87%</div></div></div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data" id="t">
+            <thead><tr><th>Claim ID</th><th>Branch</th><th>Damage Category</th><th>Vehicle</th><th>Garage</th><th>Total (AED)</th><th>Status</th><th>Cycle</th><th>Date</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+<script>
+const ST = [['Quoted','badge--info'],['Approved','badge--ok'],['Pending','badge--warn'],['Rejected','badge--danger']];
+const DMG = ['Collision (front)','Collision (rear)','Side impact','Glass damage','Mechanical failure','Theft / partial'];
+const VEH = ['Toyota Camry 2022','Honda Accord 2021','BMW 5-Series F10','Mercedes E-Class','Lexus ES350','Range Rover Sport'];
+const GAR = ['Royal Swiss','Craft Auto','Gargash','Speedway','Al Habtoor'];
+const BR = ['Dubai HQ','Abu Dhabi Br','Sharjah Br','Dubai Marina Br'];
+let html='';
+for (let i=0;i<10;i++){
+  const s=ST[i%ST.length];
+  html+=`<tr><td class="id-link">JKLMN567${80+i}</td><td>${BR[i%BR.length]}</td><td>${DMG[i%DMG.length]}</td><td>${VEH[i%VEH.length]}</td><td>${GAR[i%GAR.length]}</td><td><strong>AED ${(4000+i*1840).toLocaleString()}</strong></td><td><span class="badge ${s[1]}">${s[0]}</span></td><td>${(2.4+(i%4)*0.6).toFixed(1)}d</td><td>${(10+i).toString().padStart(2,'0')}/01/2025</td></tr>`;
+}
+document.querySelector('#t tbody').innerHTML = html;
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

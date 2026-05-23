@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Create Auction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="auction" data-page-title="Create Auction">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Auction setup</h3></div>
+          <div class="panel__body">
+            <div class="form-grid">
+              <div style="grid-column:1/-1"><label class="label">Title *</label><input class="input" placeholder="Salvage Camry 2018 — Total Loss"/></div>
+              <div><label class="label">Start date & time *</label><input class="input" type="datetime-local"/></div>
+              <div><label class="label">End date & time *</label><input class="input" type="datetime-local"/></div>
+              <div><label class="label">Reserve price (AED) *</label><input class="input" placeholder="24,000"/></div>
+              <div><label class="label">Starting bid (AED) *</label><input class="input" placeholder="20,000"/></div>
+              <div><label class="label">Bid increment (AED)</label><input class="input" placeholder="500"/></div>
+              <div><label class="label">Participant types</label><select class="select" multiple><option selected>Garages</option><option selected>Suppliers</option></select></div>
+              <div style="grid-column:1/-1"><label class="label">Description</label><textarea class="textarea" rows="3" placeholder="Vehicle and condition details..."></textarea></div>
+            </div>
+
+            <h3 class="panel__title mt-24 mb-16">Items in this auction</h3>
+            <button class="btn btn--ghost-red mb-16">+ Add from Inventory</button>
+            <table class="data">
+              <thead><tr><th>Item ID</th><th>Item</th><th>Qty</th><th>Reserve / unit</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><strong>INV-2403</strong></td><td><span class="thumb"></span>Toyota Camry 2018 (total loss)</td><td>1</td><td>AED 24,000</td><td class="more">×</td></tr>
+              </tbody>
+            </table>
+            <div class="muted small mt-16">Per AUC-002, auction items must be selectable from Inventory only.</div>
+
+            <div class="flex gap-8 mt-24" style="justify-content:flex-end">
+              <button class="btn">Save as draft</button>
+              <button class="btn">Schedule</button>
+              <button class="btn btn--primary">Publish auction</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Live preview</h3></div>
+          <div class="panel__body">
+            <div style="aspect-ratio:16/9;background:linear-gradient(135deg,#7a6450,#3a2e23);border-radius:10px;margin-bottom:12px"></div>
+            <h3 style="margin:0;font-size:16px">Salvage Camry 2018 — Total Loss</h3>
+            <div class="muted small">VIN JTDBR32E430123456 · Front-end damage · Mileage 84,000 km</div>
+            <div class="flex-between mt-16 small"><span class="muted">Reserve</span><strong>AED 24,000</strong></div>
+            <div class="flex-between small"><span class="muted">Starts</span><strong>25 May 2026, 10:00</strong></div>
+            <div class="flex-between small"><span class="muted">Ends</span><strong>28 May 2026, 18:00</strong></div>
+            <button class="btn btn--primary btn--block mt-16" disabled>Place bid (preview)</button>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

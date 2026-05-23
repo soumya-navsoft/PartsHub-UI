@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Order Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="orders" data-page-title="Order Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar">
+          <div>
+            <div class="muted small">Order ORD-4500 · From Emirates GI</div>
+            <div style="font-weight:500;font-size:18px">Claim JKLMN56780 · Sulaiman Al-Zayoudi · Toyota Camry 2022</div>
+            <div class="muted small mt-8">Awarded 22/01/2025 · Deadline 29/01/2025</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Print job card</button>
+            <a class="btn btn--ghost-red" href="rfq-to-supplier.html">Source parts</a>
+            <a class="btn btn--primary" href="review-give.html">Submit invoice</a>
+          </div>
+        </div>
+        <div class="panel__body">
+          <div class="pipeline mb-16">
+            <div class="pipeline__stage is-done">Order received</div>
+            <div class="pipeline__stage is-done">Parts sourced</div>
+            <div class="pipeline__stage is-active">Repair in progress</div>
+            <div class="pipeline__stage">Quality check</div>
+            <div class="pipeline__stage">Ready for pickup</div>
+            <div class="pipeline__stage">Delivered</div>
+            <div class="pipeline__stage">Invoiced</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Job line items</h3></div>
+          <table class="data">
+            <thead><tr><th>Item</th><th>Type</th><th>Qty</th><th>Status</th><th>Supplier</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Labor — mechanical &amp; body</strong></td><td><span class="badge">Service</span></td><td>12 hrs</td><td><span class="badge badge--info">In progress</span></td><td>—</td></tr>
+              <tr><td>Shock absorbers ×4</td><td><span class="badge badge--info">Part</span></td><td>4</td><td><span class="badge badge--ok">Received</span></td><td>Gulf Auto Parts</td></tr>
+              <tr><td>Transmission</td><td><span class="badge badge--info">Part</span></td><td>1</td><td><span class="badge badge--ok">Own inventory</span></td><td>—</td></tr>
+              <tr><td>Battery 100Ah</td><td><span class="badge badge--info">Part</span></td><td>1</td><td><span class="badge badge--ok">Received</span></td><td>Bin Hamoodah</td></tr>
+              <tr><td>Radiator</td><td><span class="badge badge--info">Part</span></td><td>1</td><td><span class="badge badge--warn">Awaiting</span></td><td>Gulf Auto Parts</td></tr>
+              <tr><td>Headlamp LH ×2</td><td><span class="badge badge--info">Part</span></td><td>2</td><td><span class="badge badge--ok">Received</span></td><td>Gulf Auto Parts</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><td colspan="2" class="text-right">Approved value</td><td colspan="3"><strong style="color:var(--brand-red);font-size:16px">AED 24,854</strong></td></tr>
+            </tfoot>
+          </table>
+        </div>
+        <div>
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Customer</h3></div>
+            <div class="panel__body small">
+              <div class="flex-between mb-8"><span class="muted">Holder</span><strong>Sulaiman Al-Zayoudi</strong></div>
+              <div class="flex-between mb-8"><span class="muted">Contact</span><strong>+971 555 345 678</strong></div>
+              <div class="flex-between mb-8"><span class="muted">Plate</span><strong>A 12345</strong></div>
+              <div class="flex-between"><span class="muted">VIN</span><strong>JTDBR32E430123456</strong></div>
+              <div class="divider"></div>
+              <a class="btn btn--block btn--sm">📞 Call customer</a>
+              <a class="btn btn--block btn--sm mt-8">✉ Send update</a>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__head"><h3 class="panel__title">Insurer</h3></div>
+            <div class="panel__body small">
+              <div class="flex-between mb-8"><span class="muted">Insurer</span><strong>Emirates GI</strong></div>
+              <div class="flex-between mb-8"><span class="muted">Claims lead</span><strong>Mariam Al-Naqbi</strong></div>
+              <div class="flex-between"><span class="muted">Payment terms</span><strong>Net 30</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

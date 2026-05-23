@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Sign Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body>
+<div class="auth">
+  <div class="auth__bg" style="background:linear-gradient(135deg,#0e1729,#0a0f1c);"></div>
+  <div class="auth__wrap">
+    <div class="auth__card">
+      <div class="auth__brand"><img src="../shared/main-logo.png" style="height:68px;width:auto"/></div>
+      
+      <h2 class="auth__title">Sign up as Insurance</h2>
+      <p style="text-align:center;color:var(--ink-500);margin:0 0 8px;font-size:13.5px">Step 1 of 2 — Personal details</p>
+      <p style="text-align:center;color:var(--ink-400);margin:0 0 24px;font-size:12px">After this, you'll complete onboarding (company &amp; license docs) and our admin team will verify your account within 24-48 hrs.</p>
+      <form onsubmit="event.preventDefault(); window.location='onboarding.html';">
+        <div class="form-grid mb-16" style="grid-template-columns:1fr 1fr">
+          <div><input class="input" placeholder="First name*" required style="padding:14px 16px"/></div>
+          <div><input class="input" placeholder="Last name*" required style="padding:14px 16px"/></div>
+        </div>
+        <div class="field"><input type="email" placeholder="Work email address*" required/></div>
+        <div class="field"><input type="tel" placeholder="Mobile number (e.g. +971 50 123 4567)*" required pattern="\+971\s?\d{2,3}\s?\d{3}\s?\d{4}"/></div>
+        <div class="field field--icon">
+          <input type="password" placeholder="Password*" required minlength="8" id="rpw"/>
+          <span class="toggle-eye" style="color:var(--eye-color);cursor:pointer">👁</span>
+        </div>
+        <div class="field"><input type="password" placeholder="Confirm password*" required/></div>
+        <label class="checkrow mb-16"><input type="checkbox" class="cbx" required/> &nbsp;I agree to the <a href="javascript:alert('Terms shown.')" class="auth__link">Terms of Service</a> &amp; <a href="javascript:alert('Privacy policy shown.')" class="auth__link">Privacy Policy</a></label>
+        <label class="checkrow mb-16"><input type="checkbox" class="cbx"/> &nbsp;Send me product updates and platform tips</label>
+        <button class="btn btn--primary btn--block btn--lg">Continue to onboarding →</button>
+        <div class="auth__signup">Already have an account? <a class="auth__link" href="login.html">Sign in</a></div>
+      </form>
+  
+    </div>
+  </div>
+</div></body></html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Reports — Insurance Partner Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="reports" data-page-title="Reports — Insurance Partner Performance">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <a class="tab" href="reports.html" style="text-decoration:none">Claim Lifecycle</a>
+            <div class="tab is-active">Insurance Performance</div>
+            <a class="tab" href="reports-supplier-perf.html" style="text-decoration:none">Supplier Performance</a>
+            <a class="tab" href="reports-revenue.html" style="text-decoration:none">Revenue Summary</a>
+            <a class="tab" href="reports-auction-part.html" style="text-decoration:none">Auction Participation</a>
+            <a class="tab" href="reports-hotdeal-part.html" style="text-decoration:none">Hot Deal Participation</a>
+          </div>
+        </div>
+      </div>
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <table class="data">
+          <thead><tr><th>Insurance Partner</th><th>Jobs received</th><th>Jobs accepted</th><th>Jobs rejected</th><th>Avg approval time</th><th>Avg job value (AED)</th><th>Total revenue</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Emirates General Insurance</strong></td><td>48</td><td><strong>46</strong> (96%)</td><td>2</td><td>4.2 hrs</td><td>AED 14,200</td><td><strong>AED 681,600</strong></td></tr>
+            <tr><td><strong>ADNIC</strong></td><td>32</td><td><strong>30</strong> (94%)</td><td>2</td><td>6.4 hrs</td><td>AED 12,800</td><td><strong>AED 409,600</strong></td></tr>
+            <tr><td><strong>Orient Insurance</strong></td><td>24</td><td><strong>22</strong> (92%)</td><td>2</td><td>8.1 hrs</td><td>AED 11,400</td><td><strong>AED 273,600</strong></td></tr>
+            <tr><td><strong>Salama</strong></td><td>18</td><td><strong>17</strong> (94%)</td><td>1</td><td>5.8 hrs</td><td>AED 13,200</td><td><strong>AED 237,600</strong></td></tr>
+            <tr><td><strong>Watania</strong></td><td>14</td><td><strong>12</strong> (86%)</td><td>2</td><td>9.4 hrs</td><td>AED 10,800</td><td><strong>AED 151,200</strong></td></tr>
+            <tr><td><strong>Sukoon Insurance</strong></td><td>6</td><td><strong>6</strong> (100%)</td><td>0</td><td>3.2 hrs</td><td>AED 16,400</td><td><strong>AED 98,400</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

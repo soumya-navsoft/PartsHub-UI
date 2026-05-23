@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Reviews & Ratings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="admin" data-page="reviews" data-page-title="Reviews & Ratings">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">★</div><div><div class="kpi__label">Total reviews</div><div class="kpi__value">8,420</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">📊</div><div><div class="kpi__label">Avg rating (platform)</div><div class="kpi__value">4.6</div></div></div>
+        <div class="kpi"><div class="kpi__icon" style="background:var(--warn-bg);color:var(--warn-fg)">🚩</div><div><div class="kpi__label">Flagged</div><div class="kpi__value">28</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">↗</div><div><div class="kpi__label">Response rate</div><div class="kpi__value">82%</div></div></div>
+      </div>
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All reviews</div>
+          <div class="tab">Flagged <span class="badge badge--danger" style="margin-left:6px">28</span></div>
+          <div class="tab">Hidden</div>
+          <div class="tab">Disputes</div>
+        </div>
+        <table class="data">
+          <thead><tr><th>Reviewer</th><th>Target</th><th>Rating</th><th>Excerpt</th><th>Order</th><th>Date</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><strong>Mariam Al-Naqbi</strong><div class="muted small">Emirates GI</div></td><td>Royal Swiss Automobile</td><td><span class="rating">★★★★★</span></td><td>"Quick turnaround on a tough collision claim..."</td><td>SO-5200</td><td>20/05/2026</td><td><span class="badge badge--ok">Published</span></td><td class="more">⋯</td></tr>
+            <tr style="background:var(--warn-bg)"><td><strong>Sara Al-Hashimi</strong><div class="muted small">ADNIC</div></td><td>Speedway Motors</td><td><span class="rating">★☆☆☆☆</span></td><td>"Repair quality was poor and delivery was 3 weeks late..."</td><td>SO-5172</td><td>18/05/2026</td><td><span class="badge badge--danger">Flagged by garage</span></td><td><button class="btn btn--sm">Investigate</button></td></tr>
+            <tr><td><strong>Khalid Al-Nuaimi</strong><div class="muted small">Craft Auto</div></td><td>Gulf Auto Parts LLC</td><td><span class="rating">★★★★★</span></td><td>"Fast shipping, OEM quality, fair pricing..."</td><td>SO-5188</td><td>17/05/2026</td><td><span class="badge badge--ok">Published</span></td><td class="more">⋯</td></tr>
+            <tr><td><strong>Omar Al-Mansouri</strong><div class="muted small">Gulf Auto Parts</div></td><td>Royal Swiss Automobile</td><td><span class="rating">★★★★☆</span></td><td>"Good buyer, but paid 7 days late..."</td><td>SO-5185</td><td>15/05/2026</td><td><span class="badge badge--ok">Published</span></td><td class="more">⋯</td></tr>
+            <tr style="background:var(--warn-bg)"><td><strong>Anonymous</strong></td><td>Falcon Parts Trading</td><td><span class="rating">★☆☆☆☆</span></td><td>"[Removed — abusive language]"</td><td>—</td><td>12/05/2026</td><td><span class="badge">Hidden</span></td><td><button class="btn btn--sm">Restore</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

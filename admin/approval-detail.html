@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Application Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="admin" data-page="approvals" data-page-title="Application Review">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="profile-head" style="background:linear-gradient(120deg,#1a1f2b,#2a2e38)">
+          <div class="avatar" style="width:80px;height:80px"></div>
+          <div style="flex:1">
+            <div class="profile-head__name">Al Wasl Auto Garage</div>
+            <div class="profile-head__sub">APP-4812 · Submitted 23/05/2026, 11:42 AM · 22h ago</div>
+            <div class="flex gap-16 mt-8" style="font-size:12px;opacity:0.85"><span>📍 Al Quoz, Dubai</span><span>📞 +971 50 123 4567</span><span>✉ owner@alwaslauto.ae</span></div>
+          </div>
+          <div class="flex gap-8">
+            <button class="btn btn--ghost-red">Reject</button>
+            <button class="btn" style="background:#fff;color:var(--ink-900)">Request more info</button>
+            <button class="btn btn--primary">Approve</button>
+          </div>
+        </div>
+        <div class="tabs" style="padding:0 28px">
+          <div class="tab is-active">Application</div>
+          <div class="tab">Documents (5)</div>
+          <div class="tab">License verification</div>
+          <div class="tab">Notes (2)</div>
+        </div>
+        <div class="panel__body">
+          <div class="dash-grid" style="grid-template-columns: 1fr 1fr">
+            <div>
+              <h3 class="panel__title mb-16">Company details</h3>
+              <div class="detail-grid" style="grid-template-columns:1fr 1fr">
+                <div><div class="label">Company Name</div><strong>Al Wasl Auto Garage</strong></div>
+                <div><div class="label">Trade License No.</div><strong>CN-12349P</strong></div>
+                <div><div class="label">Licensing Authority</div><strong>Dubai DED</strong></div>
+                <div><div class="label">License Expiry</div><strong>15/03/2027</strong></div>
+                <div><div class="label">Type</div><strong>HQ</strong></div>
+                <div><div class="label">VAT TRN</div><strong>100 234 567 80003</strong></div>
+                <div style="grid-column:1/-1"><div class="label">Address</div><strong>Al Quoz 1, Plot 421, Dubai, UAE</strong></div>
+              </div>
+
+              <h3 class="panel__title mb-16 mt-24">Specialisation</h3>
+              <div class="flex gap-8" style="flex-wrap:wrap">
+                <span class="badge badge--info">Sedan</span><span class="badge badge--info">SUV</span><span class="badge badge--info">Japan</span><span class="badge badge--info">Toyota</span><span class="badge badge--info">Honda</span><span class="badge badge--info">Mechanical</span><span class="badge badge--info">Brakes</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="panel__title mb-16">License verification</h3>
+              <div style="background:var(--bg-row-alt);padding:14px;border-radius:10px;margin-bottom:12px">
+                <div class="flex-between mb-8"><span class="muted">License database check</span><span class="badge badge--ok">Found</span></div>
+                <div class="flex-between mb-8"><span class="muted">Holder name match</span><span class="badge badge--ok">Match</span></div>
+                <div class="flex-between mb-8"><span class="muted">Activity allowed</span><span class="badge badge--ok">Mech. workshop</span></div>
+                <div class="flex-between mb-8"><span class="muted">Expiry</span><span class="badge badge--ok">15/03/2027</span></div>
+                <div class="flex-between"><span class="muted">VAT TRN check</span><span class="badge badge--ok">Active</span></div>
+              </div>
+              <a class="btn btn--block" href="#">Open authority website ↗</a>
+
+              <h3 class="panel__title mb-16 mt-24">Documents uploaded</h3>
+              <div style="display:grid;gap:6px">
+                <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px"><div><strong style="font-size:13px">Trade License.pdf</strong><div class="muted small">1.2 MB</div></div><span class="badge badge--ok">✓</span></div>
+                <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px"><div><strong style="font-size:13px">VAT Certificate.pdf</strong><div class="muted small">340 KB</div></div><span class="badge badge--ok">✓</span></div>
+                <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px"><div><strong style="font-size:13px">Owner Emirates ID.pdf</strong><div class="muted small">280 KB</div></div><span class="badge badge--ok">✓</span></div>
+                <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px"><div><strong style="font-size:13px">Bank Statement.pdf</strong><div class="muted small">920 KB</div></div><span class="badge badge--ok">✓</span></div>
+                <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px"><div><strong style="font-size:13px">Workshop photos.zip</strong><div class="muted small">8.4 MB</div></div><span class="badge badge--ok">✓</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

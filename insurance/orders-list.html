@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — Orders for Claim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .lst-page { background: var(--bg-common); border-radius: 8px; border: 1px solid var(--auth-box-border); padding: 22px 24px; }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--ink-500); margin-bottom: 14px;
+  }
+  .breadcrumb a { color: var(--forgot-link-color); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .sep { color: var(--ink-300); }
+  .breadcrumb .current { color: var(--bodyText); font-weight: 500; }
+  .claim-summary {
+    background: #fff;
+    border: 1px solid var(--auth-box-border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    display: flex; align-items: center; gap: 24px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .claim-summary__row { display: flex; flex-direction: column; gap: 2px; }
+  .claim-summary__label {
+    font-size: 11.5px; color: var(--ink-500);
+    text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500;
+  }
+  .claim-summary__value { font-size: 14px; font-weight: 500; color: var(--bodyText); }
+  .claim-summary__value.red { color: var(--brand-red); }
+
+  .lst-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .lst-toolbar .tabs-bar { display: flex; gap: 4px; }
+  .ord-tab {
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--ink-500);
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid var(--form-field-border);
+    background: #fff;
+  }
+  .ord-tab.is-active {
+    background: var(--brand-red);
+    color: #fff;
+    border-color: var(--brand-red);
+    font-weight: 500;
+  }
+  .ord-tab .pill {
+    margin-left: 6px;
+    padding: 1px 7px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 999px;
+    font-size: 11px;
+  }
+  .ord-tab:not(.is-active) .pill {
+    background: var(--bodyBg);
+    color: var(--ink-700);
+  }
+  .lst-toolbar__spacer { flex: 1; }
+  .lst-toolbar .search-box {
+    width: 240px; height: 36px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px; background: #fff;
+    display: flex; align-items: center; padding: 0 12px; gap: 8px; color: var(--ink-400);
+  }
+  .lst-toolbar .search-box input {
+    border: 0; outline: 0; background: transparent;
+    flex: 1; font-size: 13px; color: var(--bodyText); font-family: inherit;
+  }
+  .ic-btn {
+    width: 36px; height: 36px;
+    border-radius: 4px;
+    border: 1px solid var(--form-field-border);
+    background: #fff;
+    display: grid; place-items: center;
+    color: var(--forgot-link-color); cursor: pointer;
+  }
+
+  table.lst-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+  table.lst-table thead th {
+    text-align: left; font-weight: 500; color: var(--ink-500);
+    padding: 12px 14px; background: var(--bg-common);
+    border-bottom: 1px solid var(--grid-field-border);
+    white-space: nowrap; font-size: 13.5px;
+  }
+  table.lst-table tbody td {
+    padding: 16px 14px; border-bottom: 1px solid var(--grid-field-border);
+    vertical-align: middle; color: var(--bodyText); background: #fff;
+  }
+  table.lst-table tbody tr:hover td { background: var(--active-row-color); }
+  table.lst-table .cl-id { color: var(--brand-red); font-weight: 500; cursor: pointer; text-decoration: none; }
+  table.lst-table .cl-id:hover { text-decoration: underline; }
+  table.lst-table .cl-sl { color: var(--forgot-link-color); font-variant-numeric: tabular-nums; }
+  table.lst-table .cl-status {
+    display: inline-flex; align-items: center;
+    padding: 4px 12px; border-radius: 4px;
+    font-size: 12.5px; font-weight: 400;
+  }
+  .cl-status.confirmed { background: #fff4dc; color: #8a5a00; }
+  .cl-status.transit { background: #e3eefc; color: var(--forgot-link-color); }
+  .cl-status.delivered { background: #e8f5ee; color: var(--green-txt); }
+  .cl-status.pending { background: var(--bodyBg); color: var(--ink-500); }
+  .cl-type {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px; border-radius: 4px;
+    font-size: 12px; font-weight: 500;
+  }
+  .cl-type.garage { background: #e3eefc; color: var(--forgot-link-color); }
+  .cl-type.supplier { background: #f3eafe; color: #6b3aa0; }
+  .cl-type.auction { background: #ffeed4; color: #8a5a00; }
+  .cl-type.hotdeal { background: #fde2e2; color: var(--brand-red); }
+  .lst-footer { display: flex; align-items: center; margin-top: 16px; gap: 12px; }
+  .lst-show { display: flex; align-items: center; gap: 10px; color: var(--ink-500); font-size: 13px; }
+  .lst-show select {
+    border: 1px solid var(--form-field-border);
+    padding: 6px 28px 6px 12px; border-radius: 4px; background: #fff;
+    font-family: inherit; font-size: 13px; color: var(--bodyText);
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%236b6b6b' d='M0 0l5 6 5-6z'/></svg>");
+    background-repeat: no-repeat; background-position: right 10px center;
+    min-width: 60px;
+  }
+  .lst-pagination { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .pg-btn {
+    width: 30px; height: 30px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px; background: #fff;
+    display: grid; place-items: center;
+    color: var(--ink-500); font-size: 14px; cursor: pointer;
+  }
+  .pg-btn.is-active { background: var(--brand-red); color: #fff; border-color: var(--brand-red); }
+  .pg-btn:disabled { color: var(--ink-300); cursor: not-allowed; }
+</style>
+</head>
+<body data-portal="insurance" data-page="orders" data-page-title="Orders">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <div class="breadcrumb">
+        <a href="orders.html">Orders</a>
+        <span class="sep">›</span>
+        <span class="current" id="claimBreadcrumb">JKLMN56780</span>
+      </div>
+
+      <div class="claim-summary">
+        <div class="claim-summary__row">
+          <div class="claim-summary__label">Claim ID</div>
+          <div class="claim-summary__value red" id="cs-claim">JKLMN56780</div>
+        </div>
+        <div class="claim-summary__row">
+          <div class="claim-summary__label">Policy Holder</div>
+          <div class="claim-summary__value">Sulaiman Al-Zayoudi</div>
+        </div>
+        <div class="claim-summary__row">
+          <div class="claim-summary__label">Vehicle</div>
+          <div class="claim-summary__value">Toyota Camry 2022 — A 12345</div>
+        </div>
+        <div class="claim-summary__row">
+          <div class="claim-summary__label">Total Orders</div>
+          <div class="claim-summary__value">3</div>
+        </div>
+        <div class="claim-summary__row">
+          <div class="claim-summary__label">Total Order Value</div>
+          <div class="claim-summary__value">AED 30,384</div>
+        </div>
+        <div style="margin-left:auto">
+          <a class="btn btn--ghost-red" href="claim-detail.html">View Claim Details →</a>
+        </div>
+      </div>
+
+      <div class="lst-toolbar">
+        <div class="tabs-bar">
+          <div class="ord-tab is-active">All <span class="pill">3</span></div>
+          <div class="ord-tab">Garage <span class="pill">1</span></div>
+          <div class="ord-tab">Supplier <span class="pill">2</span></div>
+          
+        </div>
+        <div class="lst-toolbar__spacer"></div>
+        <div class="search-box">
+          <span id="searchIcon"></span>
+          <input placeholder="Search orders..." />
+        </div>
+        <button class="ic-btn" id="filterBtn"></button>
+        <button class="ic-btn" id="dlBtn"></button>
+      </div>
+
+      <div class="lst-page">
+        <table class="lst-table" id="ordTable">
+          <thead>
+            <tr>
+              <th>SL No.</th>
+              <th>Order ID</th>
+              <th>Type</th>
+              <th>Vendor</th>
+              <th>Items</th>
+              <th>Total (AED)</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="lst-footer">
+          <div class="lst-show">
+            Show
+            <span style="color:var(--ink-300)">|</span>
+            <select><option>50</option><option>25</option><option>10</option></select>
+          </div>
+          <div class="lst-pagination">
+            <button class="pg-btn" disabled>‹</button>
+            <button class="pg-btn is-active">1</button>
+            <button class="pg-btn" disabled>›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('searchIcon').innerHTML = PHIcon('search', 16);
+  document.getElementById('filterBtn').innerHTML = PHIcon('filter', 18);
+  document.getElementById('dlBtn').innerHTML = PHIcon('download', 18);
+
+  // Read claim ID from URL query
+  const params = new URLSearchParams(window.location.search);
+  const claimId = params.get('claim') || 'JKLMN56780';
+  document.getElementById('cs-claim').textContent = claimId;
+  document.getElementById('claimBreadcrumb').textContent = claimId;
+
+  // [SL, OrderID, type, typeClass, vendor, items, total, status, statusClass, date]
+  const ROWS = [
+    [1, 'ORD-4500', 'Garage',   'garage',   'Royal Swiss Automobile', '1 service', '24,854', 'In Transit', 'transit',   '22/05/2026'],
+    [2, 'ORD-4499', 'Supplier', 'supplier', 'Gulf Auto Parts LLC',     '5 items',  '4,935',  'Delivered',  'delivered', '21/05/2026'],
+    [3, 'ORD-4488', 'Supplier', 'supplier', 'Bin Hamoodah Trading',    '1 item',   '595',    'Delivered',  'delivered', '20/05/2026']
+  ];
+
+  // Route to the right detail page based on order type
+  function detailHref(typeClass, orderId) {
+    const page = (typeClass === 'garage') ? 'order-details-garage.html' : 'order-details-supplier.html';
+    return `${page}?order=${encodeURIComponent(orderId)}&claim=${encodeURIComponent(claimId)}`;
+  }
+
+  document.querySelector('#ordTable tbody').innerHTML = ROWS.map(r => {
+    const href = detailHref(r[3], r[1]);
+    return `
+    <tr style="cursor:pointer" onclick="if(event.target.tagName!=='A')window.location='${href}'">
+      <td class="cl-sl">${r[0]}</td>
+      <td><a class="cl-id" href="${href}">${r[1]}</a></td>
+      <td><span class="cl-type ${r[3]}">${r[2]}</span></td>
+      <td>${r[4]}</td>
+      <td>${r[5]}</td>
+      <td><strong>${r[6]}</strong></td>
+      <td><span class="cl-status ${r[8]}">${r[7]}</span></td>
+      <td>${r[9]}</td>
+      <td style="color:var(--ink-400);font-size:18px;letter-spacing:2px;cursor:pointer">⋯</td>
+    </tr>`;
+  }).join('');
+</script>
+</body>
+</html>

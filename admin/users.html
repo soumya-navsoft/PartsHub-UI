@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Admin — Users</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="admin" data-page="users" data-page-title="User Management">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All users <span class="badge" style="margin-left:6px">2,184</span></div>
+          <div class="tab">Garage</div>
+          <div class="tab">Supplier</div>
+          <div class="tab">Insurance</div>
+          <div class="tab">Admin</div>
+          <div class="tab">Pending</div>
+        </div>
+        <div class="page-card__toolbar" style="border-top:1px solid var(--ink-100)">
+          <div class="search"><span id="si"></span><input placeholder="Search users, email, account..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Export</button>
+            <button class="btn"><span id="ui"></span> Invite</button>
+            <button class="btn btn--primary"><span id="pi"></span> Add User</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data" id="t">
+            <thead>
+              <tr>
+                <th class="check"><input type="checkbox" class="cbx"/></th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Account</th>
+                <th>Role</th>
+                <th>Type</th>
+                <th>Last seen</th>
+                <th>2FA</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="pager">
+          <div class="pager__show">Show <select><option>13</option></select> of 2,184</div>
+          <div class="pager__nav">
+            <button class="pager__btn">‹</button>
+            <button class="pager__btn is-active">1</button>
+            <button class="pager__btn">2</button>
+            <button class="pager__btn">3</button>
+            <button class="pager__btn">…</button>
+            <button class="pager__btn">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('si').innerHTML = PHIcon('search', 14);
+  document.getElementById('ui').innerHTML = PHIcon('upload', 14);
+  document.getElementById('pi').innerHTML = PHIcon('plus', 14);
+
+  const USERS = [
+    ['Mariam Al-Maktoum','mariam.m@royalswiss.ae','Royal Swiss Automobile','Owner',['Garage','badge--info'],'2 min ago',true,['Active','badge--ok']],
+    ['Khalid Al-Nuaimi','khalid@craftauto.ae','Craft Auto Services','Manager',['Garage','badge--info'],'15 min ago',true,['Active','badge--ok']],
+    ['Omar Al-Mansouri','omar@gulfautoparts.ae','Gulf Auto Parts LLC','Owner',['Supplier','badge'],'1h ago',false,['Active','badge--ok']],
+    ['Sara Al-Hashimi','sara@emiratesgi.ae','Emirates General Insurance','Claims Lead',['Insurer','badge--danger'],'3h ago',true,['Active','badge--ok']],
+    ['Aisha Al-Falasi','aisha@falconparts.ae','Falcon Parts Trading','Owner',['Supplier','badge'],'5h ago',false,['Pending KYC','badge--warn']],
+    ['Mohammed Al-Ali','mohammed@gargash.ae','Gargash Auto Centre','Technician',['Garage','badge--info'],'1d ago',true,['Active','badge--ok']],
+    ['Fatima Al-Khouri','fatima@speedway.ae','Speedway Motors','Owner',['Garage','badge--info'],'2d ago',false,['Suspended','badge--danger']],
+    ['Yousef Al-Saadi','yousef@adnic.ae','ADNIC','Claims Officer',['Insurer','badge--danger'],'4d ago',true,['Active','badge--ok']],
+    ['Layla Al-Suwaidi','layla@binhamoodah.ae','Bin Hamoodah Trading','Sales',['Supplier','badge'],'1w ago',false,['Active','badge--ok']],
+    ['Hamza Al-Otaiba','hamza@partshub.io','PartsHub Platform','Super Admin',['Admin','badge--ok'],'now',true,['Active','badge--ok']],
+    ['Mariam Al-Naqbi','mariam@orient-ins.ae','Orient Insurance','Underwriter',['Insurer','badge--danger'],'2d ago',true,['Active','badge--ok']],
+    ['Saif Al-Mansoori','saif@speedwayparts.ae','Speedway Components','Owner',['Supplier','badge'],'6h ago',true,['Active','badge--ok']],
+    ['Noura Al-Hammadi','noura@partshub.io','PartsHub Platform','Support Lead',['Admin','badge--ok'],'now',true,['Active','badge--ok']]
+  ];
+  document.querySelector('#t tbody').innerHTML = USERS.map(u => `
+    <tr>
+      <td><input type="checkbox" class="cbx"/></td>
+      <td><span class="avatar-sm"></span><strong>${u[0]}</strong></td>
+      <td class="muted">${u[1]}</td>
+      <td>${u[2]}</td>
+      <td>${u[3]}</td>
+      <td><span class="badge ${u[4][1]}">${u[4][0]}</span></td>
+      <td class="muted">${u[5]}</td>
+      <td>${u[6] ? '<span class="badge badge--ok">On</span>' : '<span class="badge">Off</span>'}</td>
+      <td><span class="badge ${u[7][1]}">${u[7][0]}</span></td>
+      <td class="more">${PHIcon('dot3', 18)}</td>
+    </tr>
+  `).join('');
+</script>
+</body>
+</html>

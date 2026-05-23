@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Reports — RFQ Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="reports" data-page-title="Reports — RFQ Performance">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <div class="tab is-active">RFQ Performance</div>
+            <a class="tab" href="reports-fulfillment.html" style="text-decoration:none">Order Fulfillment</a>
+            <a class="tab" href="reports-auction-part.html" style="text-decoration:none">Auction Participation</a>
+            <a class="tab" href="reports-hotdeal-part.html" style="text-decoration:none">Hot Deal Participation</a>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">📨</div><div><div class="kpi__label">RFQs received (90d)</div><div class="kpi__value">184</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">✓</div><div><div class="kpi__label">Quoted</div><div class="kpi__value">172</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">🏆</div><div><div class="kpi__label">Won</div><div class="kpi__value">58</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold">⏱</div><div><div class="kpi__label">Avg response time</div><div class="kpi__value">2.4 hrs</div></div></div>
+      </div>
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <table class="data" id="t">
+          <thead><tr><th>RFQ ID</th><th>Source</th><th>Buyer type</th><th>Parts</th><th>Quote amount (AED)</th><th>Response time</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+<script>
+const ST=[['Won','badge--ok'],['Lost','badge--danger'],['Under review','badge--info'],['Expired','badge']];
+const BT=[['Garage','badge--info'],['Insurance','badge--danger'],['Garage','badge--info'],['Insurance','badge--danger']];
+const BUY=['Royal Swiss Automobile','Emirates GI','Craft Auto Services','ADNIC','Gargash Auto Centre','Orient Insurance'];
+let html='';
+for (let i=0;i<10;i++){
+  const s=ST[i%ST.length], b=BT[i%BT.length];
+  html+=`<tr>
+    <td class="id-link">EFHG12${34+i}U</td>
+    <td>${BUY[i%BUY.length]}</td>
+    <td><span class="badge ${b[1]}">${b[0]}</span></td>
+    <td>${2+(i%5)} items</td>
+    <td><strong>${(2400+i*420).toLocaleString()}</strong></td>
+    <td>${(1.4+(i%5)*1.2).toFixed(1)} hrs</td>
+    <td><span class="badge ${s[1]}">${s[0]}</span></td>
+  </tr>`;
+}
+document.querySelector('#t tbody').innerHTML = html;
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

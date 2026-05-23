@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Admin — Platform Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="admin" data-page="overview" data-page-title="Platform Overview">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div>
+            <div style="font-weight:700;font-size:14px">Platform Overview</div>
+            <div class="muted small">Cross-domain analytics: claims, GMV, payouts, marketplace health</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Export</button>
+            <button class="btn btn--primary">+ New</button>
+          </div>
+        </div>
+        <div class="empty" style="padding:80px 20px">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="opacity:0.4;color:var(--brand-red);margin-bottom:16px">
+      <rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>
+    </svg>
+    <div style="font-size:16px;font-weight:600;color:var(--ink-700);margin-bottom:8px">Platform Overview</div>
+    <div class="muted small" style="max-width:480px;margin:0 auto">This screen is part of the PartsHub portal blueprint. Hook up your data source to populate it with live records.</div>
+    <div class="flex gap-8" style="justify-content:center;margin-top:20px">
+      <button class="btn">Documentation</button>
+      <button class="btn btn--primary">Connect data</button>
+    </div>
+  </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>

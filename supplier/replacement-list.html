@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Replacement Requests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="replacements" data-page-title="Replacement Requests">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All <span class="badge" style="margin-left:6px">14</span></div>
+          <div class="tab">Pending approval <span class="badge" style="margin-left:6px">4</span></div>
+          <div class="tab">Approved <span class="badge" style="margin-left:6px">7</span></div>
+          <div class="tab">Rejected <span class="badge" style="margin-left:6px">3</span></div>
+        </div>
+        <div class="table-wrap">
+          <table class="data" id="t">
+            <thead><tr><th>Request ID</th><th>Order</th><th>Buyer</th><th>Item</th><th>Qty</th><th>Reason</th><th>Status</th><th>Raised</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+<script>
+const R = [
+  ['Defective part','badge--warn'],['Wrong part shipped','badge--warn'],['Damaged on arrival','badge--danger'],['Not as described','badge--info']
+];
+const ST = [['Pending','badge--warn'],['Approved','badge--ok'],['Rejected','badge--danger'],['Shipped','badge--info']];
+let html='';
+for (let i=0;i<8;i++){
+  const r = R[i%R.length], s = ST[i%ST.length];
+  html+=`<tr>
+    <td><a class="id-link" href="replacement-detail.html">REP-3${10+i}</a></td>
+    <td>SO-${5200+i}</td>
+    <td>Royal Swiss Automobile</td>
+    <td>Shock absorber</td>
+    <td>1</td>
+    <td><span class="badge ${r[1]}">${r[0]}</span></td>
+    <td><span class="badge ${s[1]}">${s[0]}</span></td>
+    <td>${(15+i).toString().padStart(2,'0')}/05/2026</td>
+    <td class="more">⋯</td>
+  </tr>`;
+}
+document.querySelector('#t tbody').innerHTML = html;
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Replacement / Refund Request</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="orders" data-page-title="Replacement / Refund Request">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Raise replacement or refund</h3><span class="panel__sub">Order ORD-4500 · Royal Swiss Automobile</span></div>
+          <div class="panel__body">
+            <div class="form-grid">
+              <div><label class="label">Request type *</label><select class="select"><option>Replacement</option><option>Full refund</option><option>Partial refund</option></select></div>
+              <div><label class="label">Reason *</label><select class="select"><option>Defective part</option><option>Wrong part shipped</option><option>Damaged on arrival</option><option>Not as described</option><option>Other</option></select></div>
+            </div>
+
+            <h3 class="panel__title mt-24 mb-16">Items affected</h3>
+            <table class="data">
+              <thead><tr><th class="check"><input type="checkbox" class="cbx"/></th><th>Part</th><th>Qty</th><th>Qty affected</th><th>Refund amount</th></tr></thead>
+              <tbody>
+                <tr><td><input type="checkbox" class="cbx" checked/></td><td>Shock absorbers</td><td>4</td><td><input class="input" value="1" style="width:60px;padding:4px"/></td><td><strong>AED 350</strong></td></tr>
+                <tr><td><input type="checkbox" class="cbx"/></td><td>Transmission rebuild kit</td><td>1</td><td>—</td><td>—</td></tr>
+                <tr><td><input type="checkbox" class="cbx"/></td><td>Battery 100Ah AGM</td><td>1</td><td>—</td><td>—</td></tr>
+                <tr><td><input type="checkbox" class="cbx"/></td><td>Headlamp LH</td><td>2</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+
+            <div class="mt-24">
+              <label class="label">Describe the issue *</label>
+              <textarea class="textarea" rows="4" placeholder="One shock absorber arrived with a damaged seal; visible oil leak on installation. Photos attached."></textarea>
+            </div>
+
+            <div class="mt-16">
+              <label class="label">Attach photos / videos</label>
+              <div class="dropzone">
+                <div class="dropzone__title">Drop evidence here</div>
+                <div class="dropzone__sub">Photos, videos or supplier QC reports</div>
+              </div>
+            </div>
+
+            <div class="flex gap-8 mt-24" style="justify-content:flex-end">
+              <button class="btn">Cancel</button>
+              <button class="btn btn--primary">Submit request</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Return timeline (preview)</h3></div>
+          <div class="panel__body">
+            <div class="timeline">
+              <div class="timeline__item"><div class="timeline__dot is-current"></div><div class="timeline__title">Request raised</div><div class="timeline__meta">Step 1 — Now</div></div>
+              <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__title">Supplier review</div><div class="timeline__meta">Step 2 — Within 48h</div><div class="timeline__body">Supplier approves or counter-offers</div></div>
+              <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__title">Return shipped</div><div class="timeline__meta">Step 3 — Carrier collects defective part</div></div>
+              <div class="timeline__item"><div class="timeline__dot"></div><div class="timeline__title">Replacement / refund issued</div><div class="timeline__meta">Step 4 — Final settlement</div></div>
+            </div>
+            <div class="divider"></div>
+            <div class="muted small">Replacement/refund requests require supplier approval. Reason is logged for audit per ORD-009.</div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

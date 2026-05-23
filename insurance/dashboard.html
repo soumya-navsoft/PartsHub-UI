@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="insurance" data-page="dashboard" data-page-title="Dashboard">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <section class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon" id="i1"></div><div><div class="kpi__label">Active Policies</div><div class="kpi__value">12,847</div><div class="kpi__delta">▲ 4% this quarter</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue" id="i2"></div><div><div class="kpi__label">Open Claims</div><div class="kpi__value">312</div><div class="kpi__delta">▲ 18 today</div></div></div>
+        <div class="kpi"><div class="kpi__icon green" id="i3"></div><div><div class="kpi__label">Payout this month</div><div class="kpi__value">AED 4.2M</div><div class="kpi__delta">▼ 3% vs last month</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold" id="i4"></div><div><div class="kpi__label">Avg. claim cycle</div><div class="kpi__value">3.6 days</div><div class="kpi__delta">▼ 0.4d vs last month</div></div></div>
+      </section>
+
+      <!-- Quick action CTAs -->
+      <div class="panel mb-16">
+        <div class="panel__head"><h3 class="panel__title">Quick actions</h3></div>
+        <div class="panel__body" style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px">
+          <a class="btn btn--primary" href="claim-create.html" style="flex-direction:column;padding:14px;text-align:center"><div style="font-size:22px">➕</div><div>New Claim</div></a>
+          <a class="btn" href="rfq-to-garage-create.html" style="flex-direction:column;padding:14px;text-align:center"><div style="font-size:22px">🏭</div><div>Invite Garage</div></a>
+          <a class="btn" href="supplier-rfq-create.html" style="flex-direction:column;padding:14px;text-align:center"><div style="font-size:22px">📦</div><div>RFQ to Supplier</div></a>
+          <a class="btn" href="claim-requests.html" style="flex-direction:column;padding:14px;text-align:center"><div style="font-size:22px">📋</div><div>All Claims</div></a>
+          <a class="btn" href="reports.html" style="flex-direction:column;padding:14px;text-align:center"><div style="font-size:22px">📊</div><div>Analytics</div></a>
+          <a class="btn" href="csv-import.html" style="flex-direction:column;padding:14px;text-align:center"><div style="font-size:22px">⬆</div><div>Import CSV</div></a>
+        </div>
+      </div>
+
+      <!-- Claims by status -->
+      <div class="dash-grid mb-16">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Claims pipeline</h3>
+            <span class="panel__sub">Last 6 months</span>
+          </div>
+          <div class="panel__body">
+            <div class="chart-area">
+              <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+                <g fill="#E11D2A" opacity="0.85">
+                  <rect x="40" y="100" width="40" height="100" rx="3"/>
+                  <rect x="140" y="80" width="40" height="120" rx="3"/>
+                  <rect x="240" y="60" width="40" height="140" rx="3"/>
+                  <rect x="340" y="90" width="40" height="110" rx="3"/>
+                  <rect x="440" y="40" width="40" height="160" rx="3"/>
+                  <rect x="540" y="70" width="40" height="130" rx="3"/>
+                </g>
+                <g fill="#2A6FDB" opacity="0.7">
+                  <rect x="85" y="130" width="20" height="70" rx="3"/>
+                  <rect x="185" y="110" width="20" height="90" rx="3"/>
+                  <rect x="285" y="100" width="20" height="100" rx="3"/>
+                  <rect x="385" y="120" width="20" height="80" rx="3"/>
+                  <rect x="485" y="80" width="20" height="120" rx="3"/>
+                  <rect x="585" y="100" width="20" height="100" rx="3"/>
+                </g>
+              </svg>
+            </div>
+            <div class="flex gap-16 mt-16 muted small">
+              <div>● Submitted: 2,140</div>
+              <div>● Approved: 1,820</div>
+              <div>● Avg payout: AED 13,400</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Claims by status</h3></div>
+          <div class="panel__body">
+            <div style="display:grid;gap:12px;">
+              <div>
+                <div class="flex-between small mb-8"><span>Submitted</span><strong>312</strong></div>
+                <div style="height:8px;background:var(--ink-100);border-radius:99px;overflow:hidden"><div style="width:78%;height:100%;background:var(--brand-red);border-radius:99px"></div></div>
+              </div>
+              <div>
+                <div class="flex-between small mb-8"><span>Quoted</span><strong>184</strong></div>
+                <div style="height:8px;background:var(--ink-100);border-radius:99px;overflow:hidden"><div style="width:55%;height:100%;background:#2A6FDB;border-radius:99px"></div></div>
+              </div>
+              <div>
+                <div class="flex-between small mb-8"><span>Approved</span><strong>148</strong></div>
+                <div style="height:8px;background:var(--ink-100);border-radius:99px;overflow:hidden"><div style="width:40%;height:100%;background:#1B7A3E;border-radius:99px"></div></div>
+              </div>
+              <div>
+                <div class="flex-between small mb-8"><span>Rejected</span><strong>32</strong></div>
+                <div style="height:8px;background:var(--ink-100);border-radius:99px;overflow:hidden"><div style="width:10%;height:100%;background:var(--ink-300);border-radius:99px"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head">
+          <h3 class="panel__title">Recent claims</h3>
+          <a href="claim-requests.html" style="margin-left:auto;color:var(--brand-red);font-weight:600;font-size:12.5px">View all →</a>
+        </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Claim ID</th><th>Policy</th><th>Holder</th><th>Garage</th><th>Total</th><th>Status</th><th>Date</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="id-link">JKLMN56780</td><td>89KLMN6789</td><td>Sulaiman Al-Zayoudi</td><td>Royal Swiss Automobile</td><td><strong>AED 19,900</strong></td><td><span class="badge badge--info">Quoted</span></td><td>18/01/2025</td></tr>
+              <tr><td class="id-link">JKLMN56781</td><td>67WXYZ2345</td><td>Yasmeen Al-Ghafli</td><td>Craft Auto Services</td><td><strong>AED 4,720</strong></td><td><span class="badge badge--ok">Approved</span></td><td>17/01/2025</td></tr>
+              <tr><td class="id-link">JKLMN56782</td><td>12ABCD0987</td><td>Omar Al-Mansouri</td><td>Gargash Auto Centre</td><td><strong>AED 28,400</strong></td><td><span class="badge badge--warn">Pending</span></td><td>16/01/2025</td></tr>
+              <tr><td class="id-link">JKLMN56783</td><td>55QRST6677</td><td>Aisha Al-Hashimi</td><td>Speedway Motors</td><td><strong>AED 7,180</strong></td><td><span class="badge badge--ok">Approved</span></td><td>15/01/2025</td></tr>
+              <tr><td class="id-link">JKLMN56784</td><td>89KLMN6789</td><td>Mohammed Al-Falasi</td><td>Royal Swiss Automobile</td><td><strong>AED 12,600</strong></td><td><span class="badge badge--danger">Rejected</span></td><td>14/01/2025</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('i1').innerHTML = PHIcon('shield', 22);
+  document.getElementById('i2').innerHTML = PHIcon('claim', 22);
+  document.getElementById('i3').innerHTML = PHIcon('wallet', 22);
+  document.getElementById('i4').innerHTML = PHIcon('quote', 22);
+</script>
+</body>
+</html>

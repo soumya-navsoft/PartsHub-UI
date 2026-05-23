@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Branches</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="branches" data-page-title="Branches">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div>
+            <div style="font-weight:500">Branch Network</div>
+            <div class="muted small">HQ-level view of branches registered under your insurance company. Branch users only see their own data.</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Export</button>
+          </div>
+        </div>
+        <table class="data">
+          <thead><tr><th>Branch Name</th><th>Branch ID</th><th>Address</th><th>Manager</th><th>Phone</th><th>Claims (90d)</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Emirates GI — Dubai HQ</strong></td><td>BR-001</td><td>Sheikh Zayed Rd, Dubai</td><td>Mariam Al-Naqbi</td><td>+971 4 555 3456</td><td>184</td><td><span class="badge badge--ok">Active</span></td></tr>
+            <tr><td><strong>Emirates GI — Abu Dhabi</strong></td><td>BR-002</td><td>Khalifa St, Abu Dhabi</td><td>Yousef Al-Saadi</td><td>+971 2 555 7890</td><td>142</td><td><span class="badge badge--ok">Active</span></td></tr>
+            <tr><td><strong>Emirates GI — Sharjah</strong></td><td>BR-003</td><td>Al Wahda St, Sharjah</td><td>Khalid Al-Nuaimi</td><td>+971 6 555 2345</td><td>68</td><td><span class="badge badge--ok">Active</span></td></tr>
+            <tr><td><strong>Emirates GI — Dubai Marina</strong></td><td>BR-004</td><td>Marina Plaza, Dubai</td><td>Sara Al-Hashimi</td><td>+971 4 555 9876</td><td>96</td><td><span class="badge badge--ok">Active</span></td></tr>
+            <tr><td><strong>Emirates GI — Al Ain</strong></td><td>BR-005</td><td>Town Centre, Al Ain</td><td>Layla Al-Khouri</td><td>+971 3 555 4321</td><td>28</td><td><span class="badge badge--warn">Onboarding</span></td></tr>
+          </tbody>
+        </table>
+        <div style="padding:14px 18px;background:var(--bodyBg);font-size:12.5px;color:var(--ink-500);border-top:1px solid var(--auth-box-border)">
+          <strong>Note (per BR-004):</strong> Branches cannot be created from HQ. Each branch self-onboards with its own trade license. HQ can edit address &amp; contact details only.
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

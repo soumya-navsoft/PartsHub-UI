@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Refund Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="refunds" data-page-title="Refund Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div class="panel">
+          <div class="panel__head">
+            <div>
+              <div class="muted small">REF-1420 · Refund request</div>
+              <h3 class="panel__title">For Order SO-5210 · Craft Auto Services</h3>
+              <div class="muted small mt-8">Raised 20 May 2026 · <span class="badge badge--warn">Pending your decision</span></div>
+            </div>
+          </div>
+          <div class="panel__body">
+            <div class="kpi-grid mb-16">
+              <div class="kpi"><div class="kpi__icon">$</div><div><div class="kpi__label">Refund requested</div><div class="kpi__value">AED 1,200</div></div></div>
+              <div class="kpi"><div class="kpi__icon" style="background:var(--ok-bg);color:var(--ok-fg)">↩</div><div><div class="kpi__label">Order total</div><div class="kpi__value">AED 4,800</div></div></div>
+            </div>
+            <h3 class="panel__title mb-16">Reason</h3>
+            <div style="background:var(--bg-row-alt);padding:14px;border-radius:10px">
+              <strong>Wrong part shipped</strong>
+              <p class="muted small mt-8" style="margin-bottom:0">"Received transmission rebuild kit for Honda Accord 2018; ordered kit was for 2022 model. Buyer requesting refund for that line item only."</p>
+            </div>
+
+            <h3 class="panel__title mt-24 mb-16">Your decision</h3>
+            <label class="label">Action</label>
+            <select class="select"><option>Approve full refund (AED 1,200)</option><option>Approve partial refund</option><option>Reject — counter-offer replacement</option><option>Reject — claim invalid</option></select>
+            <label class="label mt-16">Refund method</label>
+            <select class="select"><option>Original payment method</option><option>Credit note (against future orders)</option><option>Bank transfer</option></select>
+            <label class="label mt-16">Notes</label>
+            <textarea class="textarea" rows="3"></textarea>
+            <div class="flex gap-8 mt-16" style="justify-content:flex-end">
+              <button class="btn btn--ghost-red">Reject refund</button>
+              <button class="btn btn--primary">Approve &amp; process</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Order context</h3></div>
+          <div class="panel__body small">
+            <div class="flex-between mb-8"><span class="muted">Order</span><strong>SO-5210</strong></div>
+            <div class="flex-between mb-8"><span class="muted">Buyer rating</span><strong><span class="rating">★★★★★</span> 4.7</strong></div>
+            <div class="flex-between mb-8"><span class="muted">Past refunds</span><strong>1 (last year)</strong></div>
+            <div class="flex-between"><span class="muted">Avg payment cycle</span><strong>14 days</strong></div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

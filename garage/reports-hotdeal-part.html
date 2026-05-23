@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Reports — Hot Deal Participation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="reports" data-page-title="Reports — Hot Deal Participation">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <a class="tab" href="reports.html" style="text-decoration:none">Claim Lifecycle</a>
+            <a class="tab" href="reports-insurance-perf.html" style="text-decoration:none">Insurance Performance</a>
+            <a class="tab" href="reports-supplier-perf.html" style="text-decoration:none">Supplier Performance</a>
+            <a class="tab" href="reports-revenue.html" style="text-decoration:none">Revenue Summary</a>
+            <a class="tab" href="reports-auction-part.html" style="text-decoration:none">Auction Participation</a>
+            <div class="tab is-active">Hot Deal Participation</div>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">🔥</div><div><div class="kpi__label">Deals visible</div><div class="kpi__value">142</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">👁</div><div><div class="kpi__label">Viewed</div><div class="kpi__value">68</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">Purchased</div><div class="kpi__value">28</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold">%</div><div><div class="kpi__label">Avg savings</div><div class="kpi__value">22%</div></div></div>
+      </div>
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <table class="data">
+          <thead><tr><th>Deal</th><th>Seller</th><th>Qty purchased</th><th>Deal price</th><th>List price</th><th>Savings</th><th>Date</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Camry Brake Pad Set</strong></td><td>Emirates GI</td><td>3</td><td>AED 220</td><td>AED 280</td><td><strong style="color:var(--ok-fg)">AED 180</strong></td><td>22/05/2026</td></tr>
+            <tr><td><strong>OEM Battery 100Ah</strong></td><td>Emirates GI</td><td>2</td><td>AED 380</td><td>AED 460</td><td><strong style="color:var(--ok-fg)">AED 160</strong></td><td>18/05/2026</td></tr>
+            <tr><td><strong>Shock Absorber Refurb</strong></td><td>ADNIC</td><td>4</td><td>AED 280</td><td>AED 350</td><td><strong style="color:var(--ok-fg)">AED 280</strong></td><td>15/05/2026</td></tr>
+            <tr><td><strong>Headlamp Bundle</strong></td><td>Emirates GI</td><td>1</td><td>AED 1,100</td><td>AED 1,560</td><td><strong style="color:var(--ok-fg)">AED 460</strong></td><td>10/05/2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

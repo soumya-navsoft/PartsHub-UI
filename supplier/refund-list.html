@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Refund Requests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="refunds" data-page-title="Refund Requests">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All <span class="badge" style="margin-left:6px">8</span></div>
+          <div class="tab">Pending</div>
+          <div class="tab">Processed</div>
+        </div>
+        <table class="data" id="t">
+          <thead><tr><th>Refund ID</th><th>Order</th><th>Buyer</th><th>Amount (AED)</th><th>Reason</th><th>Status</th><th>Raised</th></tr></thead>
+          <tbody>
+            <tr><td><a class="id-link" href="refund-detail.html">REF-1420</a></td><td>SO-5210</td><td>Craft Auto Services</td><td><strong>1,200</strong></td><td>Wrong part shipped</td><td><span class="badge badge--warn">Pending</span></td><td>20/05/2026</td></tr>
+            <tr><td><a class="id-link" href="refund-detail.html">REF-1419</a></td><td>SO-5208</td><td>Speedway Motors</td><td><strong>520</strong></td><td>Cancelled order</td><td><span class="badge badge--ok">Processed</span></td><td>18/05/2026</td></tr>
+            <tr><td><a class="id-link" href="refund-detail.html">REF-1418</a></td><td>SO-5205</td><td>Royal Swiss Automobile</td><td><strong>2,400</strong></td><td>Defective batch</td><td><span class="badge badge--ok">Processed</span></td><td>15/05/2026</td></tr>
+            <tr><td><a class="id-link" href="refund-detail.html">REF-1417</a></td><td>SO-5201</td><td>Gargash Auto Centre</td><td><strong>880</strong></td><td>Late delivery — refund difference</td><td><span class="badge badge--warn">Pending</span></td><td>12/05/2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

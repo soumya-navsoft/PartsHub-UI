@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Auction — Place Bid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="store" data-subpage="auction" data-page-title="Auction — Place Bid">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 380px">
+        <div class="panel">
+          <div class="panel__head"><span class="badge badge--ok">LIVE</span><h3 class="panel__title" style="margin-left:8px">Salvage parts lot — BMW 528i</h3></div>
+          <div class="panel__body">
+            <div style="aspect-ratio:16/9;background:linear-gradient(135deg,#3a3a4e,#1a1a28);border-radius:10px;margin-bottom:16px"></div>
+            <p class="muted">8-piece salvage lot including transmission control unit, harness, alternator, AC compressor, both front headlamps and headlight harness. Vehicle: 2019 BMW 528i, total loss claim.</p>
+            <h3 class="panel__title mb-16 mt-24">Items in this lot</h3>
+            <table class="data">
+              <thead><tr><th>Part</th><th>Condition</th><th>Estimated value</th></tr></thead>
+              <tbody>
+                <tr><td>Transmission Control Unit</td><td>Working</td><td>AED 1,800</td></tr>
+                <tr><td>Engine wiring harness</td><td>Good</td><td>AED 1,200</td></tr>
+                <tr><td>Alternator OEM</td><td>Working</td><td>AED 840</td></tr>
+                <tr><td>AC compressor</td><td>Good</td><td>AED 720</td></tr>
+                <tr><td>Headlamp LH</td><td>Good</td><td>AED 680</td></tr>
+                <tr><td>Headlamp RH</td><td>Good</td><td>AED 680</td></tr>
+                <tr><td>Headlight harness</td><td>Good</td><td>AED 320</td></tr>
+                <tr><td>Side mirror RH</td><td>Good</td><td>AED 240</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Bid</h3></div>
+            <div class="panel__body">
+              <div class="flex-between mb-8 small"><span class="muted">Reserve</span><strong>AED 4,500</strong></div>
+              <div class="flex-between mb-8 small"><span class="muted">Top bid</span><strong style="color:var(--brand-red)">AED 5,200</strong></div>
+              <div class="flex-between small"><span class="muted">Min next</span><strong>AED 5,400</strong></div>
+              <label class="label mt-16">Your bid</label>
+              <input class="input" placeholder="5,500" style="font-size:18px;font-weight:700"/>
+              <button class="btn btn--primary btn--block mt-16">Place bid</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

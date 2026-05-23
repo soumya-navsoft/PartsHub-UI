@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Hot Deals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .deals-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+</style>
+</head>
+<body data-portal="garage" data-page="store" data-subpage="hot-deals" data-page-title="Hot Deals">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="sale-banner mb-16">
+        <h2>HOT SALE!</h2>
+        <div>
+          <div style="font-size:13px;letter-spacing:0.2em;font-weight:700;opacity:0.9">SUPER OFFERS</div>
+          <div class="sale-banner__sub">Save big on inventory — limited time across all categories</div>
+        </div>
+        <div class="sale-banner__price">UP TO 50% OFF</div>
+      </div>
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar">
+          <div class="search"><span id="si"></span><input placeholder="Search hot deals..." /></div>
+          <div class="flex gap-8" style="margin-left:auto">
+            <button class="btn btn--sm">Brakes</button>
+            <button class="btn btn--sm">Suspension</button>
+            <button class="btn btn--sm">Electrical</button>
+            <button class="btn btn--sm">Engine</button>
+            <button class="btn btn--sm">Body</button>
+          </div>
+        </div>
+        <div style="padding:18px">
+          <div class="deals-grid" id="deals"></div>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="panel__head">
+          <h3 class="panel__title">Cross-Sale</h3>
+          <span class="panel__sub">Bundle &amp; save</span>
+        </div>
+        <div style="padding:18px;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+          <div class="thumb" style="aspect-ratio:1;width:100%;height:auto;border-radius:10px;background:#E8EAF1 center/cover"></div>
+          <div class="thumb" style="aspect-ratio:1;width:100%;height:auto;border-radius:10px;background:#E0E3EB center/cover"></div>
+          <div class="thumb" style="aspect-ratio:1;width:100%;height:auto;border-radius:10px;background:#D8DCE6 center/cover"></div>
+          <div class="thumb" style="aspect-ratio:1;width:100%;height:auto;border-radius:10px;background:#E0E3EB center/cover"></div>
+          <div class="thumb" style="aspect-ratio:1;width:100%;height:auto;border-radius:10px;background:#16181D;color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px">+3</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('si').innerHTML = PHIcon('search', 14);
+  const items = [
+    ['Front Brake Pad Combo Set','BR-FP-2025','72','350','15% OFF'],
+    ['Premium Shock Absorber','SH-AB-118','34','420','10% OFF'],
+    ['Headlamp Assembly LH','HD-LP-LH-04','21','680','20% OFF'],
+    ['Battery 100Ah AGM','BT-100-AGM','48','590','5% OFF'],
+    ['Radiator Hose Set','RD-HS-220','60','120','25% OFF'],
+    ['OEM Alternator 14V','AL-OEM-14','12','840','12% OFF'],
+    ['Brake Disc Combo','BR-DC-2025','30','410','18% OFF'],
+    ['Front Axle Bearing','AX-FR-04','18','190','22% OFF']
+  ];
+  document.getElementById('deals').innerHTML = items.map(([t,sku,av,p,off]) => `
+    <div class="deal">
+      <div class="flex" style="justify-content:space-between;align-items:flex-start">
+        <img src="../shared/hot-deals.png" alt="Hot Deals" style="height:54px;width:auto"/>
+        <span class="badge badge--danger" style="margin-top:6px">${off}</span>
+      </div>
+      <div class="deal__title">${t}</div>
+      <div class="deal__row"><span>SKU</span><span>${sku}</span></div>
+      <div class="deal__row"><span>Available</span><span>${av}</span></div>
+      <div class="deal__price">AED ${p}</div>
+      <div class="deal__actions">
+        <button class="btn btn--ghost-red btn--sm">Details</button>
+        <button class="btn btn--primary btn--sm">Add to Cart</button>
+      </div>
+    </div>
+  `).join('');
+</script>
+</body>
+</html>

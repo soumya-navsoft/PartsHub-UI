@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Admin — Suppliers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="admin" data-page="suppliers" data-page-title="Suppliers">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div class="search"><span id="si"></span><input placeholder="Search suppliers..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <select class="select" style="width:auto"><option>All categories</option><option>Braking</option><option>Suspension</option><option>Engine</option><option>Lighting</option><option>Electrical</option></select>
+            <button class="btn btn--primary"><span id="pi"></span> Onboard Supplier</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data" id="t">
+            <thead><tr><th class="check"><input type="checkbox" class="cbx"/></th><th>Supplier</th><th>License</th><th>Specialty</th><th>SKUs</th><th>Warehouses</th><th>Rating</th><th>Orders fulfilled (30d)</th><th>On-time %</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('si').innerHTML = PHIcon('search', 14);
+  document.getElementById('pi').innerHTML = PHIcon('plus', 14);
+  const ROWS = [
+    ['Gulf Auto Parts LLC','SP-12349','OEM Multi-brand',8420,4,4.8,184,98,['Active','badge--ok']],
+    ['Emirates Spare Co.','SP-12421','Suspension &amp; Brakes',3210,2,4.6,98,96,['Active','badge--ok']],
+    ['Al Habtoor Motors Parts','SP-04839','OEM Mercedes',2180,1,4.9,76,99,['Active','badge--ok']],
+    ['Bin Hamoodah Trading','SP-29382','Multi-brand',4920,3,4.4,142,92,['Active','badge--ok']],
+    ['Speedway Components','SP-19283','Performance',1820,1,4.5,68,94,['Active','badge--ok']],
+    ['Royal Parts Supply','SP-83920','Electrical &amp; Lighting',2920,2,4.3,84,90,['Active','badge--ok']],
+    ['Falcon Parts Trading','SP-50293','Aftermarket',680,1,3.9,18,82,['Pending KYC','badge--warn']],
+    ['Desert Spares Co.','SP-71029','Body &amp; Trim',1240,1,4.1,32,88,['Active','badge--ok']]
+  ];
+  const star = r => '★★★★★'.slice(0, Math.round(r)) + '☆☆☆☆☆'.slice(0, 5 - Math.round(r));
+  document.querySelector('#t tbody').innerHTML = ROWS.map(r => `
+    <tr>
+      <td><input type="checkbox" class="cbx"/></td>
+      <td><span class="avatar-sm"></span><strong>${r[0]}</strong></td>
+      <td class="muted">${r[1]}</td>
+      <td>${r[2]}</td>
+      <td>${r[3].toLocaleString()}</td>
+      <td>${r[4]}</td>
+      <td><span style="color:var(--accent-blue);letter-spacing:2px">${star(r[5])}</span> ${r[5]}</td>
+      <td>${r[6]}</td>
+      <td><strong>${r[7]}%</strong></td>
+      <td><span class="badge ${r[8][1]}">${r[8][0]}</span></td>
+    </tr>
+  `).join('');
+</script>
+</body>
+</html>

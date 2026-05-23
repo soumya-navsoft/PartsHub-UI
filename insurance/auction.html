@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Auctions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="auction" data-page-title="Auctions">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">🔨</div><div><div class="kpi__label">Live auctions</div><div class="kpi__value">8</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">📈</div><div><div class="kpi__label">Total bids</div><div class="kpi__value">142</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">$</div><div><div class="kpi__label">Revenue (30d)</div><div class="kpi__value">AED 184K</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold">⏱</div><div><div class="kpi__label">Avg bidders / auction</div><div class="kpi__value">12</div></div></div>
+      </div>
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div class="tabs" style="border:0">
+            <div class="tab is-active">Live</div>
+            <div class="tab">Scheduled</div>
+            <div class="tab">Closed</div>
+            <div class="tab">Draft</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <a class="btn btn--primary" href="auction-create.html">+ Create Auction</a>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data" id="t">
+            <thead><tr><th>Auction ID</th><th>Title</th><th>Items</th><th>Reserve</th><th>Top bid</th><th>Bidders</th><th>Ends in</th><th>Status</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+<script>
+const ROWS = [
+  ['AUC-1042','Salvage Camry 2018 Total Loss','1 vehicle','AED 24,000','AED 28,400','14','2d 14h','Live'],
+  ['AUC-1041','Used parts lot — May batch','12 parts','AED 8,000','AED 11,200','8','1d 3h','Live'],
+  ['AUC-1040','BMW 528i transmission + harness','3 parts','AED 4,500','AED 5,200','6','5h 22m','Live'],
+  ['AUC-1039','Honda Accord 2017','1 vehicle','AED 15,000','AED 17,800','11','—','Closed'],
+  ['AUC-1038','Brake assembly bundle','8 parts','AED 3,200','AED 4,100','9','—','Closed']
+];
+document.querySelector('#t tbody').innerHTML = ROWS.map(r => `
+  <tr>
+    <td><a class="id-link" href="auction-detail.html">${r[0]}</a></td>
+    <td><strong>${r[1]}</strong></td>
+    <td>${r[2]}</td>
+    <td>${r[3]}</td>
+    <td><strong>${r[4]}</strong></td>
+    <td>${r[5]}</td>
+    <td>${r[6]}</td>
+    <td><span class="badge ${r[7]==='Live'?'badge--ok':r[7]==='Closed'?'badge':'badge--info'}">${r[7]}</span></td>
+    <td class="more">⋯</td>
+  </tr>
+`).join('');
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

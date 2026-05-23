@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Inventory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="inventory" data-page-title="Inventory">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">📦</div><div><div class="kpi__label">Total items</div><div class="kpi__value">428</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">🚗</div><div><div class="kpi__label">Vehicles (salvage)</div><div class="kpi__value">62</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">⚙</div><div><div class="kpi__label">Parts</div><div class="kpi__value">366</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold">↗</div><div><div class="kpi__label">In active auction/deals</div><div class="kpi__value">48</div></div></div>
+      </div>
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div class="tabs" style="border:0">
+            <div class="tab is-active">All</div>
+            <div class="tab">Parts</div>
+            <div class="tab">Vehicles</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <div class="search"><input placeholder="Search items..."/></div>
+            <button class="btn">Import CSV</button>
+            <a class="btn btn--primary" href="inventory-add.html">+ Add Inventory</a>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data" id="t">
+            <thead><tr><th class="check"><input type="checkbox" class="cbx"/></th><th>Item ID</th><th>Item</th><th>Type</th><th>Source</th><th>Quantity</th><th>Unit price (est.)</th><th>Status</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+<script>
+const ROWS = [
+  ['INV-2401','Premium Brake Pad Set','Parts','Closed claim JKLMN56770',12,180,'Available'],
+  ['INV-2402','Shock absorber (used)','Parts','Closed claim JKLMN56768',4,140,'Available'],
+  ['INV-2403','Toyota Camry 2018 (total loss)','Vehicle','Salvage',1,28000,'In auction'],
+  ['INV-2404','Headlamp Assembly LH','Parts','Closed claim',2,420,'In hot deal'],
+  ['INV-2405','Battery 100Ah AGM','Parts','Closed claim',6,360,'Available'],
+  ['INV-2406','Honda Accord 2017 (total loss)','Vehicle','Salvage',1,18000,'Available'],
+  ['INV-2407','Transmission rebuild kit (used)','Parts','Salvage',2,2400,'In auction'],
+  ['INV-2408','Front bumper (Camry)','Parts','Closed claim',3,520,'Available'],
+  ['INV-2409','Radiator (used)','Parts','Closed claim',2,480,'Available'],
+  ['INV-2410','BMW 528i 2019 (severe damage)','Vehicle','Salvage',1,42000,'Available']
+];
+const statusBadge = s => s==='Available' ? 'badge--ok' : s==='In auction' ? 'badge--info' : 'badge--warn';
+document.querySelector('#t tbody').innerHTML = ROWS.map(r=>`
+  <tr>
+    <td><input type="checkbox" class="cbx"/></td>
+    <td><strong>${r[0]}</strong></td>
+    <td><span class="thumb"></span>${r[1]}</td>
+    <td><span class="badge ${r[2]==='Vehicle'?'badge--info':''}">${r[2]}</span></td>
+    <td class="muted">${r[3]}</td>
+    <td>${r[4]}</td>
+    <td><strong>AED ${r[5].toLocaleString()}</strong></td>
+    <td><span class="badge ${statusBadge(r[6])}">${r[6]}</span></td>
+    <td class="more">⋯</td>
+  </tr>
+`).join('');
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

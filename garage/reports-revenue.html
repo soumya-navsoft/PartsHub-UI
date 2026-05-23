@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Reports — Revenue Summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="reports" data-page-title="Reports — Revenue Summary">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <a class="tab" href="reports.html" style="text-decoration:none">Claim Lifecycle</a>
+            <a class="tab" href="reports-insurance-perf.html" style="text-decoration:none">Insurance Performance</a>
+            <a class="tab" href="reports-supplier-perf.html" style="text-decoration:none">Supplier Performance</a>
+            <div class="tab is-active">Revenue Summary</div>
+            <a class="tab" href="reports-auction-part.html" style="text-decoration:none">Auction Participation</a>
+            <a class="tab" href="reports-hotdeal-part.html" style="text-decoration:none">Hot Deal Participation</a>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">$</div><div><div class="kpi__label">Total invoiced (90d)</div><div class="kpi__value">AED 1.85M</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">Total received</div><div class="kpi__value">AED 1.66M</div></div></div>
+        <div class="kpi"><div class="kpi__icon" style="background:var(--warn-bg);color:var(--warn-fg)">⏰</div><div><div class="kpi__label">Outstanding</div><div class="kpi__value">AED 184K</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">⏱</div><div><div class="kpi__label">Avg payment cycle</div><div class="kpi__value">16 days</div></div></div>
+      </div>
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <table class="data">
+          <thead><tr><th>Insurer</th><th>Invoices</th><th>Total invoiced (AED)</th><th>Received</th><th>Outstanding</th><th>Avg cycle</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Emirates General Insurance</strong></td><td>46</td><td><strong>681,600</strong></td><td>AED 681,600</td><td>AED 0</td><td>12 days</td></tr>
+            <tr><td><strong>ADNIC</strong></td><td>30</td><td><strong>409,600</strong></td><td>AED 380,000</td><td><strong style="color:var(--brand-red)">AED 29,600</strong></td><td>18 days</td></tr>
+            <tr><td><strong>Orient Insurance</strong></td><td>22</td><td><strong>273,600</strong></td><td>AED 240,000</td><td><strong style="color:var(--brand-red)">AED 33,600</strong></td><td>22 days</td></tr>
+            <tr><td><strong>Salama</strong></td><td>17</td><td><strong>237,600</strong></td><td>AED 200,000</td><td><strong style="color:var(--brand-red)">AED 37,600</strong></td><td>20 days</td></tr>
+            <tr><td><strong>Watania</strong></td><td>12</td><td><strong>151,200</strong></td><td>AED 84,000</td><td><strong style="color:var(--brand-red)">AED 67,200</strong></td><td>28 days</td></tr>
+            <tr><td><strong>Sukoon Insurance</strong></td><td>6</td><td><strong>98,400</strong></td><td>AED 82,000</td><td><strong>AED 16,400</strong></td><td>14 days</td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

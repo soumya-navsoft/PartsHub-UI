@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Supplier — User Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="supplier" data-page="user-management" data-page-title="User Management">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div>
+            <div style="font-weight:700;font-size:14px">User Management</div>
+            <div class="muted small">Team access &amp; permissions</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Export</button>
+            <button class="btn btn--primary">+ New</button>
+          </div>
+        </div>
+        <div class="table-wrap"><table class="data">
+    <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Warehouse</th><th>Last seen</th><th>Status</th></tr></thead>
+    <tbody><tr><td><span class="avatar-sm"></span><strong>Mariam Al-Maktoum</strong></td><td><span class="muted">mariam@partshub.ae</span></td><td>Owner</td><td>Jebel Ali</td><td>10/01/2025</td><td><span class="badge badge--ok">Active</span></td></tr><tr><td><span class="avatar-sm"></span><strong>Khalid Al-Nuaimi</strong></td><td><span class="muted">khalid@partshub.ae</span></td><td>Manager</td><td>Mussafah</td><td>11/02/2025</td><td><span class="badge badge--warn">Pending</span></td></tr><tr><td><span class="avatar-sm"></span><strong>Omar Al-Mansouri</strong></td><td><span class="muted">omar@partshub.ae</span></td><td>Technician</td><td>Sharjah Ind.</td><td>12/01/2025</td><td><span class="badge badge--info">In Transit</span></td></tr><tr><td><span class="avatar-sm"></span><strong>Sara Al-Hashimi</strong></td><td><span class="muted">sara@partshub.ae</span></td><td>Admin</td><td>Al Quoz</td><td>13/02/2025</td><td><span class="badge badge">Closed</span></td></tr><tr><td><span class="avatar-sm"></span><strong>Mariam Al-Maktoum</strong></td><td><span class="muted">mariam@partshub.ae</span></td><td>Owner</td><td>Jebel Ali</td><td>14/01/2025</td><td><span class="badge badge--ok">Active</span></td></tr><tr><td><span class="avatar-sm"></span><strong>Khalid Al-Nuaimi</strong></td><td><span class="muted">khalid@partshub.ae</span></td><td>Manager</td><td>Mussafah</td><td>15/02/2025</td><td><span class="badge badge--warn">Pending</span></td></tr><tr><td><span class="avatar-sm"></span><strong>Omar Al-Mansouri</strong></td><td><span class="muted">omar@partshub.ae</span></td><td>Technician</td><td>Sharjah Ind.</td><td>16/01/2025</td><td><span class="badge badge--info">In Transit</span></td></tr><tr><td><span class="avatar-sm"></span><strong>Sara Al-Hashimi</strong></td><td><span class="muted">sara@partshub.ae</span></td><td>Admin</td><td>Al Quoz</td><td>17/02/2025</td><td><span class="badge badge">Closed</span></td></tr></tbody>
+  </table></div>
+  <div class="pager">
+    <div class="pager__show">Show <select><option>10</option></select></div>
+    <div class="pager__nav">
+      <button class="pager__btn">‹</button>
+      <button class="pager__btn is-active">1</button>
+      <button class="pager__btn">2</button>
+      <button class="pager__btn">3</button>
+      <button class="pager__btn">›</button>
+    </div>
+  </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>

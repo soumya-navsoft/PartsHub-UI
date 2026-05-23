@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Redirecting…</title>
+<script>
+  // Legacy URL — route to the type-specific detail page.
+  const p = new URLSearchParams(location.search);
+  const type = (p.get('type') || 'supplier').toLowerCase();
+  const target = (type === 'garage') ? 'order-details-garage.html' : 'order-details-supplier.html';
+  // Preserve order + claim params
+  p.delete('type');
+  const qs = p.toString();
+  location.replace(target + (qs ? '?' + qs : ''));
+</script>
+</head>
+<body><p>Redirecting…</p></body>
+</html>

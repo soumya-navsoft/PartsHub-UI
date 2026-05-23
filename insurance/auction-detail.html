@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Auction Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="auction" data-page-title="Auction Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 380px">
+        <div class="panel">
+          <div class="panel__head">
+            <div>
+              <div class="muted small">AUC-1042</div>
+              <h3 class="panel__title">Salvage Camry 2018 — Total Loss</h3>
+              <div class="muted small">Live · ends in 2d 14h · 14 active bidders</div>
+            </div>
+            <div style="margin-left:auto"><span class="badge badge--ok">LIVE</span></div>
+          </div>
+          <div class="panel__body">
+            <div style="aspect-ratio:16/9;background:linear-gradient(135deg,#7a6450,#3a2e23);border-radius:10px;margin-bottom:16px"></div>
+            <div class="detail-grid">
+              <div><div class="label">VIN</div><strong>JTDBR32E430123456</strong></div>
+              <div><div class="label">Year / Make / Model</div><strong>2018 Toyota Camry SE</strong></div>
+              <div><div class="label">Mileage</div><strong>84,200 km</strong></div>
+              <div><div class="label">Source claim</div><strong>JKLMN56735</strong></div>
+              <div><div class="label">Reserve</div><strong>AED 24,000</strong></div>
+              <div><div class="label">Starting bid</div><strong>AED 20,000</strong></div>
+              <div><div class="label">Top bid</div><strong style="color:var(--brand-red)">AED 28,400</strong></div>
+              <div><div class="label">Bid increment</div><strong>AED 500</strong></div>
+              <div><div class="label">Started</div><strong>25 May 2026, 10:00</strong></div>
+            </div>
+            <div class="divider"></div>
+            <h3 class="panel__title mb-16">Description</h3>
+            <p class="muted">Total loss vehicle from collision claim. Front-end damage, airbags deployed. Engine intact, transmission untested. Vehicle is parked at our Jebel Ali yard. Inspections by appointment.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Bid history</h3><span class="panel__sub">14 bids</span></div>
+            <div class="panel__body" style="padding:14px">
+              <div class="bid-row is-winning"><div style="flex:1"><strong>Falcon Garage Network</strong><div class="muted small">Dubai · ★ 4.6 · 2 hrs ago</div></div><div class="bid-row__amt">AED 28,400</div></div>
+              <div class="bid-row"><div style="flex:1"><strong>Bin Hamoodah Trading</strong><div class="muted small">Abu Dhabi · ★ 4.4 · 3 hrs ago</div></div><div class="bid-row__amt">AED 27,900</div></div>
+              <div class="bid-row"><div style="flex:1"><strong>Speedway Components</strong><div class="muted small">Sharjah · ★ 4.5 · 5 hrs ago</div></div><div class="bid-row__amt">AED 27,400</div></div>
+              <div class="bid-row"><div style="flex:1"><strong>Royal Parts Supply</strong><div class="muted small">Dubai · ★ 4.3 · 8 hrs ago</div></div><div class="bid-row__amt">AED 26,900</div></div>
+              <div class="bid-row"><div style="flex:1"><strong>Gulf Auto Parts LLC</strong><div class="muted small">Dubai · ★ 4.8 · 12 hrs ago</div></div><div class="bid-row__amt">AED 26,400</div></div>
+              <a href="#" class="muted small" style="display:block;text-align:center;margin-top:8px">View all 14 bids →</a>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__head"><h3 class="panel__title">Auction actions</h3></div>
+            <div class="panel__body">
+              <button class="btn btn--block mb-8">Edit details</button>
+              <button class="btn btn--block mb-8">Extend by 24h</button>
+              <button class="btn btn--ghost-red btn--block mb-8">Pause auction</button>
+              <button class="btn btn--primary btn--block">Close & award to top bidder</button>
+              <div class="muted small mt-16">Per AUC-008, closing this auction automatically generates an order for AED 28,400 to Falcon Garage Network.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

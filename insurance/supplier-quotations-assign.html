@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Assign Suppliers to Parts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="claim-request" data-subpage="supplier-quotations-assign" data-page-title="Assign Suppliers to Parts">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div>
+            <div style="font-weight:700">Final supplier assignment — Claim JKLMN56780</div>
+            <div class="muted small">Confirm one supplier per part. This generates a Supplier Order for each unique supplier.</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">← Back</button>
+            <button class="btn btn--primary">Generate orders (3 suppliers)</button>
+          </div>
+        </div>
+        <table class="data">
+          <thead>
+            <tr><th>Part</th><th>Qty</th><th>Selected Supplier</th><th>Unit Price</th><th>Line Total</th><th>Delivery</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Shock absorbers</strong></td><td>4</td><td><select class="select"><option>Gulf Auto Parts LLC ★</option><option>Bin Hamoodah</option></select></td><td>AED 350</td><td><strong>AED 1,400</strong></td><td>3 days</td><td><input class="input" placeholder="OEM only" style="padding:6px"/></td></tr>
+            <tr><td><strong>Transmission</strong></td><td>1</td><td><select class="select"><option>Gulf Auto Parts LLC ★</option><option>Bin Hamoodah</option></select></td><td>AED 4,800</td><td><strong>AED 4,800</strong></td><td>5 days</td><td><input class="input" placeholder="" style="padding:6px"/></td></tr>
+            <tr><td><strong>Battery 100Ah AGM</strong></td><td>1</td><td><select class="select"><option>Gulf Auto Parts LLC</option><option selected>Bin Hamoodah ★</option></select></td><td>AED 595</td><td><strong>AED 595</strong></td><td>4 days</td><td><input class="input" placeholder="" style="padding:6px"/></td></tr>
+            <tr><td><strong>Radiator</strong></td><td>1</td><td><select class="select"><option>Gulf Auto Parts LLC ★</option><option>Bin Hamoodah</option></select></td><td>AED 880</td><td><strong>AED 880</strong></td><td>3 days</td><td><input class="input" placeholder="" style="padding:6px"/></td></tr>
+            <tr><td><strong>Front axle bearing</strong></td><td>1</td><td><select class="select"><option>Gulf Auto Parts LLC ★</option><option>Speedway</option></select></td><td>AED 470</td><td><strong>AED 470</strong></td><td>4 days</td><td><input class="input" placeholder="" style="padding:6px"/></td></tr>
+            <tr><td><strong>Headlamp LH (×2)</strong></td><td>2</td><td><select class="select"><option>Gulf Auto Parts LLC ★</option><option>Emirates Spare Co.</option></select></td><td>AED 200</td><td><strong>AED 400</strong></td><td>3 days</td><td><input class="input" placeholder="OEM only" style="padding:6px"/></td></tr>
+          </tbody>
+          <tfoot>
+            <tr style="background:#FEF3F4">
+              <td colspan="4" class="text-right" style="font-weight:700">Total parts cost</td>
+              <td><strong style="color:var(--brand-red);font-size:16px">AED 8,545</strong></td>
+              <td colspan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+        <div style="padding:18px;background:var(--bg-row-alt);border-top:1px solid var(--ink-100);font-size:13px">
+          <strong>Order breakdown:</strong>
+          <ul style="margin:8px 0 0 18px;color:var(--ink-500)">
+            <li>Order #1 → Gulf Auto Parts LLC — 5 parts, AED 7,950</li>
+            <li>Order #2 → Bin Hamoodah Trading — 1 part, AED 595</li>
+          </ul>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

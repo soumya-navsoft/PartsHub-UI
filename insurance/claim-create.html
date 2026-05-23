@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — New Claim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/>
+<style>
+  /* Production-accurate 4-step chevron stepper */
+  .pc-stepper {
+    display: flex;
+    margin: 0 0 12px;
+    background: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    gap: 0;
+  }
+  .pc-step {
+    flex: 1;
+    padding: 18px 24px 18px 44px;
+    background: #fff;
+    border: 1px solid var(--auth-box-border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 50%, calc(100% - 24px) 100%, 0 100%, 24px 50%);
+    margin-right: -22px;
+    font-size: 14px;
+    color: var(--ink-400);
+    z-index: 1;
+  }
+  .pc-step:first-child {
+    clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 50%, calc(100% - 24px) 100%, 0 100%);
+    padding-left: 24px;
+  }
+  .pc-step:last-child {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 24px 50%);
+    margin-right: 0;
+  }
+  .pc-step.is-done {
+    background: #e8f5ee;
+    border-color: #b6dec3;
+    color: var(--green-txt);
+    z-index: 3;
+  }
+  .pc-step.is-active {
+    background: #eef1f6;
+    border-color: #c7cfdc;
+    color: var(--bodyText);
+    z-index: 2;
+  }
+  .pc-step__circle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 500; font-size: 13px;
+    background: #fff;
+    border: 1.5px solid var(--ink-300);
+    color: var(--ink-400);
+    flex: none;
+  }
+  .pc-step.is-done .pc-step__circle {
+    background: #fff;
+    border-color: var(--green-txt);
+    color: var(--green-txt);
+  }
+  .pc-step.is-active .pc-step__circle {
+    background: #2557a7;
+    border-color: #2557a7;
+    color: #fff;
+  }
+  .pc-step__label {
+    font-weight: 500;
+    line-height: 1.25;
+    font-size: 14px;
+  }
+  .pc-step.is-active .pc-step__label { color: var(--bodyText); }
+  .pc-step.is-done .pc-step__label { color: var(--green-txt); }
+
+  /* Section panels */
+  .pc-section {
+    background: #fff;
+    border-bottom: 1px solid var(--auth-box-border);
+    padding: 18px 24px 22px;
+  }
+  .pc-section:first-of-type { border-top: 1px solid var(--auth-box-border); }
+  .pc-section__title {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 16px;
+    color: var(--bodyText);
+  }
+  .pc-grid { display: grid; gap: 16px 18px; }
+  .pc-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .pc-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .pc-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .pc-grid.policy { grid-template-columns: 1fr 1fr 110px 1fr; }
+
+  /* Outlined input matching production */
+  .pc-fld {
+    position: relative;
+  }
+  .pc-fld input,
+  .pc-fld select,
+  .pc-fld textarea,
+  .pc-fld .pc-pseudo-input {
+    width: 100%;
+    height: 56px;
+    padding: 0 14px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px;
+    background: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--bodyText);
+    outline: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  .pc-fld textarea {
+    height: auto;
+    min-height: 120px;
+    padding: 16px 14px;
+    resize: vertical;
+    display: block;
+    line-height: 1.5;
+  }
+  .pc-fld input::placeholder,
+  .pc-fld textarea::placeholder,
+  .pc-fld .pc-pseudo-input.placeholder {
+    color: var(--ink-400);
+    font-weight: 400;
+  }
+  .pc-fld input:focus, .pc-fld select:focus, .pc-fld textarea:focus {
+    border-color: var(--green-txt);
+    box-shadow: 0 0 0 1px var(--green-txt);
+  }
+  .pc-fld .pc-pseudo-input {
+    color: var(--ink-400);
+    cursor: pointer;
+    justify-content: space-between;
+  }
+  .pc-fld .pc-pseudo-input .pc-suffix {
+    color: var(--ink-500);
+    font-size: 16px;
+  }
+  .pc-fld .pc-suffix-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-500);
+    pointer-events: none;
+    font-size: 16px;
+  }
+
+  /* Phone with code prefix */
+  .pc-fld-phone-code .pc-pseudo-input {
+    gap: 8px;
+  }
+  .pc-flag-uae {
+    width: 22px; height: 16px; border-radius: 2px;
+    display: inline-block; flex-shrink: 0;
+    background: linear-gradient(to bottom, #00732f 0%, #00732f 33%, #fff 33%, #fff 66%, #000 66%, #000 100%);
+    position: relative;
+  }
+  .pc-flag-uae::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 7px; background: #ce1126;
+  }
+  .pc-code-label {
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    background: #fff;
+    padding: 0 6px;
+    font-size: 11.5px;
+    color: var(--ink-500);
+    font-weight: 400;
+    z-index: 2;
+  }
+
+  /* Upload field (filled with icon) */
+  .pc-upload {
+    height: 56px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    color: var(--ink-400);
+    font-size: 14px;
+    cursor: pointer;
+    background: #fff;
+    justify-content: space-between;
+  }
+  .pc-upload:hover { border-color: var(--brand-red); }
+  .pc-upload__icon {
+    color: var(--ink-500);
+    font-size: 18px;
+  }
+
+  /* Photo dropzone */
+  .pc-dropzone {
+    border: 1px dashed var(--ink-300);
+    border-radius: 4px;
+    padding: 56px 20px;
+    text-align: center;
+    background: #f5f5f5;
+    cursor: pointer;
+  }
+  .pc-dropzone:hover { border-color: var(--brand-red); background: var(--brand-red-ghost); }
+  .pc-dropzone__icon {
+    color: var(--ink-400);
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+  .pc-dropzone__title { color: var(--bodyText); font-size: 14px; }
+  .pc-dropzone__title a { color: var(--forgot-link-color); text-decoration: underline; cursor: pointer; }
+  .pc-dropzone__sub { color: var(--ink-400); font-size: 12px; margin-top: 8px; }
+
+  /* Parts area row with + button */
+  .pc-parts-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 56px;
+    gap: 14px;
+    align-items: center;
+  }
+  .pc-add-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+    background: #fff;
+    border: 1px solid var(--form-field-border);
+    color: var(--ink-500);
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .pc-add-btn:hover {
+    color: var(--brand-red);
+    border-color: var(--brand-red);
+  }
+
+  /* Footer bar (sticky bottom action row) */
+  .pc-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0 16px;
+    margin-top: 32px;
+  }
+  .pc-footer__right { display: flex; gap: 10px; }
+  .pc-btn-back {
+    background: var(--grey-btn-bg);
+    color: #fff;
+    border: 0;
+    padding: 10px 28px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    min-width: 100px;
+  }
+  .pc-btn-back:hover { background: #000; }
+  .pc-btn-cancel {
+    background: #fff;
+    color: var(--bodyText);
+    border: 1px solid var(--form-field-border);
+    padding: 10px 28px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    min-width: 100px;
+  }
+  .pc-btn-save, .pc-btn-next {
+    background: var(--grey-btn-bg-disable);
+    color: #fff;
+    border: 0;
+    padding: 10px 28px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: not-allowed;
+    font-family: inherit;
+    min-width: 110px;
+  }
+  .pc-btn-save.is-active,
+  .pc-btn-next.is-active {
+    background: var(--brand-red);
+    cursor: pointer;
+  }
+  .pc-btn-save.is-active:hover,
+  .pc-btn-next.is-active:hover { background: var(--brand-red-dark); }
+
+  .pc-container {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--auth-box-border);
+    overflow: hidden;
+  }
+</style>
+</head>
+<body data-portal="insurance" data-page="claim-request" data-page-title="">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+  <div class="pc-stepper">
+    
+      <div class="pc-step is-active">
+        <div class="pc-step__circle">01</div>
+        <div class="pc-step__label">Policy Information &<br/>Accident Details</div>
+      </div>
+      <div class="pc-step ">
+        <div class="pc-step__circle">02</div>
+        <div class="pc-step__label">Reports, Driver &<br/>Vehicle Information</div>
+      </div>
+      <div class="pc-step ">
+        <div class="pc-step__circle">03</div>
+        <div class="pc-step__label">Workflow Settings &<br/>Parts Details</div>
+      </div>
+      <div class="pc-step ">
+        <div class="pc-step__circle">04</div>
+        <div class="pc-step__label">Witness & Additional<br/>Documents</div>
+      </div>
+  </div>
+<div class="pc-container">
+  
+  <div class="pc-section">
+    <h3 class="pc-section__title">Claim ID &amp; Policy Information</h3>
+    <div class="pc-grid policy">
+      <div class="pc-fld"><input type="text" placeholder="Policy Holder Name*"/></div>
+      <div class="pc-fld"><input type="text" placeholder="Policy Number*"/></div>
+      <div class="pc-fld pc-fld-phone-code">
+        <div class="pc-pseudo-input">
+          <span class="pc-flag-uae"></span>
+          <span style="color:var(--bodyText)">+971</span>
+          <span class="pc-suffix" style="margin-left:auto">▼</span>
+        </div>
+        <span class="pc-code-label">Code*</span>
+      </div>
+      <div class="pc-fld"><input type="tel" placeholder="Mobile Number*"/></div>
+    </div>
+  </div>
+
+  <div class="pc-section">
+    <h3 class="pc-section__title">Accident Details</h3>
+    <div class="pc-grid cols-4">
+      <div class="pc-fld">
+        <input type="text" placeholder="Date of Accident*"/>
+        <span class="pc-suffix-icon">📅</span>
+      </div>
+      <div class="pc-fld">
+        <input type="text" placeholder="Time of Accident*"/>
+        <span class="pc-suffix-icon">🕒</span>
+      </div>
+      <div class="pc-fld">
+        <input type="text" placeholder="Accident Location*"/>
+        <span class="pc-suffix-icon" style="color:var(--forgot-link-color)">📍</span>
+      </div>
+      <div class="pc-fld">
+        <div class="pc-pseudo-input placeholder">
+          <span>Country*</span>
+          <span class="pc-suffix">▼</span>
+        </div>
+      </div>
+    </div>
+    <div class="pc-grid cols-3" style="margin-top:16px;grid-template-columns:1fr 1fr 1fr">
+      <div class="pc-fld">
+        <div class="pc-pseudo-input placeholder">
+          <span>City*</span>
+          <span class="pc-suffix">▼</span>
+        </div>
+      </div>
+      <div class="pc-fld">
+        <div class="pc-pseudo-input placeholder">
+          <span>Level of Damage*</span>
+          <span class="pc-suffix">▼</span>
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div class="pc-fld" style="margin-top:16px">
+      <textarea placeholder="Description of Damages*"></textarea>
+    </div>
+  </div>
+  
+</div>
+
+  <div class="pc-footer">
+    <div>
+      
+    </div>
+    <div class="pc-footer__right">
+      <button class="pc-btn-cancel" onclick="window.location='claim-requests.html'">Cancel</button>
+      <button class="pc-btn-save">Save &amp; Exit</button>
+      <button class="pc-btn-next" onclick="window.location='claim-create-damage.html'">Next</button>
+    </div>
+  </div>
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+<script>
+  // Activate Next/Save buttons when any field has changed
+  document.querySelectorAll('.pc-fld input, .pc-fld textarea, .pc-fld select').forEach(inp => {
+    inp.addEventListener('input', () => {
+      document.querySelectorAll('.pc-btn-save, .pc-btn-next').forEach(b => b.classList.add('is-active'));
+    });
+  });
+</script>
+</body></html>

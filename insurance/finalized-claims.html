@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — Claim Finalization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .fin-page { background: var(--bg-common); border-radius: 8px; border: 1px solid var(--auth-box-border); padding: 22px 24px; }
+  .fin-toolbar { display:flex; align-items:center; gap:10px; margin-bottom:14px; justify-content:flex-end; }
+  .fin-toolbar .search-box {
+    width: 280px; height: 40px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px; background: #fff;
+    display: flex; align-items: center; padding: 0 12px; gap: 8px;
+    color: var(--ink-400);
+  }
+  .fin-toolbar .search-box input { border:0; outline:0; background:transparent; flex:1; font-size:14px; color:var(--bodyText); font-family:inherit; }
+  .fin-toolbar .ic-btn { width:40px; height:40px; border-radius:4px; border:1px solid var(--form-field-border); background:#fff; display:grid; place-items:center; color:var(--forgot-link-color); cursor:pointer; }
+  .fin-toolbar .ic-btn:hover { background: var(--bodyBg); }
+  .fin-tabs { display:flex; gap:4px; margin-bottom:14px; }
+  .fin-tab {
+    padding: 8px 14px;
+    border: 1px solid var(--form-field-border);
+    background: #fff;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--ink-500);
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .fin-tab:hover { background: var(--bodyBg); }
+  .fin-tab.is-active { background: var(--brand-red); color:#fff; border-color: var(--brand-red); }
+  .fin-tab__count {
+    background: var(--ink-100); color: var(--ink-500);
+    padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 500;
+    min-width: 22px; text-align: center;
+  }
+  .fin-tab.is-active .fin-tab__count { background: rgba(255,255,255,0.25); color:#fff; }
+
+  .fin-total { font-size: 13.5px; color: var(--bodyText); margin-bottom: 12px; }
+  .fin-total strong { font-weight: 500; }
+
+  table.fin-table { width:100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+  table.fin-table thead th {
+    text-align:left; font-weight:500; color: var(--ink-500);
+    padding:12px 14px; background: var(--bg-common);
+    border-bottom: 1px solid var(--grid-field-border);
+    white-space: nowrap; font-size: 13.5px;
+  }
+  table.fin-table tbody td {
+    padding: 16px 14px; border-bottom: 1px solid var(--grid-field-border);
+    vertical-align: middle; color: var(--bodyText); background:#fff;
+  }
+  table.fin-table tbody tr:hover td { background: var(--active-row-color); }
+  table.fin-table .id-link { color: var(--brand-red); font-weight:500; text-decoration:none; }
+  table.fin-table .id-link:hover { text-decoration: underline; }
+  table.fin-table .sl { color: var(--bodyText); font-variant-numeric: tabular-nums; }
+  table.fin-table .num { font-variant-numeric: tabular-nums; }
+  table.fin-table .vehicle small { display:block; color: var(--ink-400); font-size:12px; margin-top:2px; }
+  table.fin-table .garage small { display:block; color: var(--ink-400); font-size:12px; margin-top:2px; }
+
+  .pill {
+    display:inline-flex; align-items:center; gap:6px;
+    padding: 4px 12px; border-radius:4px; font-size:12.5px; font-weight: 400;
+  }
+  .pill::before { content:""; width:6px; height:6px; border-radius:50%; background: currentColor; opacity:.85; }
+  .pill.in-progress { background: #e3eefc; color: var(--forgot-link-color); }
+  .pill.awaiting    { background: #fff4dc; color: #8a5a00; }
+  .pill.ready       { background: #e8f5ee; color: var(--green-txt); }
+  .pill.paid        { background: var(--ok-bg); color: var(--ok-fg); }
+  .pill.disputed    { background: var(--brand-red-ghost); color: var(--brand-red); }
+
+  .row-action {
+    display:inline-flex; align-items:center; gap:6px;
+    border:1px solid var(--brand-red); background:#fff;
+    color: var(--brand-red); border-radius:4px;
+    padding: 6px 12px; font-size: 12.5px; font-weight: 500;
+    cursor:pointer; text-decoration:none; font-family:inherit;
+  }
+  .row-action:hover { background: var(--brand-red-ghost); }
+  .row-action.muted { color: var(--ink-500); border-color: var(--form-field-border); }
+  .row-action.muted:hover { background: var(--bodyBg); }
+
+  /* progress mini-bar */
+  .stage-mini { display:flex; align-items:center; gap:6px; }
+  .stage-mini__dots { display:flex; gap:3px; }
+  .stage-mini__dot {
+    width: 18px; height: 4px; border-radius: 2px; background: var(--ink-100);
+  }
+  .stage-mini__dot.is-done { background: var(--ok-fg); }
+  .stage-mini__dot.is-active { background: var(--brand-red); }
+  .stage-mini__label { font-size: 12px; color: var(--ink-500); white-space: nowrap; }
+
+  /* footer */
+  .fin-footer { display:flex; align-items:center; margin-top:16px; gap:12px; }
+  .fin-show { display:flex; align-items:center; gap:10px; color: var(--ink-500); font-size:13px; }
+  .fin-show select {
+    border:1px solid var(--form-field-border); padding:6px 28px 6px 12px; border-radius:4px;
+    background:#fff; font-family:inherit; font-size:13px; color: var(--bodyText);
+    appearance:none; -webkit-appearance:none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%236b6b6b' d='M0 0l5 6 5-6z'/></svg>");
+    background-repeat:no-repeat; background-position: right 10px center; min-width:60px;
+  }
+  .fin-show-divider { color: var(--ink-300); }
+  .fin-pagination { margin-left:auto; display:flex; align-items:center; gap:4px; }
+  .pg-btn { width:30px; height:30px; border:1px solid var(--form-field-border); border-radius:4px; background:#fff; display:grid; place-items:center; color:var(--ink-500); font-size:14px; cursor:pointer; }
+  .pg-btn:hover { background: var(--bodyBg); }
+  .pg-btn.is-active { background: var(--brand-red); color:#fff; border-color: var(--brand-red); }
+  .pg-btn:disabled { color: var(--ink-300); cursor:not-allowed; }
+
+  /* KPI strip */
+  .fin-kpis { display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; margin-bottom:16px; }
+  .fin-kpi {
+    background:#fff; border:1px solid var(--auth-box-border); border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .fin-kpi__label { font-size:12.5px; color: var(--ink-500); margin-bottom: 6px; }
+  .fin-kpi__value { font-size: 22px; font-weight: 500; color: var(--bodyText); font-family: 'Roboto', sans-serif; line-height: 1; }
+  .fin-kpi__delta { font-size:12px; color: var(--ok-fg); margin-top:8px; }
+  .fin-kpi__delta.muted { color: var(--ink-400); }
+</style>
+</head>
+<body data-portal="insurance" data-page="claims" data-subpage="finalized-claims" data-page-title="Claim Finalization">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <!-- KPI strip -->
+      <div class="fin-kpis">
+        <div class="fin-kpi">
+          <div class="fin-kpi__label">Awaiting evidence</div>
+          <div class="fin-kpi__value">14</div>
+          <div class="fin-kpi__delta muted">From 9 partner garages</div>
+        </div>
+        <div class="fin-kpi">
+          <div class="fin-kpi__label">Ready to finalize</div>
+          <div class="fin-kpi__value">8</div>
+          <div class="fin-kpi__delta">+3 since yesterday</div>
+        </div>
+        <div class="fin-kpi">
+          <div class="fin-kpi__label">Finalized this month</div>
+          <div class="fin-kpi__value">62</div>
+          <div class="fin-kpi__delta">Avg cycle 4.6 days</div>
+        </div>
+        <div class="fin-kpi">
+          <div class="fin-kpi__label">Payout pending</div>
+          <div class="fin-kpi__value">AED 318,420</div>
+          <div class="fin-kpi__delta muted">Across 19 claims</div>
+        </div>
+      </div>
+
+      <div class="fin-toolbar">
+        <div class="search-box">
+          <span id="searchIcon"></span>
+          <input placeholder="Search claim ID, garage, policy holder..." />
+        </div>
+        <button class="ic-btn" id="dlBtn" title="Download"></button>
+        <button class="ic-btn" id="statsBtn" title="Stats"></button>
+        <button class="ic-btn" id="filterBtn" title="Filter"></button>
+      </div>
+
+      <div class="fin-page">
+        <div class="fin-tabs" id="finTabs">
+          <button class="fin-tab is-active" data-filter="all">All <span class="fin-tab__count">28</span></button>
+          <button class="fin-tab" data-filter="in-progress">In Progress <span class="fin-tab__count">11</span></button>
+          <button class="fin-tab" data-filter="awaiting">Awaiting Evidence <span class="fin-tab__count">6</span></button>
+          <button class="fin-tab" data-filter="ready">Ready to Finalize <span class="fin-tab__count">8</span></button>
+          <button class="fin-tab" data-filter="paid">Paid &amp; Closed <span class="fin-tab__count">2</span></button>
+          <button class="fin-tab" data-filter="disputed">Disputed <span class="fin-tab__count">1</span></button>
+        </div>
+
+        <div class="fin-total">Total <strong id="finCount">10</strong> claims found</div>
+
+        <table class="fin-table" id="finTable">
+          <thead>
+            <tr>
+              <th>SL</th>
+              <th>Claim ID</th>
+              <th>Policy Holder / Vehicle</th>
+              <th>Garage</th>
+              <th>Job Card</th>
+              <th>Stage</th>
+              <th>Final Cost</th>
+              <th>Status</th>
+              <th>Submitted</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="fin-footer">
+          <div class="fin-show">
+            Show
+            <span class="fin-show-divider">|</span>
+            <select><option>50</option><option>25</option><option>10</option></select>
+          </div>
+          <div class="fin-pagination">
+            <button class="pg-btn" disabled>‹</button>
+            <button class="pg-btn is-active">1</button>
+            <button class="pg-btn">2</button>
+            <button class="pg-btn">3</button>
+            <button class="pg-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('searchIcon').innerHTML = PHIcon('search', 16);
+  document.getElementById('dlBtn').innerHTML = PHIcon('download', 18);
+  document.getElementById('statsBtn').innerHTML = PHIcon('bars', 18);
+  document.getElementById('filterBtn').innerHTML = PHIcon('filter', 18);
+
+  // 5 stages: Received, Disassembly, Repair & Install, Quality Check, Completion Evidence
+  const STAGE_LABELS = ['Vehicle Received', 'Disassembly', 'Repair & Install', 'Quality Check', 'Completion Evidence'];
+
+  // status -> [filter key, label, css class]
+  const STATUS = {
+    in_progress: ['in-progress', 'In Progress',         'in-progress'],
+    awaiting:    ['awaiting',    'Awaiting Evidence',   'awaiting'],
+    ready:       ['ready',       'Ready to Finalize',   'ready'],
+    paid:        ['paid',        'Paid &amp; Closed',   'paid'],
+    disputed:    ['disputed',    'Disputed',            'disputed']
+  };
+
+  // [claimId, holder, vehicle, garage, branch, jobCard, stageIdx (0-4), final (AED), statusKey, submittedDate]
+  const ROWS = [
+    ['CLM00318', 'Ahmed Al-Mansouri',  'Toyota Camry 2022 · A-12345',   'Royal Swiss Automobile', 'Dubai · Bay 04',  'JC-20250118-0042', 4, 25883, 'ready',       '24/01/2025'],
+    ['CLM00317', 'Sulaiman Al-Zayoudi','Nissan Patrol 2021 · D-77821',  'Al Habtoor Motors',     'Abu Dhabi · Bay 07','JC-20250115-0039', 4, 41250, 'ready',       '22/01/2025'],
+    ['CLM00316', 'Fatima Al-Hashimi',  'Honda CR-V 2023 · S-54129',     'Premier Auto Care',     'Sharjah · Bay 02', 'JC-20250114-0037', 4, 18960, 'ready',       '21/01/2025'],
+    ['CLM00315', 'Khalid Bin Rashid',  'Mercedes C200 2022 · A-98220',  'Gargash Service',       'Dubai · Bay 11',   'JC-20250114-0036', 3, 32400, 'in_progress', '—'         ],
+    ['CLM00314', 'Hessa Al-Marri',     'BMW X3 2020 · D-31188',         'Al Tayer Motors',       'Dubai · Bay 03',   'JC-20250112-0034', 3, 27890, 'in_progress', '—'         ],
+    ['CLM00313', 'Omar Al-Falasi',     'Lexus RX 2022 · A-22117',       'Royal Swiss Automobile','Dubai · Bay 06',   'JC-20250110-0031', 2, 0,     'in_progress', '—'         ],
+    ['CLM00312', 'Maryam Al-Zaabi',    'Toyota Land Cruiser · A-11990', 'Liberty Automobiles',   'Al Ain · Bay 01',  'JC-20250108-0029', 4, 56720, 'awaiting',    '—'         ],
+    ['CLM00311', 'Rashid Al-Naqbi',    'Hyundai Tucson 2023 · S-67421', 'Premier Auto Care',     'Sharjah · Bay 04', 'JC-20250107-0027', 4, 14380, 'awaiting',    '—'         ],
+    ['CLM00310', 'Yusuf Al-Kindi',     'Audi A6 2021 · D-22847',        'Gargash Service',       'Dubai · Bay 09',   'JC-20250103-0024', 4, 38900, 'paid',        '08/01/2025'],
+    ['CLM00309', 'Zayed Al-Suwaidi',   'Ford Explorer 2020 · A-65512',  'Al Habtoor Motors',     'Abu Dhabi · Bay 02','JC-20241228-0021', 4, 22150, 'disputed',    '04/01/2025']
+  ];
+
+  function stageMini(idx, statusKey) {
+    const isActive = (statusKey === 'in_progress' || statusKey === 'awaiting');
+    const dots = STAGE_LABELS.map((_, i) => {
+      let cls = '';
+      if (i < idx) cls = 'is-done';
+      else if (i === idx) cls = isActive ? 'is-active' : 'is-done';
+      return `<span class="stage-mini__dot ${cls}"></span>`;
+    }).join('');
+    const label = isActive ? STAGE_LABELS[idx] : 'All stages complete';
+    return `<div class="stage-mini"><div class="stage-mini__dots">${dots}</div><span class="stage-mini__label">${label}</span></div>`;
+  }
+
+  function render(filter) {
+    const tbody = document.querySelector('#finTable tbody');
+    const filtered = ROWS.filter(r => filter === 'all' || STATUS[r[8]][0] === filter);
+    document.getElementById('finCount').textContent = filtered.length;
+    tbody.innerHTML = filtered.map((r, i) => {
+      const [claimId, holder, vehicle, garage, branch, jobCard, stageIdx, finalCost, statusKey, submitted] = r;
+      const [, label, cls] = STATUS[statusKey];
+      const canOpen = stageIdx === 4 && (statusKey === 'ready' || statusKey === 'paid' || statusKey === 'disputed' || statusKey === 'awaiting');
+      const openHref = `finalized-claim-detail.html?id=${claimId}`;
+      const action = (statusKey === 'ready')
+        ? `<a class="row-action" href="${openHref}">Review &amp; Finalize</a>`
+        : (statusKey === 'paid')
+          ? `<a class="row-action muted" href="${openHref}">View Receipt</a>`
+          : (statusKey === 'disputed')
+            ? `<a class="row-action" href="${openHref}">Resolve</a>`
+            : (statusKey === 'awaiting')
+              ? `<a class="row-action muted" href="${openHref}">View Evidence</a>`
+              : `<a class="row-action muted" href="${openHref}">Track</a>`;
+      const cost = finalCost ? `AED ${finalCost.toLocaleString()}` : '—';
+      return `
+        <tr>
+          <td class="sl">${String(i+1).padStart(2,'0')}</td>
+          <td><a class="id-link" href="${openHref}">${claimId}</a></td>
+          <td class="vehicle"><strong style="font-weight:500">${holder}</strong><small>${vehicle}</small></td>
+          <td class="garage"><strong style="font-weight:500">${garage}</strong><small>${branch}</small></td>
+          <td class="num" style="color:var(--ink-500)">${jobCard}</td>
+          <td>${stageMini(stageIdx, statusKey)}</td>
+          <td class="num"><strong style="font-weight:500">${cost}</strong></td>
+          <td><span class="pill ${cls}">${label}</span></td>
+          <td style="color:var(--ink-500)">${submitted}</td>
+          <td>${action}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  document.querySelectorAll('#finTabs .fin-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#finTabs .fin-tab').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      render(btn.dataset.filter);
+    });
+  });
+  render('all');
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Admin — Venue Master</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="admin" data-page="venue-master" data-page-title="Venue Master">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="dash-grid" style="grid-template-columns: 320px 1fr">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Venues</h3><button class="btn btn--primary btn--sm" style="margin-left:auto"><span id="pi"></span> Add</button></div>
+          <div class="panel__body" style="padding:0">
+            <div class="search" style="margin:12px;width:auto"><span id="si"></span><input placeholder="Search venues..."/></div>
+            <div id="vlist" style="display:flex;flex-direction:column"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Royal Swiss Automobile — Jebel Ali Workshop</h3>
+            <span class="panel__sub">CN-12349P · 12,500 sq ft</span>
+            <div style="margin-left:auto" class="flex gap-8">
+              <button class="btn">Edit</button>
+              <button class="btn btn--ghost-red"><span id="ti"></span> Archive</button>
+            </div>
+          </div>
+          <div class="panel__body">
+            <div class="form-grid mb-16">
+              <div><label class="label">Venue Name</label><input class="input" value="Royal Swiss Automobile — Jebel Ali Workshop"/></div>
+              <div><label class="label">Trade License No.</label><input class="input" value="CN-12349P"/></div>
+              <div><label class="label">Manager</label><input class="input" value="Mariam Al-Maktoum"/></div>
+              <div><label class="label">Contact</label><input class="input" value="+971 4 555 3456"/></div>
+              <div style="grid-column:1/-1"><label class="label">Address</label><input class="input" value="Plot 218, Jebel Ali Industrial Area 1, Dubai, UAE"/></div>
+              <div><label class="label">Emirate</label><select class="select"><option>Dubai</option><option>Abu Dhabi</option><option>Sharjah</option></select></div>
+              <div><label class="label">Capacity (vehicles/day)</label><input class="input" value="48"/></div>
+            </div>
+            <div class="panel__head" style="border-top:1px solid var(--ink-100);margin:0 -18px;padding:14px 18px">
+              <h3 class="panel__title">Working hours</h3>
+            </div>
+            <div style="display:grid;grid-template-columns:120px repeat(7,1fr);gap:8px;font-size:12.5px;align-items:center" class="mt-16">
+              <div></div>
+              <div class="muted text-right">Mon</div><div class="muted text-right">Tue</div><div class="muted text-right">Wed</div><div class="muted text-right">Thu</div><div class="muted text-right">Fri</div><div class="muted text-right">Sat</div><div class="muted text-right">Sun</div>
+              <div>Open</div>
+              <input class="input" value="08:00"/><input class="input" value="08:00"/><input class="input" value="08:00"/><input class="input" value="08:00"/><input class="input" value="08:00"/><input class="input" value="09:00"/><input class="input" value="—"/>
+              <div>Close</div>
+              <input class="input" value="20:00"/><input class="input" value="20:00"/><input class="input" value="20:00"/><input class="input" value="20:00"/><input class="input" value="20:00"/><input class="input" value="14:00"/><input class="input" value="—"/>
+            </div>
+            <div class="panel__head" style="border-top:1px solid var(--ink-100);margin:24px -18px 0;padding:14px 18px">
+              <h3 class="panel__title">Specialties</h3>
+            </div>
+            <div class="mt-16" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+              <label class="checkrow"><input type="checkbox" class="cbx" checked/> Mechanical Repair</label>
+              <label class="checkrow"><input type="checkbox" class="cbx" checked/> Engine / Drivetrain</label>
+              <label class="checkrow"><input type="checkbox" class="cbx" checked/> Braking System</label>
+              <label class="checkrow"><input type="checkbox" class="cbx" checked/> Suspension &amp; Steering</label>
+              <label class="checkrow"><input type="checkbox" class="cbx" checked/> Body / Paint</label>
+              <label class="checkrow"><input type="checkbox" class="cbx"/> Cooling System</label>
+              <label class="checkrow"><input type="checkbox" class="cbx" checked/> Electrical / Wiring</label>
+              <label class="checkrow"><input type="checkbox" class="cbx"/> AC / HVAC</label>
+            </div>
+            <div class="flex gap-8 mt-24" style="justify-content:flex-end">
+              <button class="btn">Cancel</button>
+              <button class="btn btn--primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('si').innerHTML = PHIcon('search', 14);
+  document.getElementById('pi').innerHTML = PHIcon('plus', 14);
+  document.getElementById('ti').innerHTML = PHIcon('trash', 14);
+  const venues = [
+    ['Royal Swiss Automobile — Jebel Ali Workshop','Dubai',true],
+    ['Royal Swiss Automobile — Al Quoz','Dubai',false],
+    ['Royal Swiss Automobile — Mussafah','Abu Dhabi',false],
+    ['Craft Auto Services — Al Garhoud','Dubai',false],
+    ['Gargash Auto Centre — Sheikh Zayed Rd','Dubai',false],
+    ['Gargash Auto Centre — Mussafah','Abu Dhabi',false],
+    ['Speedway Motors — Sharjah Industrial','Sharjah',false],
+    ['Al Habtoor Motors — Ras Al Khor','Dubai',false],
+    ['Bin Hamoodah Garage — Mussafah','Abu Dhabi',false],
+    ['Al Wasl Auto Garage — Al Quoz','Dubai',false]
+  ];
+  document.getElementById('vlist').innerHTML = venues.map(v => `
+    <div style="padding:12px 16px;border-top:1px solid var(--ink-100);cursor:pointer;${v[2] ? 'background:var(--brand-red-ghost);border-left:3px solid var(--brand-red)' : ''}">
+      <div style="font-weight:600;font-size:13px;color:${v[2] ? 'var(--brand-red)':'var(--ink-900)'}">${v[0]}</div>
+      <div class="muted small">${v[1]}</div>
+    </div>
+  `).join('');
+</script>
+</body>
+</html>

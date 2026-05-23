@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — RFQ to Supplier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .lst-page { background: var(--bg-common); border-radius: 8px; border: 1px solid var(--auth-box-border); padding: 22px 24px; }
+  .lst-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; justify-content: flex-end; }
+  .lst-toolbar .search-box {
+    width: 280px; height: 40px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px; background: #fff;
+    display: flex; align-items: center; padding: 0 12px; gap: 8px; color: var(--ink-400);
+  }
+  .lst-toolbar .search-box input {
+    border: 0; outline: 0; background: transparent;
+    flex: 1; font-size: 14px; color: var(--bodyText); font-family: inherit;
+  }
+  .lst-cta {
+    height: 40px; background: var(--brand-red); color: #fff;
+    border: 0; border-radius: 4px; padding: 0 20px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    font-family: inherit;
+    display: inline-flex; align-items: center; text-decoration: none;
+  }
+  .lst-cta:hover { background: var(--brand-red-dark); }
+  .lst-total { font-size: 13.5px; color: var(--bodyText); margin-bottom: 12px; }
+  .lst-total strong { font-weight: 500; }
+  table.lst-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+  table.lst-table thead th {
+    text-align: left; font-weight: 500; color: var(--ink-500);
+    padding: 12px 14px; background: var(--bg-common);
+    border-bottom: 1px solid var(--grid-field-border);
+    white-space: nowrap; font-size: 13.5px;
+  }
+  table.lst-table tbody td {
+    padding: 16px 14px; border-bottom: 1px solid var(--grid-field-border);
+    vertical-align: middle; color: var(--bodyText); background: #fff;
+  }
+  table.lst-table tbody tr:hover td { background: var(--active-row-color); }
+  table.lst-table .cl-id { color: var(--brand-red); font-weight: 500; cursor: pointer; text-decoration: none; }
+  table.lst-table .cl-id:hover { text-decoration: underline; }
+  table.lst-table .cl-status {
+    display: inline-flex; align-items: center;
+    padding: 4px 12px; border-radius: 4px;
+    font-size: 12.5px; font-weight: 400;
+  }
+  table.lst-table .cl-status.draft { background: #fff4dc; color: #8a5a00; }
+  table.lst-table .cl-status.scheduled { background: #e8f5ee; color: var(--green-txt); }
+  table.lst-table .cl-status.awaiting { background: #e8f5ee; color: var(--green-txt); }
+  table.lst-table .cl-status.received { background: #e3eefc; color: var(--forgot-link-color); }
+  table.lst-table .cl-more { color: var(--ink-400); cursor: pointer; font-size: 18px; letter-spacing: 2px; }
+  table.lst-table .cl-sl { color: var(--forgot-link-color); font-variant-numeric: tabular-nums; }
+  .lst-footer { display: flex; align-items: center; margin-top: 16px; gap: 12px; }
+  .lst-show { display: flex; align-items: center; gap: 10px; color: var(--ink-500); font-size: 13px; }
+  .lst-show select {
+    border: 1px solid var(--form-field-border);
+    padding: 6px 28px 6px 12px; border-radius: 4px; background: #fff;
+    font-family: inherit; font-size: 13px; color: var(--bodyText);
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%236b6b6b' d='M0 0l5 6 5-6z'/></svg>");
+    background-repeat: no-repeat; background-position: right 10px center;
+    min-width: 60px;
+  }
+  .lst-show-divider { color: var(--ink-300); }
+  .lst-pagination { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .pg-btn {
+    width: 30px; height: 30px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px; background: #fff;
+    display: grid; place-items: center;
+    color: var(--ink-500); font-size: 14px; cursor: pointer;
+  }
+  .pg-btn.is-active { background: var(--brand-red); color: #fff; border-color: var(--brand-red); }
+  .pg-btn:disabled { color: var(--ink-300); cursor: not-allowed; }
+</style>
+</head>
+<body data-portal="insurance" data-page="claims" data-subpage="rfq-to-supplier" data-page-title="RFQ to Supplier">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="lst-toolbar">
+        <div class="search-box">
+          <span id="searchIcon"></span>
+          <input placeholder="Search..." />
+        </div>
+        <a class="lst-cta" href="rfq-to-supplier-create.html">Send RFQ to Supplier</a>
+      </div>
+      <div class="lst-page">
+        <div class="lst-total">Total <strong>8</strong> RFQs found</div>
+        <table class="lst-table" id="rfqTable">
+          <thead>
+            <tr>
+              <th>SL No.</th>
+              <th>RFQ ID</th>
+              <th>Claim ID</th>
+              <th>Branch Name</th>
+              <th>Suppliers Notified</th>
+              <th>Responses</th>
+              <th>Status</th>
+              <th>RFQ End Date &amp; Time</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="lst-footer">
+          <div class="lst-show">
+            Show
+            <span class="lst-show-divider">|</span>
+            <select><option>50</option><option>25</option><option>10</option></select>
+          </div>
+          <div class="lst-pagination">
+            <button class="pg-btn" disabled>‹</button>
+            <button class="pg-btn is-active">1</button>
+            <button class="pg-btn" disabled>›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('searchIcon').innerHTML = PHIcon('search', 16);
+  const ROWS = [
+    [1, 'SRQ00081', 'CLM00313', 'Hyper Co (HQ)', 214, 86, 'Awaiting Quotes',   'awaiting',  '03-06-2026, 04:17 PM'],
+    [2, 'SRQ00080', 'CLM00328', 'Hyper Co (HQ)', 214, 142, 'Quotes Received',  'received',  '02-06-2026, 05:46 PM'],
+    [3, 'SRQ00079', 'CLM00320', 'Hyper Co (HQ)', 214, 198, 'Quotes Received',  'received',  '26-06-2026, 04:18 PM'],
+    [4, 'SRQ00078', 'CLM00317', 'Hyper Co (HQ)', 0,   0,   'Draft',            'draft',     ''],
+    [5, 'SRQ00077', 'CLM00314', 'Hyper Co (HQ)', 214, 64, 'Awaiting Quotes',   'awaiting',  '27-06-2026, 02:26 PM'],
+    [6, 'SRQ00076', 'CLM00310', 'Hyper Co (HQ)', 0,   0,   'Draft',            'draft',     ''],
+    [7, 'SRQ00075', 'CLM00312', 'Hyper Co (HQ)', 214, 184, 'Quotes Received',  'received',  '27-05-2026, 07:52 AM'],
+    [8, 'SRQ00074', 'CLM00309', 'Hyper Co (HQ)', 214, 32,  'Awaiting Quotes',  'awaiting',  '30-05-2026, 11:14 AM']
+  ];
+  document.querySelector('#rfqTable tbody').innerHTML = ROWS.map(r => `
+    <tr>
+      <td class="cl-sl">${r[0]}</td>
+      <td><a class="cl-id" href="supplier-quotations-compare.html">${r[1]}</a></td>
+      <td>${r[2]}</td>
+      <td>${r[3]}</td>
+      <td>${r[4]}</td>
+      <td>${r[5]}</td>
+      <td><span class="cl-status ${r[7]}">${r[6]}</span></td>
+      <td>${r[8]}</td>
+      <td class="cl-more">⋯</td>
+    </tr>
+  `).join('');
+</script>
+</body>
+</html>

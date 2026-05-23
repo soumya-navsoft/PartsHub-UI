@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub — Supplier Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .auth__bg.sup {
+    background:
+      radial-gradient(circle at 30% 60%, rgba(225,29,42,0.18), transparent 50%),
+      linear-gradient(135deg, #1a1f2b 0%, #0f1218 70%);
+  }
+  .warehouse { position:absolute; inset:0; z-index:1; opacity:0.45; }
+</style>
+</head>
+<body>
+<div class="auth">
+  <div class="auth__bg sup"></div>
+  <svg class="warehouse" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="floor" width="80" height="80" patternUnits="userSpaceOnUse" patternTransform="skewY(-12)">
+        <rect width="80" height="80" fill="none" stroke="#2a3344" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="800" fill="url(#floor)"/>
+    <!-- shelves -->
+    <g fill="#2a3344">
+      <rect x="80" y="200" width="200" height="280" rx="3"/>
+      <rect x="80" y="220" width="200" height="6"/>
+      <rect x="80" y="290" width="200" height="6"/>
+      <rect x="80" y="360" width="200" height="6"/>
+      <rect x="80" y="430" width="200" height="6"/>
+    </g>
+    <g fill="#3a4458">
+      <rect x="100" y="226" width="40" height="60"/>
+      <rect x="155" y="226" width="50" height="60"/>
+      <rect x="220" y="226" width="55" height="60"/>
+      <rect x="100" y="296" width="55" height="60"/>
+      <rect x="170" y="296" width="40" height="60"/>
+      <rect x="225" y="296" width="50" height="60"/>
+      <rect x="105" y="366" width="50" height="60"/>
+      <rect x="170" y="366" width="50" height="60"/>
+      <rect x="230" y="366" width="45" height="60"/>
+    </g>
+    <g fill="#2a3344" transform="translate(900,0)">
+      <rect x="80" y="180" width="220" height="320" rx="3"/>
+      <rect x="80" y="200" width="220" height="6"/>
+      <rect x="80" y="270" width="220" height="6"/>
+      <rect x="80" y="340" width="220" height="6"/>
+      <rect x="80" y="410" width="220" height="6"/>
+    </g>
+    <g fill="#3a4458" transform="translate(900,0)">
+      <rect x="100" y="206" width="45" height="60"/>
+      <rect x="160" y="206" width="55" height="60"/>
+      <rect x="230" y="206" width="50" height="60"/>
+      <rect x="100" y="276" width="50" height="60"/>
+      <rect x="165" y="276" width="50" height="60"/>
+      <rect x="230" y="276" width="45" height="60"/>
+    </g>
+  </svg>
+
+  <div class="auth__wrap">
+    <div class="auth__card">
+      <div class="auth__brand"><img src="../shared/main-logo.png" style="width:100px;height:auto"/></div>
+      <h2 class="auth__title">Log in as Supplier</h2>
+      <form onsubmit="event.preventDefault(); window.location='dashboard.html';">
+        <div class="field"><input type="email" placeholder="Email Address*" required /></div>
+        <div class="field field--icon"><input type="password" placeholder="Password*" required /><span class="toggle-eye" id="eye"></span></div>
+        <div class="row-between">
+          <label class="checkrow"><input type="checkbox" class="cbx"/> Remember me</label>
+          <a class="auth__link" href="forgot-password.html">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block btn--lg">Log In</button>
+        <div class="auth__signup">New to Parts Hub? <a class="auth__link" href="register.html">Create account</a></div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="../shared/icons.js"></script>
+<script>document.getElementById('eye').innerHTML = PHIcon('eyeOff', 18);</script>
+</body>
+</html>

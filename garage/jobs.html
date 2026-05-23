@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Jobs / Workshop Floor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="jobs" data-page-title="Jobs / Workshop Floor">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">🔧</div><div><div class="kpi__label">Active jobs</div><div class="kpi__value">14</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">⏳</div><div><div class="kpi__label">Waiting parts</div><div class="kpi__value">3</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">Ready for pickup</div><div class="kpi__value">2</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold">⏰</div><div><div class="kpi__label">Overdue</div><div class="kpi__value">1</div></div></div>
+      </div>
+
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All <span class="badge" style="margin-left:6px">14</span></div>
+          <div class="tab">Inspection</div>
+          <div class="tab">In Progress</div>
+          <div class="tab">Waiting Parts</div>
+          <div class="tab">QC</div>
+          <div class="tab">Ready</div>
+        </div>
+        <div class="page-card__toolbar" style="border-top:1px solid var(--auth-box-border)">
+          <div class="search"><input placeholder="Search jobs..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Filter</button>
+            <button class="btn btn--primary">+ Manual Job</button>
+          </div>
+        </div>
+        <table class="data">
+          <thead><tr><th>Job #</th><th>Claim</th><th>Vehicle</th><th>Customer</th><th>Stage</th><th>Technician</th><th>Started</th><th>ETA</th></tr></thead>
+          <tbody>
+            <tr><td><a class="id-link">JOB-4501</a></td><td>JKLMN56780</td><td>Toyota Camry 2022</td><td>Sulaiman A.</td><td><span class="badge badge--info">In Progress</span></td><td>Ahmed K.</td><td>22/05/2026</td><td>28/05/2026</td></tr>
+            <tr><td><a class="id-link">JOB-4502</a></td><td>JKLMN56779</td><td>Honda Accord 2021</td><td>Yasmeen G.</td><td><span class="badge badge--warn">Waiting Parts</span></td><td>Mohammed S.</td><td>21/05/2026</td><td>30/05/2026</td></tr>
+            <tr><td><a class="id-link">JOB-4503</a></td><td>JKLMN56778</td><td>BMW 5 Series</td><td>Omar M.</td><td><span class="badge">Inspection</span></td><td>Hassan R.</td><td>23/05/2026</td><td>31/05/2026</td></tr>
+            <tr><td><a class="id-link">JOB-4504</a></td><td>JKLMN56777</td><td>Mercedes E-Class</td><td>Aisha H.</td><td><span class="badge badge--ok">QC</span></td><td>Ahmed K.</td><td>18/05/2026</td><td>25/05/2026</td></tr>
+            <tr><td><a class="id-link">JOB-4505</a></td><td>JKLMN56776</td><td>Lexus ES350</td><td>Mohammed F.</td><td><span class="badge badge--ok">Ready</span></td><td>Mohammed S.</td><td>15/05/2026</td><td>23/05/2026</td></tr>
+            <tr><td><a class="id-link">JOB-4506</a></td><td>JKLMN56775</td><td>Range Rover Sport</td><td>Fatima S.</td><td><span class="badge badge--info">In Progress</span></td><td>Hassan R.</td><td>19/05/2026</td><td>27/05/2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

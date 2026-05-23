@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Import Data — CSV / Excel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="orders" data-page-title="Import Data — CSV / Excel">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="stepper">
+        <div class="stepper__item is-active"><span class="stepper__num">1</span> Upload file</div>
+        <div class="stepper__line"></div>
+        <div class="stepper__item"><span class="stepper__num">2</span> Map fields</div>
+        <div class="stepper__line"></div>
+        <div class="stepper__item"><span class="stepper__num">3</span> Review & import</div>
+        <div class="stepper__line"></div>
+        <div class="stepper__item"><span class="stepper__num">4</span> Import summary</div>
+      </div>
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div>
+          <div class="page-card mb-16">
+            <div class="panel__head"><h3 class="panel__title">Step 1 · Upload your data file</h3><span class="panel__sub">CSV / XLSX, max 25 MB</span></div>
+            <div class="panel__body">
+              <div class="dropzone" style="padding:60px 20px">
+                <div class="dropzone__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+                <div class="dropzone__title">Drop your CSV/Excel file here</div>
+                <div class="dropzone__sub">or click to browse · download template ↓</div>
+              </div>
+              <div class="flex-between mt-16" style="padding:14px;background:var(--ok-bg);color:var(--ok-fg);border-radius:10px;font-size:13px"><div><strong>✓ policies_2025_q1.csv</strong> · 128 KB · 120 rows detected</div><strong>Ready</strong></div>
+            </div>
+          </div>
+
+          <div class="page-card mb-16">
+            <div class="panel__head"><h3 class="panel__title">Step 2 · Map CSV fields to PartsHub fields</h3></div>
+            <div class="table-wrap">
+              <table class="data">
+                <thead><tr><th>CSV Field</th><th></th><th>Parts Hub Field</th><th>Sample</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Garage Number</strong></td><td>→</td><td><select class="select"><option>Garage No / License</option></select></td><td class="muted">CN-12349P</td></tr>
+                  <tr><td><strong>Garage Name</strong></td><td>→</td><td><select class="select"><option>Garage Name</option></select></td><td class="muted">Royal Swiss Automobile</td></tr>
+                  <tr><td><strong>Manager</strong></td><td>→</td><td><select class="select"><option>Manager Name</option></select></td><td class="muted">Mariam Al-Maktoum</td></tr>
+                  <tr><td><strong>Phone</strong></td><td>→</td><td><select class="select"><option>Contact Number</option></select></td><td class="muted">+971 555 345 678</td></tr>
+                  <tr><td><strong>Address</strong></td><td>→</td><td><select class="select"><option>Address</option></select></td><td class="muted">Plot 218, Jebel Ali…</td></tr>
+                  <tr><td><strong>Emirate</strong></td><td>→</td><td><select class="select"><option>Emirate</option></select></td><td class="muted">Dubai</td></tr>
+                  <tr style="background:var(--warn-bg)"><td><strong>Unknown Column X</strong></td><td>→</td><td><select class="select"><option>— Skip this column —</option><option>Custom field…</option></select></td><td class="muted">…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="page-card">
+            <div class="panel__head"><h3 class="panel__title">Step 3 · Review &amp; import</h3></div>
+            <div class="panel__body">
+              <div class="kpi-grid mb-16" style="grid-template-columns:repeat(4,1fr)">
+                <div class="kpi"><div class="kpi__icon" style="background:var(--info-bg);color:var(--info-fg)">∑</div><div><div class="kpi__label">Total rows in file</div><div class="kpi__value">120</div></div></div>
+                <div class="kpi"><div class="kpi__icon green">●</div><div><div class="kpi__label">Will create new</div><div class="kpi__value">85</div></div></div>
+                <div class="kpi"><div class="kpi__icon" style="background:var(--warn-bg);color:var(--warn-fg)">↻</div><div><div class="kpi__label">Will update existing</div><div class="kpi__value">28</div></div></div>
+                <div class="kpi"><div class="kpi__icon" style="background:var(--danger-bg);color:var(--danger-fg)">×</div><div><div class="kpi__label">Errors / duplicates</div><div class="kpi__value">7</div></div></div>
+              </div>
+
+              <div class="flex gap-8" style="justify-content:flex-end">
+                <button class="btn">Download errors CSV</button>
+                <button class="btn">Cancel</button>
+                <button class="btn btn--primary">Begin Import (113 valid rows)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Import history</h3></div>
+          <div class="panel__body" style="padding:0">
+            <div style="padding:12px 18px;border-bottom:1px solid var(--ink-100)"><strong style="font-size:13px">policies_2025_q1.csv</strong><div class="muted small">In progress · 113 rows</div></div>
+            <div style="padding:12px 18px;border-bottom:1px solid var(--ink-100)"><strong style="font-size:13px">garages_dec_2024.xlsx</strong><div class="muted small">12 May 2026 · 48 rows imported</div></div>
+            <div style="padding:12px 18px;border-bottom:1px solid var(--ink-100)"><strong style="font-size:13px">claims_q4_2025.csv</strong><div class="muted small">02 May 2026 · 318 rows imported</div></div>
+            <div style="padding:12px 18px"><strong style="font-size:13px">policies_2024_q4.csv</strong><div class="muted small">15 Apr 2026 · 92 rows imported</div></div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

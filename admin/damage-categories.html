@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Damage Categories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="admin" data-page="damage-categories" data-page-title="Damage Categories">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar">
+          <div>
+            <div style="font-weight:700">Damage taxonomy</div>
+            <div class="muted small">Used by AI damage assessment + manual claim creation. Maps to Parts categories for cascading effects.</div>
+          </div>
+          <div style="margin-left:auto"><button class="btn btn--primary">+ Add category</button></div>
+        </div>
+      </div>
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 1fr 1fr">
+        <div class="page-card">
+          <div class="panel__head"><h3 class="panel__title">Collision</h3></div>
+          <div style="padding:0">
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Front-end collision</strong><div class="muted small">Bumper, headlamps, hood, radiator</div></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Rear-end collision</strong><div class="muted small">Bumper, taillamps, trunk</div></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Side impact (driver)</strong><div class="muted small">Door, B-pillar, side airbag</div></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Side impact (passenger)</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Rollover / overturn</strong></div>
+          </div>
+        </div>
+        <div class="page-card">
+          <div class="panel__head"><h3 class="panel__title">Cosmetic / surface</h3></div>
+          <div style="padding:0">
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Scratch (minor)</strong><div class="muted small">Touch-up paint</div></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Scratch (deep)</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Dent</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Hail damage</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Paint chip</strong></div>
+          </div>
+        </div>
+        <div class="page-card">
+          <div class="panel__head"><h3 class="panel__title">Other</h3></div>
+          <div style="padding:0">
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Glass damage (windshield)</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Glass damage (side)</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Mechanical failure</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Electrical failure</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Theft / partial</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Vandalism</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Flood / water</strong></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--ink-100)"><strong>Fire</strong></div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

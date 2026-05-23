@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — Claims Orders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="claim-request" data-subpage="claims-orders" data-page-title="Claims Orders">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All <span class="badge" style="margin-left:6px">28</span></div>
+          <div class="tab">Confirmed <span class="badge" style="margin-left:6px">12</span></div>
+          <div class="tab">In Progress <span class="badge" style="margin-left:6px">9</span></div>
+          <div class="tab">Delivered</div>
+          <div class="tab">Invoiced</div>
+        </div>
+        <div class="page-card__toolbar" style="border-top:1px solid var(--auth-box-border)">
+          <div class="search"><input placeholder="Search orders from insurance..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Export</button>
+            <button class="btn btn--primary">+ Manual Order</button>
+          </div>
+        </div>
+        <table class="data">
+          <thead><tr><th>Order ID</th><th>Claim ID</th><th>Insurer</th><th>Vehicle</th><th>Approved Value (AED)</th><th>Status</th><th>Awarded</th><th>Deadline</th></tr></thead>
+          <tbody>
+            <tr><td><a class="id-link">ORD-4500</a></td><td>JKLMN56780</td><td>Emirates GI</td><td>Toyota Camry 2022</td><td><strong>24,854</strong></td><td><span class="badge badge--info">In Progress</span></td><td>22/05/2026</td><td>29/05/2026</td></tr>
+            <tr><td><a class="id-link">ORD-4498</a></td><td>JKLMN56778</td><td>ADNIC</td><td>Honda Accord 2021</td><td><strong>18,240</strong></td><td><span class="badge badge--warn">Confirmed</span></td><td>20/05/2026</td><td>27/05/2026</td></tr>
+            <tr><td><a class="id-link">ORD-4495</a></td><td>JKLMN56775</td><td>Orient Insurance</td><td>BMW 5 Series</td><td><strong>28,400</strong></td><td><span class="badge badge--info">In Progress</span></td><td>18/05/2026</td><td>26/05/2026</td></tr>
+            <tr><td><a class="id-link">ORD-4492</a></td><td>JKLMN56772</td><td>Emirates GI</td><td>Mercedes E-Class</td><td><strong>32,600</strong></td><td><span class="badge badge--ok">Delivered</span></td><td>15/05/2026</td><td>23/05/2026</td></tr>
+            <tr><td><a class="id-link">ORD-4488</a></td><td>JKLMN56768</td><td>Salama</td><td>Lexus ES350</td><td><strong>14,200</strong></td><td><span class="badge badge--ok">Invoiced</span></td><td>12/05/2026</td><td>20/05/2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

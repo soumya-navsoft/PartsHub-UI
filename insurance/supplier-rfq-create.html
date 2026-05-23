@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — Send RFQ to Suppliers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+
+</head>
+<body data-portal="insurance" data-page="claim-request" data-subpage="supplier-rfq-create" data-page-title="Send RFQ to Suppliers">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar">
+          <div>
+            <div style="font-weight:700">Claim JKLMN56780 · Garage selected: Royal Swiss Automobile</div>
+            <div class="muted small">Garage approved. Now source parts from suppliers — you can assign each part to multiple suppliers and pick the best quotes.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 380px">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Parts to source (6)</h3>
+            <button class="btn btn--sm" style="margin-left:auto">Auto-assign best suppliers</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data">
+              <thead><tr><th class="check"><input type="checkbox" class="cbx" checked/></th><th>Part</th><th>Qty</th><th>Garage est.</th><th>Suppliers to invite</th></tr></thead>
+              <tbody>
+                <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Shock absorbers</strong></td><td>4</td><td>AED 1,400</td><td><strong>5</strong> shortlisted</td></tr>
+                <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Transmission</strong></td><td>1</td><td>AED 4,800</td><td><strong>3</strong> shortlisted</td></tr>
+                <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Battery 100Ah AGM</strong></td><td>1</td><td>AED 590</td><td><strong>6</strong> shortlisted</td></tr>
+                <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Radiator</strong></td><td>1</td><td>AED 920</td><td><strong>4</strong> shortlisted</td></tr>
+                <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Front axle bearing</strong></td><td>1</td><td>AED 540</td><td><strong>2</strong> shortlisted</td></tr>
+                <tr><td><input type="checkbox" class="cbx" checked/></td><td><strong>Headlamp LH (×2)</strong></td><td>2</td><td>AED 1,360</td><td><strong>4</strong> shortlisted</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">RFQ recipients (unique)</h3></div>
+          <div class="panel__body">
+            <div style="padding:10px 12px;border:1px solid var(--ink-100);border-radius:8px;margin-bottom:6px"><div class="flex-between"><strong style="font-size:13px">Gulf Auto Parts LLC</strong><span class="badge badge--ok">OEM</span></div><div class="muted small">Will quote on 6 parts · ★ 4.8</div></div>
+            <div style="padding:10px 12px;border:1px solid var(--ink-100);border-radius:8px;margin-bottom:6px"><div class="flex-between"><strong style="font-size:13px">Emirates Spare Co.</strong><span class="badge">Aftermarket</span></div><div class="muted small">Will quote on 4 parts · ★ 4.6</div></div>
+            <div style="padding:10px 12px;border:1px solid var(--ink-100);border-radius:8px;margin-bottom:6px"><div class="flex-between"><strong style="font-size:13px">Bin Hamoodah Trading</strong><span class="badge badge--ok">OEM</span></div><div class="muted small">Will quote on 5 parts · ★ 4.4</div></div>
+            <div style="padding:10px 12px;border:1px solid var(--ink-100);border-radius:8px;margin-bottom:6px"><div class="flex-between"><strong style="font-size:13px">Royal Parts Supply</strong><span class="badge">Aftermarket</span></div><div class="muted small">Will quote on 3 parts · ★ 4.3</div></div>
+            <div style="padding:10px 12px;border:1px solid var(--ink-100);border-radius:8px"><div class="flex-between"><strong style="font-size:13px">Speedway Components</strong><span class="badge">Performance</span></div><div class="muted small">Will quote on 2 parts · ★ 4.5</div></div>
+            <div class="divider"></div>
+            <label class="label">Response deadline</label>
+            <input type="date" class="input"/>
+            <label class="label mt-16">Allow multiple suppliers per part?</label>
+            <select class="select"><option>Yes — split orders</option><option>No — one supplier per part</option></select>
+            <button class="btn btn--primary btn--block mt-16">Send RFQ to 5 suppliers</button>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+
+</body>
+</html>

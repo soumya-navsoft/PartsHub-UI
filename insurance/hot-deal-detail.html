@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Hot Deal Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="hot-deals" data-page-title="Hot Deal Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div>
+          <div class="page-card mb-16">
+            <div class="page-card__toolbar">
+              <div>
+                <div class="muted small">HD-2410 · Active</div>
+                <div style="font-weight:700;font-size:18px">Camry Brake Pad Set — May Deal</div>
+                <div class="muted small mt-8">Created 18 May 2026 · Ends 27 May 2026, 18:00 · 4 days remaining</div>
+              </div>
+              <div style="margin-left:auto" class="flex gap-8">
+                <button class="btn">Edit</button>
+                <button class="btn btn--ghost-red" data-modal="close">Close deal</button>
+                <button class="btn btn--ghost-red" data-modal="delete">Delete</button>
+              </div>
+            </div>
+            <div class="panel__body">
+              <div class="kpi-grid">
+                <div class="kpi"><div class="kpi__icon">📦</div><div><div class="kpi__label">Available</div><div class="kpi__value">12</div></div></div>
+                <div class="kpi"><div class="kpi__icon blue">✓</div><div><div class="kpi__label">Sold</div><div class="kpi__value">8</div></div></div>
+                <div class="kpi"><div class="kpi__icon green">$</div><div><div class="kpi__label">Revenue</div><div class="kpi__value">AED 1,760</div></div></div>
+                <div class="kpi"><div class="kpi__icon gold">⏱</div><div><div class="kpi__label">Avg time to sell</div><div class="kpi__value">3.2 hrs</div></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel__head"><h3 class="panel__title">Orders from this deal</h3></div>
+            <table class="data">
+              <thead><tr><th>Order</th><th>Buyer</th><th>Qty</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody>
+                <tr><td class="id-link">HD-ORD-8121</td><td>Royal Swiss Automobile</td><td>3</td><td><strong>AED 660</strong></td><td><span class="badge badge--ok">Delivered</span></td><td>22/05/2026</td></tr>
+                <tr><td class="id-link">HD-ORD-8120</td><td>Craft Auto Services</td><td>2</td><td><strong>AED 440</strong></td><td><span class="badge badge--info">In transit</span></td><td>21/05/2026</td></tr>
+                <tr><td class="id-link">HD-ORD-8119</td><td>Gargash Auto Centre</td><td>2</td><td><strong>AED 440</strong></td><td><span class="badge badge--warn">Confirmed</span></td><td>20/05/2026</td></tr>
+                <tr><td class="id-link">HD-ORD-8118</td><td>Speedway Motors</td><td>1</td><td><strong>AED 220</strong></td><td><span class="badge badge--ok">Delivered</span></td><td>19/05/2026</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Deal config</h3></div>
+          <div class="panel__body small">
+            <div class="flex-between mb-8"><span class="muted">Deal price</span><strong>AED 220</strong></div>
+            <div class="flex-between mb-8"><span class="muted">Original price</span><strong>AED 280</strong></div>
+            <div class="flex-between mb-8"><span class="muted">Discount</span><strong style="color:var(--brand-red)">21% off</strong></div>
+            <div class="divider"></div>
+            <div class="flex-between mb-8"><span class="muted">Visible to</span><strong>Garages, Suppliers</strong></div>
+            <div class="flex-between"><span class="muted">Available emirates</span><strong>All UAE</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Close modal -->
+      <div class="modal-backdrop" id="m-close">
+        <div class="modal">
+          <div class="modal__head"><h3 class="modal__title">Close hot deal?</h3><button class="modal__close" onclick="document.getElementById('m-close').classList.remove('is-open')">×</button></div>
+          <div class="modal__body">
+            <p>Closing this hot deal will stop new orders. Existing orders will continue to fulfillment. Unsold quantity (4 units) will return to Inventory.</p>
+            <label class="label">Reason</label>
+            <select class="select"><option>Sold out</option><option>End of campaign</option><option>Pricing issue</option><option>Other</option></select>
+          </div>
+          <div class="modal__foot">
+            <button class="btn" onclick="document.getElementById('m-close').classList.remove('is-open')">Cancel</button>
+            <button class="btn btn--primary">Close deal</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete modal -->
+      <div class="modal-backdrop" id="m-del">
+        <div class="modal">
+          <div class="modal__head"><h3 class="modal__title" style="color:var(--brand-red)">Delete hot deal?</h3><button class="modal__close" onclick="document.getElementById('m-del').classList.remove('is-open')">×</button></div>
+          <div class="modal__body">
+            <p>This deal has <strong>8 fulfilled orders</strong>. Deletion is permanent and will only remove the deal record — order records will be preserved for audit.</p>
+            <label class="checkrow"><input type="checkbox" class="cbx"/> I understand this action is irreversible</label>
+          </div>
+          <div class="modal__foot">
+            <button class="btn" onclick="document.getElementById('m-del').classList.remove('is-open')">Cancel</button>
+            <button class="btn btn--primary">Delete permanently</button>
+          </div>
+        </div>
+      </div>
+<script>
+  document.querySelectorAll('[data-modal]').forEach(b => b.addEventListener('click', () => {
+    document.getElementById('m-' + (b.dataset.modal === 'close' ? 'close' : 'del')).classList.add('is-open');
+  }));
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

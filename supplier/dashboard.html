@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Supplier — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="supplier" data-page="dashboard" data-page-title="Dashboard">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <section class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon" id="i1"></div><div><div class="kpi__label">New RFQs</div><div class="kpi__value">7</div><div class="kpi__delta">▲ 2 new today</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue" id="i2"></div><div><div class="kpi__label">Quotations Pending</div><div class="kpi__value">14</div><div class="kpi__delta">5 awaiting decision</div></div></div>
+        <div class="kpi"><div class="kpi__icon green" id="i3"></div><div><div class="kpi__label">Orders to Ship</div><div class="kpi__value">23</div><div class="kpi__delta">▲ 4 this week</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold" id="i4"></div><div><div class="kpi__label">Revenue (AED)</div><div class="kpi__value">186,400</div><div class="kpi__delta">▲ 12% MoM</div></div></div>
+      </section>
+
+      <!-- RFQ-to-Order Pipeline -->
+      <div class="panel mb-16">
+        <div class="panel__head">
+          <h3 class="panel__title">RFQ → Order lifecycle</h3>
+          <span class="panel__sub">Across 142 active records</span>
+        </div>
+        <div class="panel__body">
+          <div class="pipeline">
+            <div class="pipeline__stage is-done"><span class="pipeline__count">28</span>RFQ Received</div>
+            <div class="pipeline__stage is-done"><span class="pipeline__count">14</span>Quote Submitted</div>
+            <div class="pipeline__stage is-active"><span class="pipeline__count">9</span>Accepted</div>
+            <div class="pipeline__stage"><span class="pipeline__count">23</span>Order Confirmed</div>
+            <div class="pipeline__stage"><span class="pipeline__count">18</span>Packed</div>
+            <div class="pipeline__stage"><span class="pipeline__count">12</span>Dispatched</div>
+            <div class="pipeline__stage"><span class="pipeline__count">28</span>Delivered</div>
+            <div class="pipeline__stage"><span class="pipeline__count">10</span>Invoiced</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Financial snapshot -->
+      <div class="panel mb-16">
+        <div class="panel__head"><h3 class="panel__title">Financial snapshot</h3><span class="panel__sub">Summary only — see Reports for ledger detail</span></div>
+        <div class="panel__body" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+          <div><div class="muted small">Invoiced (current period)</div><div style="font-size:22px;font-weight:700;margin-top:4px">AED 186,400</div></div>
+          <div><div class="muted small">Received</div><div style="font-size:22px;font-weight:700;margin-top:4px;color:var(--ok-fg)">AED 142,800</div></div>
+          <div><div class="muted small">Pending</div><div style="font-size:22px;font-weight:700;margin-top:4px;color:var(--warn-fg)">AED 43,600</div></div>
+          <div><div class="muted small">Avg payment cycle</div><div style="font-size:22px;font-weight:700;margin-top:4px">18 days</div></div>
+        </div>
+      </div>
+
+      <div class="dash-grid mb-16">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Quotation conversion</h3>
+            <span class="panel__sub">Last 30 days</span>
+          </div>
+          <div class="panel__body">
+            <div class="chart-area">
+              <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gS" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#2A6FDB" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#2A6FDB" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,180 C60,150 100,130 160,140 C220,150 260,90 320,100 C380,110 420,60 480,70 C540,80 580,40 600,50 L600,220 L0,220 Z" fill="url(#gS)"/>
+                <path d="M0,180 C60,150 100,130 160,140 C220,150 260,90 320,100 C380,110 420,60 480,70 C540,80 580,40 600,50" stroke="#2A6FDB" stroke-width="2.5" fill="none"/>
+                <path d="M0,200 C60,190 100,180 160,170 C220,160 260,160 320,150 C380,140 420,130 480,120 C540,110 580,100 600,95" stroke="#E11D2A" stroke-width="2.5" fill="none" stroke-dasharray="5 4"/>
+              </svg>
+            </div>
+            <div class="flex gap-16 mt-16 muted small">
+              <div>● Sent: 142</div>
+              <div>● Accepted: 58</div>
+              <div>--- Avg cycle: 36h</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Top selling parts</h3></div>
+          <div class="panel__body">
+            <table class="data" style="font-size:12.5px">
+              <tr><td>Brake Pad Set BR-FP-2025</td><td><strong>48</strong></td><td><span class="badge badge--ok">Hot</span></td></tr>
+              <tr><td>Premium Shock Absorber</td><td><strong>32</strong></td><td><span class="badge badge--ok">Hot</span></td></tr>
+              <tr><td>Headlamp Assembly LH</td><td><strong>28</strong></td><td><span class="badge">Steady</span></td></tr>
+              <tr><td>Battery 100Ah AGM</td><td><strong>24</strong></td><td><span class="badge">Steady</span></td></tr>
+              <tr><td>Radiator Hose Set</td><td><strong>21</strong></td><td><span class="badge">Steady</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head">
+          <h3 class="panel__title">New RFQs</h3>
+          <a href="rfqs.html" style="margin-left:auto;color:var(--brand-red);font-weight:600;font-size:12.5px">View all →</a>
+        </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>RFQ ID</th><th>From Garage</th><th>Parts</th><th>Qty</th><th>Deadline</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td class="id-link">EFHG1234U</td><td>Royal Swiss Automobile</td><td>Shock absorbers, Brake pad set</td><td>7</td><td><strong>27/01/2025</strong></td><td><button class="btn btn--primary btn--sm">Quote now</button></td></tr>
+              <tr><td class="id-link">EFHG1235V</td><td>Craft Auto Services</td><td>Transmission rebuild kit</td><td>1</td><td><strong>28/01/2025</strong></td><td><button class="btn btn--primary btn--sm">Quote now</button></td></tr>
+              <tr><td class="id-link">EFHG1236W</td><td>Gargash Auto Centre</td><td>Headlamp LH, Battery</td><td>3</td><td><strong>29/01/2025</strong></td><td><button class="btn btn--primary btn--sm">Quote now</button></td></tr>
+              <tr><td class="id-link">EFHG1237X</td><td>Speedway Motors</td><td>Radiator hose, Front axle</td><td>4</td><td><strong>30/01/2025</strong></td><td><button class="btn btn--primary btn--sm">Quote now</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('i1').innerHTML = PHIcon('rfq',22);
+  document.getElementById('i2').innerHTML = PHIcon('quote',22);
+  document.getElementById('i3').innerHTML = PHIcon('truck',22);
+  document.getElementById('i4').innerHTML = PHIcon('wallet',22);
+</script>
+</body>
+</html>

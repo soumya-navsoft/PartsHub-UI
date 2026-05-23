@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Admin — Subscriptions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .plan {
+    border: 1px solid var(--ink-100);
+    border-radius: 16px;
+    padding: 24px;
+    background: #fff;
+    position: relative;
+  }
+  .plan.is-featured { border-color: var(--brand-red); box-shadow: 0 10px 30px -10px rgba(225,29,42,0.25); }
+  .plan__tag {
+    position: absolute;
+    top: -10px; right: 24px;
+    background: var(--brand-red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+  }
+  .plan__name { font-size: 14px; font-weight: 700; color: var(--ink-500); letter-spacing: 0.04em; text-transform: uppercase; }
+  .plan__price { font-size: 38px; font-weight: 800; color: var(--ink-900); margin: 8px 0; letter-spacing: -0.02em; }
+  .plan__price small { font-size: 14px; color: var(--ink-400); font-weight: 500; }
+  .plan__features { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 8px; }
+  .plan__features li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-700); }
+  .plan__features li .ck { width: 16px; height: 16px; border-radius: 50%; background: var(--ok-bg); color: var(--ok-fg); display:grid;place-items:center; flex:none; }
+</style>
+</head>
+<body data-portal="admin" data-page="subscriptions" data-page-title="Subscriptions">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon" id="i1"></div><div><div class="kpi__label">MRR (AED)</div><div class="kpi__value">428,200</div><div class="kpi__delta">▲ 6% MoM</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue" id="i2"></div><div><div class="kpi__label">Active Subscribers</div><div class="kpi__value">726</div></div></div>
+        <div class="kpi"><div class="kpi__icon green" id="i3"></div><div><div class="kpi__label">Trial conversions</div><div class="kpi__value">38%</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold" id="i4"></div><div><div class="kpi__label">Churn (30d)</div><div class="kpi__value">2.1%</div></div></div>
+      </div>
+
+      <h2 class="mb-16" style="font-size:16px;font-weight:700">Plans</h2>
+      <div class="plans-grid mb-24">
+        <div class="plan">
+          <div class="plan__name">Starter</div>
+          <div class="plan__price">Free <small></small></div>
+          <div class="muted small">For solo workshops getting started</div>
+          <ul class="plan__features">
+            <li><span class="ck">✓</span> Up to 20 claim requests / mo</li>
+            <li><span class="ck">✓</span> 1 user</li>
+            <li><span class="ck">✓</span> 1 branch</li>
+            <li><span class="ck">✓</span> Email support</li>
+          </ul>
+          <button class="btn btn--block">Manage</button>
+          <div class="muted small mt-16">412 subscribers</div>
+        </div>
+        <div class="plan is-featured">
+          <div class="plan__tag">Most Popular</div>
+          <div class="plan__name">Pro</div>
+          <div class="plan__price">AED 499 <small>/ month</small></div>
+          <div class="muted small">For growing multi-branch garages</div>
+          <ul class="plan__features">
+            <li><span class="ck">✓</span> Unlimited claim requests</li>
+            <li><span class="ck">✓</span> 10 users</li>
+            <li><span class="ck">✓</span> 3 branches</li>
+            <li><span class="ck">✓</span> Supplier RFQ workflows</li>
+            <li><span class="ck">✓</span> Priority support &amp; SLAs</li>
+          </ul>
+          <button class="btn btn--primary btn--block">Manage</button>
+          <div class="muted small mt-16">248 subscribers</div>
+        </div>
+        <div class="plan">
+          <div class="plan__name">Business</div>
+          <div class="plan__price">AED 1,499 <small>/ month</small></div>
+          <div class="muted small">For dealer networks &amp; large suppliers</div>
+          <ul class="plan__features">
+            <li><span class="ck">✓</span> Everything in Pro</li>
+            <li><span class="ck">✓</span> Unlimited users &amp; branches</li>
+            <li><span class="ck">✓</span> Advanced analytics &amp; API</li>
+            <li><span class="ck">✓</span> Dedicated account manager</li>
+            <li><span class="ck">✓</span> Custom SLAs</li>
+          </ul>
+          <button class="btn btn--block">Manage</button>
+          <div class="muted small mt-16">66 subscribers</div>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="panel__head">
+          <h3 class="panel__title">Active subscriptions</h3>
+        </div>
+        <div class="table-wrap">
+          <table class="data" id="t">
+            <thead><tr><th>Account</th><th>Type</th><th>Plan</th><th>MRR (AED)</th><th>Status</th><th>Started</th><th>Next renewal</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  ['i1','i2','i3','i4'].forEach((id,i)=>document.getElementById(id).innerHTML = PHIcon(['wallet','user','arrowUp','arrowDown'][i],22));
+  const ROWS = [
+    ['Royal Swiss Automobile','Garage','Pro',499,'Active','01/01/2024','01/02/2025'],
+    ['Gargash Auto Centre','Garage','Business',1499,'Active','12/03/2023','12/02/2025'],
+    ['Gulf Auto Parts LLC','Supplier','Business',1499,'Active','22/05/2024','22/01/2025'],
+    ['Emirates General Insurance','Insurer','Enterprise',8400,'Active','01/06/2024','01/06/2025'],
+    ['Craft Auto Services','Garage','Pro',499,'Active','15/08/2024','15/01/2025'],
+    ['Speedway Components','Supplier','Pro',499,'Past Due','01/07/2024','01/01/2025'],
+    ['Bin Hamoodah Trading','Supplier','Business',1499,'Active','03/04/2024','03/02/2025'],
+    ['Falcon Garage Network','Garage','Business',1499,'Active','09/09/2024','09/02/2025']
+  ];
+  document.querySelector('#t tbody').innerHTML = ROWS.map(r => `
+    <tr>
+      <td><span class="avatar-sm"></span><strong>${r[0]}</strong></td>
+      <td><span class="badge">${r[1]}</span></td>
+      <td><span class="badge badge--info">${r[2]}</span></td>
+      <td><strong>${r[3].toLocaleString()}</strong></td>
+      <td>${r[4]==='Active' ? '<span class="badge badge--ok">Active</span>' : '<span class="badge badge--danger">Past Due</span>'}</td>
+      <td>${r[5]}</td>
+      <td>${r[6]}</td>
+      <td class="more">${PHIcon('dot3', 18)}</td>
+    </tr>
+  `).join('');
+</script>
+</body>
+</html>

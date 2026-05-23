@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — Reports — Order Fulfillment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="reports" data-page-title="Reports — Order Fulfillment">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar" style="padding:0">
+          <div class="tabs" style="border:0;padding:0 16px">
+            <a class="tab" href="reports.html" style="text-decoration:none">RFQ Performance</a>
+            <div class="tab is-active">Order Fulfillment</div>
+            <a class="tab" href="reports-auction-part.html" style="text-decoration:none">Auction Participation</a>
+            <a class="tab" href="reports-hotdeal-part.html" style="text-decoration:none">Hot Deal Participation</a>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon">📦</div><div><div class="kpi__label">Orders fulfilled (90d)</div><div class="kpi__value">142</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">⏱</div><div><div class="kpi__label">Avg fulfillment time</div><div class="kpi__value">3.8 days</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">On-time rate</div><div class="kpi__value">96%</div></div></div>
+        <div class="kpi"><div class="kpi__icon" style="background:var(--warn-bg);color:var(--warn-fg)">↩</div><div><div class="kpi__label">Returns / replacements</div><div class="kpi__value">8</div></div></div>
+      </div>
+      <div class="page-card">
+        
+    <div class="page-card__toolbar">
+      <div class="flex gap-8">
+        <select class="select" style="width:auto"><option>This month</option><option>Last 90 days</option><option>YTD</option><option>Custom</option></select>
+        <button class="btn">+ Filter</button>
+      </div>
+      <div style="margin-left:auto" class="flex gap-8">
+        <button class="btn">Export CSV</button>
+        <button class="btn">Export Excel</button>
+        <button class="btn btn--primary">Export PDF</button>
+      </div>
+    </div>
+        <table class="data">
+          <thead><tr><th>Order ID</th><th>Buyer</th><th>Parts shipped</th><th>Fulfillment time</th><th>Delivery time</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="id-link">SO-5210</td><td>Royal Swiss Automobile</td><td>5</td><td>2 days</td><td>3 days</td><td><span class="badge badge--ok">Delivered</span></td></tr>
+            <tr><td class="id-link">SO-5209</td><td>Craft Auto Services</td><td>3</td><td>1 day</td><td>2 days</td><td><span class="badge badge--ok">Delivered</span></td></tr>
+            <tr><td class="id-link">SO-5208</td><td>Gargash Auto Centre</td><td>8</td><td>3 days</td><td>5 days</td><td><span class="badge badge--ok">Delivered</span></td></tr>
+            <tr><td class="id-link">SO-5207</td><td>Speedway Motors</td><td>2</td><td>4 days</td><td>—</td><td><span class="badge badge--info">In transit</span></td></tr>
+            <tr><td class="id-link">SO-5206</td><td>Al Habtoor Motors</td><td>6</td><td>2 days</td><td>4 days</td><td><span class="badge badge--ok">Delivered</span></td></tr>
+            <tr><td class="id-link">SO-5205</td><td>Bin Hamoodah Garage</td><td>4</td><td>5 days</td><td>—</td><td><span class="badge badge--warn">Delayed</span></td></tr>
+            <tr><td class="id-link">SO-5204</td><td>Falcon Garage</td><td>7</td><td>2 days</td><td>3 days</td><td><span class="badge badge--ok">Delivered</span></td></tr>
+            <tr><td class="id-link">SO-5203</td><td>Royal Swiss Automobile</td><td>2</td><td>1 day</td><td>2 days</td><td><span class="badge badge--ok">Delivered</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

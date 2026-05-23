@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Claim Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="claim-request" data-subpage="claim-requests" data-page-title="Claim Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar">
+          <div>
+            <div class="muted small">Claim JKLMN56780 · Created 18/01/2025</div>
+            <div style="font-weight:500;font-size:18px">Sulaiman Al-Zayoudi · Toyota Camry 2022 · A 12345</div>
+            <div class="mt-8"><span class="badge badge--info">Quoted</span> <span class="badge badge--warn ml-16">Awaiting your decision</span></div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Print</button>
+            <button class="btn">Download PDF</button>
+            <a class="btn btn--primary" href="garage-quotations.html">View 3 quotations →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid mb-16" style="grid-template-columns: 1fr 380px">
+        <div>
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Claim lifecycle</h3></div>
+            <div class="panel__body">
+              <div class="pipeline">
+                <div class="pipeline__stage is-done">Created</div>
+                <div class="pipeline__stage is-done">RFQ sent</div>
+                <div class="pipeline__stage is-done">Quotes received</div>
+                <div class="pipeline__stage is-active">Approval</div>
+                <div class="pipeline__stage">Repair</div>
+                <div class="pipeline__stage">Closed</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Damage assessment</h3></div>
+            <div class="panel__body">
+              <div class="photo-grid mb-16">
+                <div class="photo-tile" style="background-image:url('../shared/accident-car-1.png')"></div>
+                <div class="photo-tile" style="background-image:url('../shared/accident-car-2.png')"></div>
+                <div class="photo-tile" style="background-image:url('../shared/accident-car-3.png')"></div>
+                <div class="photo-tile" style="background-image:url('../shared/accident-car-4.png')"></div>
+              </div>
+              <table class="data">
+                <thead><tr><th>Part</th><th>Damage</th><th>Severity</th><th>Action</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Front bumper</strong></td><td>Collision</td><td>Severe</td><td>Replace</td></tr>
+                  <tr><td><strong>Headlamp LH</strong></td><td>Collision</td><td>Severe</td><td>Replace</td></tr>
+                  <tr><td><strong>Front grille</strong></td><td>Scratch</td><td>Moderate</td><td>Replace</td></tr>
+                  <tr><td><strong>Hood</strong></td><td>Dent</td><td>Moderate</td><td>Repair</td></tr>
+                  <tr><td><strong>Radiator</strong></td><td>Hidden</td><td>Severe</td><td>Replace</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel__head"><h3 class="panel__title">Quotations received (3 of 3)</h3><a class="id-link" style="margin-left:auto" href="garage-quotations.html">Compare side-by-side →</a></div>
+            <table class="data">
+              <thead><tr><th>Garage</th><th>Labor</th><th>Parts</th><th>Total</th><th>Delivery</th><th>Rating</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><strong>Royal Swiss Automobile</strong></td><td>AED 14,600</td><td>AED 5,300</td><td><strong style="color:var(--brand-red)">AED 19,900</strong> 🏆</td><td>7 days</td><td><span class="rating">★★★★★</span> 4.9</td><td><a class="btn btn--ghost-red btn--sm" href="select-garage-confirm.html">Select</a></td></tr>
+                <tr><td><strong>Craft Auto Services</strong></td><td>AED 16,400</td><td>AED 5,820</td><td><strong>AED 22,220</strong></td><td>5 days</td><td><span class="rating">★★★★★</span> 4.7</td><td><a class="btn btn--sm" href="select-garage-confirm.html">Select</a></td></tr>
+                <tr><td><strong>Gargash Auto Centre</strong></td><td>AED 17,200</td><td>AED 6,100</td><td><strong>AED 23,300</strong></td><td>9 days</td><td><span class="rating">★★★★☆</span> 4.5</td><td><a class="btn btn--sm" href="select-garage-confirm.html">Select</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Claim summary</h3></div>
+            <div class="panel__body">
+              <div class="detail-grid" style="grid-template-columns:1fr 1fr">
+                <div><div class="label">Claim ID</div><strong>JKLMN56780</strong></div>
+                <div><div class="label">Status</div><strong>Quoted</strong></div>
+                <div><div class="label">Policy</div><strong>89KLMN6789</strong></div>
+                <div><div class="label">Plan</div><strong>Comprehensive</strong></div>
+                <div><div class="label">Sum insured</div><strong>AED 120K</strong></div>
+                <div><div class="label">Deductible</div><strong>AED 500</strong></div>
+              </div>
+              <div class="divider"></div>
+              <h4 style="font-size:13px;color:var(--ink-500);font-weight:600">Documents</h4>
+              <div style="display:grid;gap:6px;margin-top:8px">
+                <a class="btn btn--sm">📄 Police_Report_5523.pdf</a>
+                <a class="btn btn--sm">📄 Witness_Statement.pdf</a>
+                <a class="btn btn--sm">🎥 Dashcam_video.mp4</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel__head"><h3 class="panel__title">Activity</h3></div>
+            <div class="panel__body">
+              <div class="timeline">
+                <div class="timeline__item"><div class="timeline__dot is-current"></div><div class="timeline__title">Awaiting your approval</div><div class="timeline__meta">3 quotations received</div></div>
+                <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">Gargash quote received</div><div class="timeline__meta">22/01/2025, 11:48 AM</div></div>
+                <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">Craft Auto quote received</div><div class="timeline__meta">21/01/2025, 09:14 AM</div></div>
+                <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">Royal Swiss quote received</div><div class="timeline__meta">20/01/2025, 14:22 PM</div></div>
+                <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">RFQ sent to 3 garages</div><div class="timeline__meta">18/01/2025, 04:00 PM</div></div>
+                <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">Claim created</div><div class="timeline__meta">18/01/2025, 03:42 PM · Mariam Al-Naqbi</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

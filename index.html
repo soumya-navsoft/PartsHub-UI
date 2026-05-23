@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub — Portal Selector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shared/styles.css" />
+<style>
+  body { background: linear-gradient(135deg, #f5f6fa 0%, #ffffff 100%); }
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 32px 32px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.02em; margin: 24px 0 8px; }
+  .hero h1 span { color: var(--brand-red); }
+  .hero p { color: var(--ink-500); font-size: 16px; max-width: 580px; margin: 0 auto; }
+  .footer { text-align:center; padding: 32px; color: var(--ink-400); font-size: 12px; }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <img src="shared/main-logo.png" style="height:84px;width:auto"/>
+    <h1>Welcome to <span>PartsHub</span></h1>
+    <p>The auto-parts marketplace connecting insurers, garages, suppliers and the platform team. Select your portal to continue.</p>
+  </div>
+
+  <div class="portal-grid" style="padding: 16px 32px 60px;">
+    <a href="insurance/login.html" class="portal-card">
+      <div class="portal-card__icon" id="ic1"></div>
+      <h3>Insurance</h3>
+      <p>Manage policies and claims, review garage quotations, approve payouts and monitor your claims pipeline.</p>
+      <div class="portal-card__cta">Enter Insurance portal <span id="a1"></span></div>
+      <div style="display:flex;gap:8px;margin-top:8px;font-size:12px;color:var(--ink-400)"><a href="insurance/register.html" style="color:var(--brand-red)">Register</a> · <a href="insurance/onboarding.html" style="color:var(--brand-red)">Onboarding demo</a></div>
+    </a>
+    <a href="garage/login.html" class="portal-card">
+      <div class="portal-card__icon" id="ic2"></div>
+      <h3>Garage</h3>
+      <p>Receive claim requests, build quotations, send RFQs to suppliers, track orders and run your workshop.</p>
+      <div class="portal-card__cta">Enter Garage portal <span id="a2"></span></div>
+      <div style="display:flex;gap:8px;margin-top:8px;font-size:12px;color:var(--ink-400)"><a href="garage/register.html" style="color:var(--brand-red)">Register</a> · <a href="garage/onboarding.html" style="color:var(--brand-red)">Onboarding demo</a></div>
+    </a>
+    <a href="supplier/login.html" class="portal-card">
+      <div class="portal-card__icon" id="ic3"></div>
+      <h3>Supplier</h3>
+      <p>Respond to RFQs from garages, manage your catalog &amp; inventory, fulfill orders, and run hot-deal campaigns.</p>
+      <div class="portal-card__cta">Enter Supplier portal <span id="a3"></span></div>
+      <div style="display:flex;gap:8px;margin-top:8px;font-size:12px;color:var(--ink-400)"><a href="supplier/register.html" style="color:var(--brand-red)">Register</a> · <a href="supplier/onboarding.html" style="color:var(--brand-red)">Onboarding demo</a></div>
+    </a>
+    <a href="admin/login.html" class="portal-card">
+      <div class="portal-card__icon" id="ic4"></div>
+      <h3>Admin Console</h3>
+      <p>Govern the entire platform: users, garages, suppliers, insurers, subscriptions, taxonomy and system health.</p>
+      <div class="portal-card__cta">Enter Admin portal <span id="a4"></span></div>
+      <div style="display:flex;gap:8px;margin-top:8px;font-size:12px;color:var(--ink-400)"><a href="admin/approvals.html" style="color:var(--brand-red)">Approvals queue</a> · <a href="admin/2fa.html" style="color:var(--brand-red)">2FA flow</a></div>
+    </a>
+  </div>
+
+  <div class="footer">
+    PartsHub Platform · Internal demo · ${new Date().getFullYear()}
+  </div>
+
+<script src="shared/icons.js"></script>
+<script>
+  document.getElementById('ic1').innerHTML = PHIcon('shield', 28);
+  document.getElementById('ic2').innerHTML = PHIcon('garage', 28);
+  document.getElementById('ic3').innerHTML = PHIcon('supplier', 28);
+  document.getElementById('ic4').innerHTML = PHIcon('settings', 28);
+  ['a1','a2','a3','a4'].forEach(id => document.getElementById(id).innerHTML = PHIcon('arrowRight', 14));
+  document.querySelector('.footer').textContent = 'PartsHub Platform · Internal demo · ' + new Date().getFullYear();
+</script>
+</body>
+</html>

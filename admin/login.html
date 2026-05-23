@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub — Admin Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .auth__bg.adm {
+    background:
+      radial-gradient(circle at 70% 30%, rgba(225,29,42,0.22), transparent 55%),
+      linear-gradient(135deg, #16181d 0%, #2a2e38 50%, #0b0d11 100%);
+  }
+  .grid-art { position:absolute; inset:0; z-index:1; opacity:0.4; }
+</style>
+</head>
+<body>
+<div class="auth">
+  <div class="auth__bg adm"></div>
+  <svg class="grid-art" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="gridP" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#3a3e4a" stroke-width="0.5"/>
+      </pattern>
+      <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stop-color="#E11D2A" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#E11D2A" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1200" height="800" fill="url(#gridP)"/>
+    <circle cx="220" cy="180" r="180" fill="url(#glow)"/>
+    <circle cx="980" cy="640" r="220" fill="url(#glow)"/>
+    <!-- floating nodes -->
+    <g fill="#E11D2A">
+      <circle cx="220" cy="180" r="4"/>
+      <circle cx="420" cy="280" r="3"/>
+      <circle cx="600" cy="400" r="5"/>
+      <circle cx="800" cy="320" r="3"/>
+      <circle cx="980" cy="640" r="6"/>
+      <circle cx="320" cy="600" r="4"/>
+      <circle cx="180" cy="500" r="3"/>
+    </g>
+    <g stroke="#E11D2A" stroke-width="0.8" opacity="0.4">
+      <line x1="220" y1="180" x2="420" y2="280"/>
+      <line x1="420" y1="280" x2="600" y2="400"/>
+      <line x1="600" y1="400" x2="800" y2="320"/>
+      <line x1="600" y1="400" x2="980" y2="640"/>
+      <line x1="600" y1="400" x2="320" y2="600"/>
+      <line x1="180" y1="500" x2="320" y2="600"/>
+      <line x1="320" y1="600" x2="980" y2="640"/>
+    </g>
+  </svg>
+
+  <div class="auth__wrap">
+    <div class="auth__card">
+      <div class="auth__brand"><img src="../shared/main-logo.png" style="width:100px;height:auto"/></div>
+      <h2 class="auth__title">Admin Console Login</h2>
+      <form onsubmit="event.preventDefault(); window.location='dashboard.html';">
+        <div class="field"><input type="email" placeholder="Admin Email*" required /></div>
+        <div class="field field--icon"><input type="password" placeholder="Password*" required /><span class="toggle-eye" id="eye"></span></div>
+        <div class="field">
+          <input type="text" placeholder="2FA code (6 digits)" maxlength="6" />
+        </div>
+        <div class="row-between">
+          <label class="checkrow"><input type="checkbox" class="cbx"/> Remember this device for 30 days</label>
+        </div>
+        <button type="submit" class="btn btn--primary btn--block btn--lg">Sign In Securely</button>
+        <div class="auth__signup">Need help? <a class="auth__link" href="javascript:alert('Support contact: support@partshub.ae · +971 4 555 0100')">Contact platform support</a></div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="../shared/icons.js"></script>
+<script>document.getElementById('eye').innerHTML = PHIcon('eyeOff', 18);</script>
+</body>
+</html>

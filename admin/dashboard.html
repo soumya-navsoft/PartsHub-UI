@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Admin — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+</head>
+<body data-portal="admin" data-page="dashboard" data-page-title="Platform Overview">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <section class="kpi-grid mb-16">
+        <div class="kpi"><div class="kpi__icon" id="i1"></div><div><div class="kpi__label">Total Garages</div><div class="kpi__value">486</div><div class="kpi__delta">▲ 12 this month</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue" id="i2"></div><div><div class="kpi__label">Suppliers</div><div class="kpi__value">214</div><div class="kpi__delta">▲ 6 this month</div></div></div>
+        <div class="kpi"><div class="kpi__icon green" id="i3"></div><div><div class="kpi__label">Insurance Partners</div><div class="kpi__value">38</div><div class="kpi__delta">▲ 2 this month</div></div></div>
+        <div class="kpi"><div class="kpi__icon gold" id="i4"></div><div><div class="kpi__label">GMV (AED)</div><div class="kpi__value">18.4M</div><div class="kpi__delta">▲ 9% MoM</div></div></div>
+      </section>
+
+      <div class="dash-grid mb-16">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Platform activity</h3>
+            <span class="panel__sub">Last 12 weeks</span>
+          </div>
+          <div class="panel__body">
+            <div class="chart-area">
+              <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gA" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#E11D2A" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#E11D2A" stop-opacity="0"/>
+                  </linearGradient>
+                  <linearGradient id="gB" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#2A6FDB" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#2A6FDB" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,180 C40,170 80,150 120,140 C160,130 200,100 240,90 C280,80 320,60 360,70 C400,80 440,50 480,40 C520,30 560,35 600,25 L600,220 L0,220 Z" fill="url(#gA)"/>
+                <path d="M0,180 C40,170 80,150 120,140 C160,130 200,100 240,90 C280,80 320,60 360,70 C400,80 440,50 480,40 C520,30 560,35 600,25" stroke="#E11D2A" stroke-width="2.5" fill="none"/>
+                <path d="M0,195 C40,190 80,185 120,180 C160,175 200,160 240,150 C280,140 320,120 360,115 C400,110 440,95 480,85 C520,75 560,80 600,70 L600,220 L0,220 Z" fill="url(#gB)"/>
+                <path d="M0,195 C40,190 80,185 120,180 C160,175 200,160 240,150 C280,140 320,120 360,115 C400,110 440,95 480,85 C520,75 560,80 600,70" stroke="#2A6FDB" stroke-width="2.5" fill="none"/>
+              </svg>
+            </div>
+            <div class="flex gap-16 mt-16 muted small">
+              <div><span style="color:#E11D2A">●</span> Claims processed</div>
+              <div><span style="color:#2A6FDB">●</span> Orders fulfilled</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">System health</h3></div>
+          <div class="panel__body" style="display:grid;gap:14px">
+            <div class="flex-between">
+              <div><strong>API Gateway</strong><div class="muted small">us-east-1 · v4.18.2</div></div>
+              <span class="badge badge--ok">Operational</span>
+            </div>
+            <div class="divider"></div>
+            <div class="flex-between">
+              <div><strong>Payment Service</strong><div class="muted small">Stripe + Telr</div></div>
+              <span class="badge badge--ok">Operational</span>
+            </div>
+            <div class="divider"></div>
+            <div class="flex-between">
+              <div><strong>Notification Queue</strong><div class="muted small">12 jobs pending</div></div>
+              <span class="badge badge--warn">Degraded</span>
+            </div>
+            <div class="divider"></div>
+            <div class="flex-between">
+              <div><strong>OCR / VIN Lookup</strong><div class="muted small">3rd party · 98.7% uptime</div></div>
+              <span class="badge badge--ok">Operational</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Recent signups</h3>
+            <a href="users.html" style="margin-left:auto;color:var(--brand-red);font-weight:600;font-size:12.5px">View all →</a>
+          </div>
+          <div class="table-wrap">
+            <table class="data">
+              <thead><tr><th>Account</th><th>Type</th><th>Plan</th><th>Status</th><th>Joined</th></tr></thead>
+              <tbody>
+                <tr><td><span class="avatar-sm"></span><strong>Al Wasl Auto Garage</strong></td><td><span class="badge badge--info">Garage</span></td><td>Pro</td><td><span class="badge badge--ok">Active</span></td><td>20/01/2025</td></tr>
+                <tr><td><span class="avatar-sm"></span><strong>Falcon Parts Trading LLC</strong></td><td><span class="badge">Supplier</span></td><td>Business</td><td><span class="badge badge--warn">Pending KYC</span></td><td>19/01/2025</td></tr>
+                <tr><td><span class="avatar-sm"></span><strong>Emirates General Insurance</strong></td><td><span class="badge badge--danger">Insurer</span></td><td>Enterprise</td><td><span class="badge badge--ok">Active</span></td><td>18/01/2025</td></tr>
+                <tr><td><span class="avatar-sm"></span><strong>Sharjah Mechanic Hub</strong></td><td><span class="badge badge--info">Garage</span></td><td>Starter</td><td><span class="badge badge--ok">Active</span></td><td>17/01/2025</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Open tickets</h3></div>
+          <div class="panel__body" style="display:grid;gap:10px">
+            <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px">
+              <div><strong>#4821</strong> · Payout delay — Speedway Motors<div class="muted small">P1 · Opened 2h ago</div></div>
+              <span class="badge badge--danger">Critical</span>
+            </div>
+            <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px">
+              <div><strong>#4820</strong> · KYC review — Falcon Parts<div class="muted small">P2 · Opened 1d ago</div></div>
+              <span class="badge badge--warn">High</span>
+            </div>
+            <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px">
+              <div><strong>#4819</strong> · Subscription upgrade<div class="muted small">P3 · Opened 2d ago</div></div>
+              <span class="badge badge--info">Normal</span>
+            </div>
+            <div class="flex-between" style="padding:10px;border:1px solid var(--ink-100);border-radius:8px">
+              <div><strong>#4818</strong> · Component menu bug<div class="muted small">P3 · Opened 3d ago</div></div>
+              <span class="badge">Low</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('i1').innerHTML = PHIcon('garage', 22);
+  document.getElementById('i2').innerHTML = PHIcon('supplier', 22);
+  document.getElementById('i3').innerHTML = PHIcon('shield', 22);
+  document.getElementById('i4').innerHTML = PHIcon('wallet', 22);
+</script>
+</body>
+</html>

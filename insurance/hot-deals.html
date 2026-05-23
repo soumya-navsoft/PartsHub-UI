@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Hot Deals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="hot-deals" data-page-title="Hot Deals">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="sale-banner mb-16">
+        <h2>HOT SALE!</h2>
+        <div><div style="font-size:13px;letter-spacing:0.2em;font-weight:700;opacity:0.9">SELL FROM INVENTORY</div><div class="sale-banner__sub">Move recovered parts &amp; vehicles fast</div></div>
+        <a class="btn" style="margin-left:auto;background:#fff;color:var(--brand-red);font-weight:700" href="hot-deal-create.html">+ Create Hot Deal</a>
+      </div>
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div class="tabs" style="border:0">
+            <div class="tab is-active">Active</div>
+            <div class="tab">Scheduled</div>
+            <div class="tab">Closed</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <div class="search"><input placeholder="Search..."/></div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data" id="t">
+            <thead><tr><th>Deal ID</th><th>Title</th><th>Items</th><th>Price</th><th>Sold</th><th>Revenue</th><th>Ends</th><th>Status</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+<script>
+const ROWS = [
+  ['HD-2410','Camry Brake Pad Set — May Deal','12 units','AED 220','8','AED 1,760','27/05/2026','Active'],
+  ['HD-2409','Shock Absorber Refurb — Pair','4 pairs','AED 280','2','AED 560','24/05/2026','Active'],
+  ['HD-2408','Headlamp Assembly Bundle','2 sets','AED 1,100','1','AED 1,100','22/05/2026','Active'],
+  ['HD-2407','OEM Battery 100Ah','6 units','AED 380','6','AED 2,280','—','Closed'],
+  ['HD-2406','Radiator Salvage Bundle','3 units','AED 320','—','—','30/05/2026','Scheduled']
+];
+document.querySelector('#t tbody').innerHTML = ROWS.map(r => `
+  <tr>
+    <td><a class="id-link" href="hot-deal-detail.html">${r[0]}</a></td>
+    <td><strong>${r[1]}</strong></td>
+    <td>${r[2]}</td>
+    <td><strong>${r[3]}</strong></td>
+    <td>${r[4]}</td>
+    <td><strong>${r[5]}</strong></td>
+    <td>${r[6]}</td>
+    <td><span class="badge ${r[7]==='Active'?'badge--ok':r[7]==='Scheduled'?'badge--warn':'badge'}">${r[7]}</span></td>
+    <td class="more">⋯</td>
+  </tr>
+`).join('');
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Insurance — Garage Quotations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .lst-page {
+    background: var(--bg-common);
+    border-radius: 8px;
+    border: 1px solid var(--auth-box-border);
+    padding: 22px 24px;
+  }
+  .lst-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    justify-content: flex-end;
+  }
+  .lst-toolbar .search-box {
+    width: 280px;
+    height: 40px;
+    border: 1px solid var(--form-field-border);
+    border-radius: 4px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+    color: var(--ink-400);
+  }
+  .lst-toolbar .search-box input {
+    border: 0; outline: 0; background: transparent;
+    flex: 1; font-size: 14px; color: var(--bodyText);
+    font-family: inherit;
+  }
+  .lst-toolbar .ic-btn {
+    width: 40px; height: 40px;
+    border-radius: 4px;
+    border: 1px solid var(--form-field-border);
+    background: #fff;
+    display: grid; place-items: center;
+    color: var(--forgot-link-color);
+    cursor: pointer;
+  }
+
+  table.lst-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+  }
+  table.lst-table thead th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--ink-500);
+    padding: 12px 14px;
+    background: var(--table-head);
+    border-bottom: 1px solid var(--grid-field-border);
+    white-space: nowrap;
+    font-size: 13.5px;
+  }
+  table.lst-table tbody td {
+    padding: 18px 14px;
+    border-bottom: 1px solid var(--grid-field-border);
+    vertical-align: middle;
+    color: var(--bodyText);
+    background: #fff;
+  }
+  table.lst-table tbody tr:nth-child(even) td { background: var(--grid-field-bg); }
+  table.lst-table tbody tr:hover td { background: var(--active-row-color); }
+  table.lst-table .cl-id {
+    color: var(--brand-red);
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  table.lst-table .cl-id:hover { text-decoration: underline; }
+  table.lst-table .cl-sl {
+    color: var(--bodyText);
+    font-variant-numeric: tabular-nums;
+    width: 60px;
+  }
+  table.lst-table .num {
+    font-variant-numeric: tabular-nums;
+  }
+  .lst-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    gap: 4px;
+  }
+  .pg-arrow {
+    width: 40px; height: 40px;
+    background: #2a2b2a;
+    color: #fff;
+    border-radius: 6px;
+    border: 0;
+    display: grid; place-items: center;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .pg-arrow:hover { background: #000; }
+  .pg-arrow:disabled { opacity: 0.4; cursor: not-allowed; }
+</style>
+</head>
+<body data-portal="insurance" data-page="claims" data-subpage="garage-quotations" data-page-title="Garage Quotations">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="lst-toolbar">
+        <div class="search-box">
+          <span id="searchIcon"></span>
+          <input placeholder="Search..." />
+        </div>
+        <button class="ic-btn" id="statsBtn" title="Stats"></button>
+      </div>
+
+      <div class="lst-page" style="padding:0;border:0">
+        <table class="lst-table" id="qTable">
+          <thead>
+            <tr>
+              <th style="border-radius:6px 0 0 0">&nbsp;</th>
+              <th>RFQ ID</th>
+              <th>Claim ID</th>
+              <th>No. of Garages Sent Quotation</th>
+              <th>Average Cost</th>
+              <th style="border-radius:0 6px 0 0">Avg. Repair Time</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="lst-pagination">
+          <button class="pg-arrow">‹</button>
+          <button class="pg-arrow">›</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('searchIcon').innerHTML = PHIcon('search', 16);
+  document.getElementById('statsBtn').innerHTML = PHIcon('bars', 18);
+
+  const ROWS = [
+    [1, 'JKLMN5678O',  'EFGHI1234U', 8, '19,532', '10 Days'],
+    [2, 'VWXYZ2345X',  'EFGHI1234U', 5, '96,789', '25 Days'],
+    [3, 'XYZAB2345C',  'LMNOP5678A', 7, '56,789', '22 Days'],
+    [4, 'QRSTU9012W',  'RSTUV2345W', 6, '69,123', '19 Days'],
+    [5, 'UVWXY2345S',  'XYZAB2345C', 4, '34,567', '30 Days'],
+    [6, 'QRSTU9012W',  'XYZAB2345C', 3, '23,456', '11 Days'],
+    [7, 'FGHIJ5678K',  'XYZAB2345C', 5, '78,901', '26 Days']
+  ];
+
+  document.querySelector('#qTable tbody').innerHTML = ROWS.map(r => `
+    <tr>
+      <td class="cl-sl">${r[0]}</td>
+      <td><a class="cl-id" href="garage-quotations.html">${r[1]}</a></td>
+      <td>${r[2]}</td>
+      <td class="num">${r[3]}</td>
+      <td class="num">AED ${r[4]}</td>
+      <td>${r[5]}</td>
+    </tr>
+  `).join('');
+</script>
+</body>
+</html>

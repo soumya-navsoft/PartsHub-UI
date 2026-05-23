@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Create Hot Deal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="hot-deals" data-page-title="Create Hot Deal">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Create hot deal</h3></div>
+          <div class="panel__body">
+            <div class="form-grid">
+              <div style="grid-column:1/-1"><label class="label">Title *</label><input class="input" placeholder="Camry Brake Pad Set — May Deal"/></div>
+              <div><label class="label">Start *</label><input class="input" type="datetime-local"/></div>
+              <div><label class="label">End *</label><input class="input" type="datetime-local"/></div>
+              <div><label class="label">Deal price (AED) *</label><input class="input" placeholder="220"/></div>
+              <div><label class="label">Original price (AED)</label><input class="input" placeholder="280 (shows as % off)"/></div>
+              <div style="grid-column:1/-1"><label class="label">Description</label><textarea class="textarea" rows="3" placeholder="Condition, fitment notes…"></textarea></div>
+            </div>
+            <h3 class="panel__title mt-24 mb-16">Items in this deal</h3>
+            <button class="btn btn--ghost-red mb-16">+ Add from Inventory</button>
+            <table class="data">
+              <thead><tr><th>Item ID</th><th>Item</th><th>Available qty</th><th>Per unit price</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><strong>INV-2401</strong></td><td><span class="thumb"></span>Premium Brake Pad Set</td><td>12</td><td>AED 220</td><td class="more">×</td></tr>
+              </tbody>
+            </table>
+            <div class="flex gap-8 mt-24" style="justify-content:flex-end">
+              <button class="btn">Save draft</button>
+              <button class="btn btn--primary">Publish deal</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Preview</h3></div>
+          <div class="panel__body">
+            <div class="deal">
+              <img src="../shared/hot-deals.png" alt="Hot Deals" style="height:60px;width:auto;margin-bottom:8px"/>
+              <div class="deal__title">Camry Brake Pad Set — May Deal</div>
+              <div class="deal__row"><span>Item</span><span>INV-2401</span></div>
+              <div class="deal__row"><span>Available</span><span>12</span></div>
+              <div class="deal__price">AED 220</div>
+              <div class="deal__actions"><button class="btn btn--primary btn--sm">Buy now</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

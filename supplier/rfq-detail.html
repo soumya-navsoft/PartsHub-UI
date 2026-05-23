@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Supplier — RFQ Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="supplier" data-page="rfqs" data-page-title="RFQ Detail">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card mb-16">
+        <div class="page-card__toolbar">
+          <div>
+            <div class="muted small">RFQ EFHG1234U · From Royal Swiss Automobile</div>
+            <div style="font-weight:700;font-size:18px">For Claim JKLMN56780 · Toyota Camry 2022</div>
+            <div class="muted small mt-8">Received 20/01/2025 · Respond by <strong style="color:var(--brand-red)">27/01/2025</strong> · 4 days remaining</div>
+          </div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <button class="btn">Decline RFQ</button>
+            <a class="btn btn--primary" href="quotations.html">Build quotation →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 380px">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Parts requested</h3></div>
+          <div class="table-wrap">
+            <table class="data">
+              <thead><tr><th>Part</th><th>Qty</th><th>Condition</th><th>Vehicle fitment</th><th>In my stock</th><th>Last sold price</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Shock absorbers</strong></td><td>4</td><td>OEM</td><td>Toyota Camry 2022</td><td><span class="badge badge--ok">128 units</span></td><td>AED 350</td></tr>
+                <tr><td><strong>Transmission rebuild kit</strong></td><td>1</td><td>OEM</td><td>Toyota Camry 2022</td><td><span class="badge badge--warn">2 units (low)</span></td><td>AED 4,800</td></tr>
+                <tr><td><strong>Battery 100Ah AGM</strong></td><td>1</td><td>Aftermarket</td><td>Universal</td><td><span class="badge badge--ok">210 units</span></td><td>AED 590</td></tr>
+                <tr><td><strong>Radiator</strong></td><td>1</td><td>OEM</td><td>Toyota Camry 2022</td><td><span class="badge badge--ok">42 units</span></td><td>AED 880</td></tr>
+                <tr><td><strong>Front axle bearing</strong></td><td>1</td><td>OEM</td><td>Toyota Camry 2022</td><td><span class="badge badge--ok">18 units</span></td><td>AED 470</td></tr>
+                <tr><td><strong>Headlamp LH</strong></td><td>2</td><td>OEM</td><td>Toyota Camry 2022</td><td><span class="badge badge--warn">3 units</span></td><td>AED 200</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel mb-16">
+            <div class="panel__head"><h3 class="panel__title">Buyer info</h3></div>
+            <div class="panel__body small">
+              <div class="flex-between mb-8"><span class="muted">Buyer type</span><span class="badge badge--info">Garage</span></div>
+              <div class="flex-between mb-8"><span class="muted">Garage</span><strong>Royal Swiss Automobile</strong></div>
+              <div class="flex-between mb-8"><span class="muted">Rating</span><strong><span class="rating">★★★★★</span> 4.9</strong></div>
+              <div class="flex-between mb-8"><span class="muted">Past orders</span><strong>42 (AED 184K)</strong></div>
+              <div class="flex-between"><span class="muted">Payment history</span><strong style="color:var(--ok-fg)">Always on time</strong></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__head"><h3 class="panel__title">Competing suppliers</h3></div>
+            <div class="panel__body small">
+              <p class="muted mb-8">Other suppliers invited on this RFQ:</p>
+              <div class="flex-between mb-8"><span>Emirates Spare Co.</span><span class="badge">Pending</span></div>
+              <div class="flex-between mb-8"><span>Bin Hamoodah Trading</span><span class="badge badge--ok">Quoted</span></div>
+              <div class="flex-between mb-8"><span>Royal Parts Supply</span><span class="badge">Pending</span></div>
+              <div class="flex-between"><span>Speedway Components</span><span class="badge">Pending</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

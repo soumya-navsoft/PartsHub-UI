@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Contact Inquiries & Tasks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="admin" data-page="contact-inquiry" data-page-title="Contact Inquiries & Tasks">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid mb-16" style="grid-template-columns: 1fr 1fr 1fr 1fr">
+        <div class="kpi"><div class="kpi__icon">✉</div><div><div class="kpi__label">Open inquiries</div><div class="kpi__value">42</div></div></div>
+        <div class="kpi"><div class="kpi__icon blue">⏱</div><div><div class="kpi__label">Avg response</div><div class="kpi__value">2.4 hrs</div></div></div>
+        <div class="kpi"><div class="kpi__icon green">✓</div><div><div class="kpi__label">Resolved (30d)</div><div class="kpi__value">218</div></div></div>
+        <div class="kpi"><div class="kpi__icon" style="background:var(--warn-bg);color:var(--warn-fg)">⏰</div><div><div class="kpi__label">SLA breaches</div><div class="kpi__value">4</div></div></div>
+      </div>
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 1fr">
+        <div class="page-card">
+          <div class="panel__head"><h3 class="panel__title">Contact us inquiries</h3></div>
+          <table class="data">
+            <thead><tr><th>From</th><th>Subject</th><th>Type</th><th>Priority</th><th>Received</th><th></th></tr></thead>
+            <tbody>
+              <tr><td><strong>info@arabianmotors.ae</strong><div class="muted small">Marketplace garage</div></td><td>API access for fleet</td><td><span class="badge badge--info">Sales</span></td><td><span class="badge badge--warn">High</span></td><td>2h ago</td><td><button class="btn btn--sm">Open</button></td></tr>
+              <tr><td><strong>finance@watania.ae</strong></td><td>Volume pricing — insurance</td><td><span class="badge badge--info">Sales</span></td><td><span class="badge badge--warn">High</span></td><td>4h ago</td><td><button class="btn btn--sm">Open</button></td></tr>
+              <tr><td><strong>ahmed@example.ae</strong></td><td>Forgot login email</td><td><span class="badge">Support</span></td><td><span class="badge">Normal</span></td><td>1d ago</td><td><button class="btn btn--sm">Open</button></td></tr>
+              <tr><td><strong>raju@partsdubai.com</strong></td><td>Demo request</td><td><span class="badge badge--info">Sales</span></td><td><span class="badge">Normal</span></td><td>1d ago</td><td><button class="btn btn--sm">Open</button></td></tr>
+              <tr><td><strong>info@quickfix.ae</strong></td><td>Pricing plans</td><td><span class="badge badge--info">Sales</span></td><td><span class="badge">Normal</span></td><td>2d ago</td><td><button class="btn btn--sm">Open</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-card">
+          <div class="panel__head"><h3 class="panel__title">Admin tasks</h3><button class="btn btn--sm" style="margin-left:auto">+ New task</button></div>
+          <div class="panel__body" style="padding:0">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--ink-100);display:flex;gap:12px;align-items:flex-start">
+              <input type="checkbox" class="cbx" style="margin-top:3px"/>
+              <div style="flex:1">
+                <strong>Verify Falcon Parts trading license</strong>
+                <div class="muted small">Assigned to: Noura · Due tomorrow</div>
+              </div>
+              <span class="badge badge--warn">High</span>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid var(--ink-100);display:flex;gap:12px;align-items:flex-start">
+              <input type="checkbox" class="cbx" style="margin-top:3px"/>
+              <div style="flex:1">
+                <strong>Investigate review #28491 — abusive language</strong>
+                <div class="muted small">Assigned to: Hamza · Due in 3 days</div>
+              </div>
+              <span class="badge">Normal</span>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid var(--ink-100);display:flex;gap:12px;align-items:flex-start">
+              <input type="checkbox" class="cbx" checked style="margin-top:3px"/>
+              <div style="flex:1;opacity:0.5;text-decoration:line-through">
+                <strong>Approve Speedway Motors KYC re-submission</strong>
+                <div class="muted small">Completed today</div>
+              </div>
+              <span class="badge badge--ok">Done</span>
+            </div>
+            <div style="padding:14px 18px;display:flex;gap:12px;align-items:flex-start">
+              <input type="checkbox" class="cbx" style="margin-top:3px"/>
+              <div style="flex:1">
+                <strong>Reach out to Watania re: volume pricing</strong>
+                <div class="muted small">Assigned to: Hamza · Due in 5 days</div>
+              </div>
+              <span class="badge">Normal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

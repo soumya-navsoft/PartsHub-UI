@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Admin — Roles & Permissions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="admin" data-page="roles" data-page-title="Roles & Permissions">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 320px 1fr">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Roles</h3><button class="btn btn--sm" style="margin-left:auto">+ New role</button></div>
+          <div id="rlist" style="display:flex;flex-direction:column"></div>
+        </div>
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Super Admin</h3>
+            <span class="panel__sub">2 users · created 01/01/2023</span>
+            <button class="btn btn--ghost-red btn--sm" style="margin-left:auto">Delete role</button>
+          </div>
+          <div class="panel__body">
+            <h4 class="panel__title mb-16" style="font-size:13px">Permissions</h4>
+            <table class="data">
+              <thead><tr><th>Module</th><th>View</th><th>Create</th><th>Edit</th><th>Delete</th><th>Approve</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Users</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Garages</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Suppliers</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Insurers</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Claims</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Orders</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Subscriptions</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Master Attributes</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td>—</td></tr>
+                <tr><td><strong>Payments</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx"/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Reviews</strong></td><td><input type="checkbox" class="cbx" checked/></td><td>—</td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td></tr>
+                <tr><td><strong>Reports</strong></td><td><input type="checkbox" class="cbx" checked/></td><td><input type="checkbox" class="cbx" checked/></td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td><strong>Settings</strong></td><td><input type="checkbox" class="cbx" checked/></td><td>—</td><td><input type="checkbox" class="cbx" checked/></td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <div class="flex gap-8 mt-24" style="justify-content:flex-end"><button class="btn">Cancel</button><button class="btn btn--primary">Save changes</button></div>
+          </div>
+        </div>
+      </div>
+<script>
+const ROLES = [
+  ['Super Admin','2 users',true],
+  ['Support Lead','4 users',false],
+  ['Support Agent','12 users',false],
+  ['KYC Reviewer','6 users',false],
+  ['Finance Admin','3 users',false],
+  ['Read-only Auditor','2 users',false]
+];
+document.getElementById('rlist').innerHTML = ROLES.map(r => `
+  <div style="padding:14px 18px;border-top:1px solid var(--ink-100);cursor:pointer;${r[2] ? 'background:var(--brand-red-ghost);border-left:3px solid var(--brand-red)':''}">
+    <div style="font-weight:600;font-size:13px;color:${r[2]?'var(--brand-red)':'var(--ink-900)'}">${r[0]}</div>
+    <div class="muted small">${r[1]}</div>
+  </div>
+`).join('');
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

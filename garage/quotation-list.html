@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Garage — My Quotations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="garage" data-page="claim-request" data-subpage="garage-quotations-list" data-page-title="My Quotations">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="page-card">
+        <div class="tabs" style="padding:0 16px">
+          <div class="tab is-active">All <span class="badge" style="margin-left:6px">142</span></div>
+          <div class="tab">Submitted <span class="badge" style="margin-left:6px">28</span></div>
+          <div class="tab">Won <span class="badge" style="margin-left:6px">64</span></div>
+          <div class="tab">Lost <span class="badge" style="margin-left:6px">18</span></div>
+          <div class="tab">Draft <span class="badge" style="margin-left:6px">3</span></div>
+        </div>
+        <div class="page-card__toolbar" style="border-top:1px solid var(--ink-100)">
+          <div class="search"><input placeholder="Search by claim ID or insurer..."/></div>
+        </div>
+        <table class="data" id="t">
+          <thead><tr><th>Quote ID</th><th>Claim ID</th><th>Insurer</th><th>Vehicle</th><th>Total (AED)</th><th>Status</th><th>Submitted</th><th>Decision by</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+<script>
+const ST = [['Under review','badge--info'],['Won','badge--ok'],['Lost','badge--danger'],['Draft','badge--warn']];
+const INS = ['Emirates GI','ADNIC','Orient','Salama','Watania'];
+const VEH = ['Toyota Camry 2022','Honda Accord 2021','BMW 5-Series','Mercedes E-Class','Lexus ES350'];
+let html='';
+for (let i=0;i<10;i++){
+  const s=ST[i%ST.length];
+  html+=`<tr>
+    <td><a class="id-link" href="quotation-detail.html">Q-90${24-i}</a></td>
+    <td>JKLMN567${80+i}</td>
+    <td>${INS[i%INS.length]}</td>
+    <td>${VEH[i%VEH.length]}</td>
+    <td><strong>${(5500 + i*1800).toLocaleString()}</strong></td>
+    <td><span class="badge ${s[1]}">${s[0]}</span></td>
+    <td>${(10+i).toString().padStart(2,'0')}/01/2025</td>
+    <td>${(20+i).toString().padStart(2,'0')}/01/2025</td>
+    <td class="more">⋯</td>
+  </tr>`;
+}
+document.querySelector('#t tbody').innerHTML = html;
+</script>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

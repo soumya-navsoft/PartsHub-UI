@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>PartsHub Insurance — Edit Inventory Item</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../shared/styles.css"/></head>
+<body data-portal="insurance" data-page="inventory" data-page-title="Edit Inventory Item">
+<div class="app"><div id="shell-sidebar"></div><main><div id="shell-topbar"></div><div class="page">
+
+      <div class="dash-grid" style="grid-template-columns: 1fr 360px">
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Edit INV-2401 — Premium Brake Pad Set</h3></div>
+          <div class="panel__body">
+            <div style="background:var(--warn-bg);color:var(--warn-fg);padding:12px 14px;border-radius:8px;font-size:12.5px;margin-bottom:16px">
+              <strong>Note:</strong> Per INV-002, master catalog fields (item name, category, brand, vehicle fitment) are read-only. Only quantity, price, status and storage location can be edited.
+            </div>
+
+            <h3 class="panel__title mb-16">Read-only catalog fields</h3>
+            <div class="form-grid">
+              <div><label class="label">Item Name</label><input class="input" value="Premium Brake Pad Set" readonly style="background:#f7f8fa"/></div>
+              <div><label class="label">SKU</label><input class="input" value="PAR0182" readonly style="background:#f7f8fa"/></div>
+              <div><label class="label">Category</label><input class="input" value="Braking System" readonly style="background:#f7f8fa"/></div>
+              <div><label class="label">Brand</label><input class="input" value="Brembo" readonly style="background:#f7f8fa"/></div>
+              <div style="grid-column:1/-1"><label class="label">Vehicle fitment</label><input class="input" value="Toyota Camry 2018-2024" readonly style="background:#f7f8fa"/></div>
+            </div>
+
+            <h3 class="panel__title mt-24 mb-16">Editable fields</h3>
+            <div class="form-grid">
+              <div><label class="label">Available Quantity *</label><input class="input" type="number" value="12"/></div>
+              <div><label class="label">Unit Price (estimated) *</label><input class="input" value="180"/></div>
+              <div><label class="label">Condition</label><select class="select"><option selected>OEM new</option><option>Refurbished</option><option>Used</option></select></div>
+              <div><label class="label">Status</label><select class="select"><option selected>Available</option><option>Reserved</option><option>Inactive (archive)</option></select></div>
+              <div><label class="label">Storage location</label><input class="input" value="Warehouse 2 · Shelf B-12"/></div>
+              <div><label class="label">Source claim ID</label><input class="input" value="JKLMN56770"/></div>
+              <div style="grid-column:1/-1"><label class="label">Notes</label><textarea class="textarea" rows="3" placeholder="Internal notes — not visible to buyers..."></textarea></div>
+            </div>
+
+            <div class="flex gap-8 mt-24" style="justify-content:space-between">
+              <button class="btn btn--ghost-red">Delete item</button>
+              <div class="flex gap-8">
+                <a class="btn" href="inventory-detail.html">Cancel</a>
+                <button class="btn btn--primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><h3 class="panel__title">Change history</h3></div>
+          <div class="panel__body">
+            <div class="timeline">
+              <div class="timeline__item"><div class="timeline__dot is-current"></div><div class="timeline__title">Editing now</div><div class="timeline__meta">Today · Mariam Al-Naqbi</div></div>
+              <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">Quantity updated: 15 → 12</div><div class="timeline__meta">22/05/2026 · auto-adjusted (HD-ORD-8121)</div></div>
+              <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">Price updated: AED 200 → 180</div><div class="timeline__meta">19/05/2026 · Mariam Al-Naqbi</div></div>
+              <div class="timeline__item"><div class="timeline__dot is-done"></div><div class="timeline__title">Item created</div><div class="timeline__meta">18/05/2026 · Mariam Al-Naqbi</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+</div></main></div>
+<script src="../shared/icons.js"></script><script src="../shared/sidebar.js"></script>
+</body></html>

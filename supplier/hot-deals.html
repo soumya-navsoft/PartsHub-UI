@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Supplier — Hot Deals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>.deals-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }</style>
+</head>
+<body data-portal="supplier" data-page="store" data-subpage="hot-deals" data-page-title="Hot Deals — Promotions">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="sale-banner mb-16">
+        <h2>HOT SALE!</h2>
+        <div>
+          <div style="font-size:13px;letter-spacing:0.2em;font-weight:700;opacity:0.9">RUN A CAMPAIGN</div>
+          <div class="sale-banner__sub">Boost slow-moving SKUs with a featured Hot Deal</div>
+        </div>
+        <button class="btn" style="margin-left:auto;background:#fff;color:var(--brand-red);font-weight:700">Create Promotion</button>
+      </div>
+
+      <div class="page-card">
+        <div class="page-card__toolbar">
+          <div class="search"><span id="si"></span><input placeholder="Search promotions..."/></div>
+          <div style="margin-left:auto" class="flex gap-8">
+            <select class="select" style="width:auto"><option>All status</option><option>Active</option><option>Scheduled</option><option>Ended</option></select>
+            <button class="btn btn--primary"><span id="pi"></span> New Promotion</button>
+          </div>
+        </div>
+        <div style="padding:18px">
+          <div class="deals-grid" id="deals"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('si').innerHTML = PHIcon('search', 14);
+  document.getElementById('pi').innerHTML = PHIcon('plus', 14);
+  const items = [
+    ['Front Brake Pad Combo Set','BR-FP-2025',420,350,'15% OFF','Active'],
+    ['Premium Shock Absorber','SH-AB-118',128,420,'10% OFF','Active'],
+    ['Headlamp Assembly LH','HD-LP-LH-04',64,680,'20% OFF','Active'],
+    ['Battery 100Ah AGM','BT-100-AGM',210,590,'5% OFF','Scheduled'],
+    ['Radiator Hose Set','RD-HS-220',360,120,'25% OFF','Active'],
+    ['OEM Alternator 14V','AL-OEM-14',24,840,'12% OFF','Active'],
+    ['Brake Disc Combo','BR-DC-2025',86,410,'18% OFF','Ended'],
+    ['Front Axle Bearing','AX-FR-04',18,190,'22% OFF','Scheduled']
+  ];
+  const statusBadge = s => s==='Active' ? 'badge--ok' : s==='Scheduled' ? 'badge--warn' : 'badge';
+  document.getElementById('deals').innerHTML = items.map(([t,sku,av,p,off,st]) => `
+    <div class="deal">
+      <div class="flex" style="justify-content:space-between;align-items:flex-start">
+        <img src="../shared/hot-deals.png" alt="Hot Deals" style="height:50px;width:auto"/>
+        <span class="badge ${statusBadge(st)}">${st}</span>
+      </div>
+      <div class="deal__title">${t}</div>
+      <div class="deal__row"><span>SKU</span><span>${sku}</span></div>
+      <div class="deal__row"><span>Stock</span><span>${av}</span></div>
+      <div class="deal__row"><span>Discount</span><span style="color:var(--brand-red);font-weight:700">${off}</span></div>
+      <div class="deal__price">AED ${p}</div>
+      <div class="deal__actions">
+        <button class="btn btn--ghost-red btn--sm">Edit</button>
+        <button class="btn btn--sm">Pause</button>
+      </div>
+    </div>
+  `).join('');
+</script>
+</body>
+</html>

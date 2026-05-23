@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Subscription</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<link rel="stylesheet" href="../shared/subscription.css" />
+</head>
+<body data-portal="garage" data-page="subscription" data-page-title="Subscription">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+      <div class="sub-wrap">
+
+        <!-- Current plan banner -->
+        <div class="sub-current">
+          <div>
+            <div class="sub-current__l">Your current plan</div>
+            <div class="sub-current__row">
+              <span class="sub-current__name">Pro</span>
+              <span class="sub-current__pill">Active</span>
+            </div>
+            <div class="sub-current__meta">
+              <div><label>Billing cycle</label><strong>Monthly · auto-renew</strong></div>
+              <div><label>Started</label><strong>01 Jan 2024</strong></div>
+              <div><label>Next renewal</label><strong>01 Jun 2026 · 8 days</strong></div>
+              <div><label>Account</label><strong>Royal Swiss Automobile</strong></div>
+              <div><label>Subscription ID</label><strong>SUB-GRG-0118</strong></div>
+            </div>
+          </div>
+          <div class="sub-current__actions">
+            <div class="sub-current__price">AED 499<small>/ month</small></div>
+            <div style="display:flex;gap:8px">
+              <button class="sub-btn">Switch to annual · save 17%</button>
+              <button class="sub-btn primary">Manage payment</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Usage strip -->
+        <div class="sub-section">
+          <div class="sub-section__head">
+            <h3 class="sub-section__title">Usage this cycle</h3>
+            <span class="sub-section__sub">22 days into May 2026</span>
+            <div class="sub-section__cta"><button class="sub-btn">View detailed usage</button></div>
+          </div>
+          <div class="usage-grid">
+            <div class="use">
+              <div class="use__lbl">RFQ Responses / month</div>
+              <div class="use__row"><span class="use__used">187</span><span class="use__of">of <span class="use__limit">Unlimited</span></span></div>
+              <div class="use__bar"><div class="use__fill" style="width:48%"></div></div>
+              <div class="use__hint">Avg. response time 2.4 hrs</div>
+            </div>
+            <div class="use">
+              <div class="use__lbl">Active Users</div>
+              <div class="use__row"><span class="use__used">8</span><span class="use__of">of <span class="use__limit">10</span></span></div>
+              <div class="use__bar"><div class="use__fill is-warn" style="width:80%"></div></div>
+              <div class="use__hint">Owner, 3 advisors, 4 technicians</div>
+            </div>
+            <div class="use">
+              <div class="use__lbl">Branches</div>
+              <div class="use__row"><span class="use__used">3</span><span class="use__of">of <span class="use__limit">3</span></span></div>
+              <div class="use__bar"><div class="use__fill is-over" style="width:100%"></div></div>
+              <div class="use__hint">At limit · Upgrade to add more</div>
+            </div>
+            <div class="use">
+              <div class="use__lbl">Supplier RFQs / month</div>
+              <div class="use__row"><span class="use__used">94</span><span class="use__of">of <span class="use__limit">Unlimited</span></span></div>
+              <div class="use__bar"><div class="use__fill" style="width:38%"></div></div>
+              <div class="use__hint">5 active supplier partners</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan options (cards) -->
+        <div class="sub-section">
+          <div class="sub-section__head">
+            <h3 class="sub-section__title">Plans available for Garages</h3>
+            <span class="sub-section__sub">Switch anytime · prorated mid-cycle · cancel anytime</span>
+          </div>
+          <div class="plans-grid">
+            <div class="plan-card">
+              <div class="plan-card__name">Starter</div>
+              <div class="plan-card__price">Free</div>
+              <div class="plan-card__sub">Solo workshops trying PartsHub</div>
+              <ul class="plan-card__features">
+                <li><span class="ck">✓</span> Up to 20 RFQ responses / month</li>
+                <li><span class="ck">✓</span> 1 user · 1 branch</li>
+                <li><span class="ck">✓</span> Participate in auctions &amp; hot deals</li>
+                <li><span class="ck">✓</span> Email support</li>
+                <li class="is-disabled"><span class="x">✕</span> Supplier RFQ workflow</li>
+                <li class="is-disabled"><span class="x">✕</span> Create auctions &amp; hot deals</li>
+              </ul>
+              <button class="sub-btn block">Downgrade to Starter</button>
+            </div>
+            <div class="plan-card is-current">
+              <div class="plan-card__tag">Current Plan</div>
+              <div class="plan-card__name">Pro</div>
+              <div class="plan-card__price">AED 499<small> / month</small></div>
+              <div class="plan-card__sub">Growing multi-branch garages</div>
+              <ul class="plan-card__features">
+                <li><span class="ck">✓</span> Unlimited RFQ responses</li>
+                <li><span class="ck">✓</span> 10 users · 3 branches</li>
+                <li><span class="ck">✓</span> Supplier RFQ workflow</li>
+                <li><span class="ck">✓</span> Create auctions &amp; hot deals</li>
+                <li><span class="ck">✓</span> 3 of 5 reports · Bulk import / export</li>
+                <li><span class="ck">✓</span> Priority support · 4hr SLA</li>
+              </ul>
+              <button class="sub-btn ghost block" disabled style="opacity:0.6;cursor:default">You're on this plan</button>
+            </div>
+            <div class="plan-card is-popular">
+              <div class="plan-card__tag">Recommended</div>
+              <div class="plan-card__name">Business</div>
+              <div class="plan-card__price">AED 1,499<small> / month</small></div>
+              <div class="plan-card__sub">Dealer networks &amp; multi-site groups</div>
+              <ul class="plan-card__features">
+                <li><span class="ck">✓</span> Everything in Pro</li>
+                <li><span class="ck">✓</span> Unlimited users &amp; branches</li>
+                <li><span class="ck">✓</span> All 5 reports · advanced analytics</li>
+                <li><span class="ck">✓</span> REST API · ERP webhooks</li>
+                <li><span class="ck">✓</span> Dedicated account manager</li>
+                <li><span class="ck">✓</span> Custom SLAs · 1hr response</li>
+              </ul>
+              <button class="sub-btn primary block">Upgrade to Business</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature group matrix -->
+        <div class="sub-section">
+          <div class="sub-section__head">
+            <h3 class="sub-section__title">Feature Groups</h3>
+            <span class="sub-section__sub">9 platform groups · bundled per tier</span>
+          </div>
+          <div class="fg-table-wrap">
+            <table class="fg-table">
+              <thead>
+                <tr>
+                  <th style="width:55%">Group</th>
+                  <th class="col-plan">Starter</th>
+                  <th class="col-plan is-current">Pro</th>
+                  <th class="col-plan">Business</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><div class="fg-name">Core</div><div class="fg-desc">RFQ Inbox, quotations, jobs, basic dashboard · 18 features</div></td><td class="col-plan"><span class="fg-yes">✓</span></td><td class="col-plan is-current"><span class="fg-yes">✓</span></td><td class="col-plan"><span class="fg-yes">✓</span></td></tr>
+                <tr><td><div class="fg-name">Multi-branch</div><div class="fg-desc">HQ + branch hierarchy, branch-scoped reporting</div></td><td class="col-plan"><span class="fg-no">—</span></td><td class="col-plan is-current" style="font-size:12px;color:var(--brand-red);font-weight:500">3 branches</td><td class="col-plan" style="font-size:12px;color:var(--ink-400)">Unlimited</td></tr>
+                <tr><td><div class="fg-name">Supplier RFQ workflow</div><div class="fg-desc">Source parts from multiple suppliers, compare, assign</div></td><td class="col-plan"><span class="fg-no">—</span></td><td class="col-plan is-current"><span class="fg-yes">✓</span></td><td class="col-plan"><span class="fg-yes">✓</span></td></tr>
+                <tr><td><div class="fg-name">Auctions &amp; Hot Deals — Create</div><div class="fg-desc">List your inventory or won-bid items for sale</div></td><td class="col-plan"><span class="fg-no">—</span></td><td class="col-plan is-current"><span class="fg-yes">✓</span></td><td class="col-plan"><span class="fg-yes">✓</span></td></tr>
+                <tr><td><div class="fg-name">Auctions &amp; Hot Deals — Participate</div><div class="fg-desc">Bid on insurer auctions &amp; buy hot deals</div></td><td class="col-plan"><span class="fg-yes">✓</span></td><td class="col-plan is-current"><span class="fg-yes">✓</span></td><td class="col-plan"><span class="fg-yes">✓</span></td></tr>
+                <tr><td><div class="fg-name">Advanced analytics</div><div class="fg-desc">Revenue, supplier perf, insurance perf · PDF/Excel export</div></td><td class="col-plan"><span class="fg-no">—</span></td><td class="col-plan is-current" style="font-size:12px;color:var(--brand-red);font-weight:500">3 of 5</td><td class="col-plan" style="font-size:12px;color:var(--ink-400)">All 5</td></tr>
+                <tr><td><div class="fg-name">API access</div><div class="fg-desc">REST + Webhooks for DMS / ERP integration</div></td><td class="col-plan"><span class="fg-no">—</span></td><td class="col-plan is-current"><span class="fg-no">—</span></td><td class="col-plan"><span class="fg-yes">✓</span></td></tr>
+                <tr><td><div class="fg-name">Bulk import / export</div><div class="fg-desc">CSV / Excel for inventory, parts, customers</div></td><td class="col-plan"><span class="fg-no">—</span></td><td class="col-plan is-current"><span class="fg-yes">✓</span></td><td class="col-plan"><span class="fg-yes">✓</span></td></tr>
+                <tr><td><div class="fg-name">Priority support</div><div class="fg-desc">SLA-backed support &amp; dedicated account manager</div></td><td class="col-plan" style="font-size:12px;color:var(--ink-400)">Email</td><td class="col-plan is-current" style="font-size:12px;color:var(--brand-red);font-weight:500">4hr SLA</td><td class="col-plan" style="font-size:12px;color:var(--ink-400)">1hr · AM</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Add-ons -->
+        <div class="sub-section">
+          <div class="sub-section__head">
+            <h3 class="sub-section__title">Add-ons</h3>
+            <span class="sub-section__sub">Stack on top of any plan</span>
+          </div>
+          <div class="addon-grid">
+            <div class="addon">
+              <div class="addon__ic">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="20" r="3"/><path d="M6 9v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9"/><line x1="12" y1="13" x2="12" y2="17"/></svg>
+              </div>
+              <div>
+                <div class="addon__name">Extra Branch</div>
+                <div class="addon__desc">Add a 4th branch without upgrading to Business</div>
+                <div class="addon__price"><strong>AED 120</strong> / branch / mo <button class="sub-btn" style="margin-left:6px">Add</button></div>
+              </div>
+            </div>
+            <div class="addon">
+              <div class="addon__ic">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <div class="addon__name">Extra User Seats</div>
+                <div class="addon__desc">Beyond the 10 Pro seats · billed per 5 seats</div>
+                <div class="addon__price"><strong>AED 80</strong> / 5 seats / mo <button class="sub-btn" style="margin-left:6px">Add</button></div>
+              </div>
+            </div>
+            <div class="addon">
+              <div class="addon__ic">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div>
+                <div class="addon__name">Featured Listing Boost</div>
+                <div class="addon__desc">Top placement in insurer search · 5 boosts / month</div>
+                <div class="addon__price"><strong>AED 60</strong> / month <span style="color:var(--ok-fg);margin-left:6px">✓ Active</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Billing history + Payment -->
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;margin-bottom:16px">
+          <div class="sub-section" style="margin-bottom:0">
+            <div class="sub-section__head">
+              <h3 class="sub-section__title">Billing history</h3>
+              <div class="sub-section__cta"><button class="sub-btn">Export all (CSV)</button></div>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="billing">
+                <thead>
+                  <tr><th>Invoice #</th><th>Date</th><th>Description</th><th style="text-align:right">Amount</th><th>Status</th><th></th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong style="font-weight:500">INV-GRG-1184</strong></td><td>01/05/2026</td><td>Pro · May 2026 + Featured Boost</td><td style="text-align:right">AED 559</td><td><span class="bill-pill paid">Paid</span></td><td><a class="bill-link" href="#">Download</a></td></tr>
+                  <tr><td><strong style="font-weight:500">INV-GRG-1171</strong></td><td>01/04/2026</td><td>Pro · April 2026 + Featured Boost</td><td style="text-align:right">AED 559</td><td><span class="bill-pill paid">Paid</span></td><td><a class="bill-link" href="#">Download</a></td></tr>
+                  <tr><td><strong style="font-weight:500">INV-GRG-1158</strong></td><td>01/03/2026</td><td>Pro · March 2026</td><td style="text-align:right">AED 499</td><td><span class="bill-pill paid">Paid</span></td><td><a class="bill-link" href="#">Download</a></td></tr>
+                  <tr><td><strong style="font-weight:500">INV-GRG-1141</strong></td><td>01/02/2026</td><td>Pro · February 2026</td><td style="text-align:right">AED 499</td><td><span class="bill-pill paid">Paid</span></td><td><a class="bill-link" href="#">Download</a></td></tr>
+                  <tr><td><strong style="font-weight:500">INV-GRG-1128</strong></td><td>01/01/2026</td><td>Pro · January 2026</td><td style="text-align:right">AED 499</td><td><span class="bill-pill paid">Paid</span></td><td><a class="bill-link" href="#">Download</a></td></tr>
+                  <tr><td><strong style="font-weight:500">INV-GRG-1115</strong></td><td>01/12/2025</td><td>Pro · December 2025</td><td style="text-align:right">AED 499</td><td><span class="bill-pill paid">Paid</span></td><td><a class="bill-link" href="#">Download</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="sub-section" style="margin-bottom:0">
+            <div class="sub-section__head">
+              <h3 class="sub-section__title">Payment method</h3>
+            </div>
+            <div class="pm-row">
+              <div class="pm-card" style="background:linear-gradient(135deg,#cc3636,#a82a2a)">MC</div>
+              <div class="pm-info">
+                <div class="pm-num">•••• •••• •••• 8821</div>
+                <div class="pm-name">Royal Swiss Auto LLC · Exp 11 / 27</div>
+              </div>
+            </div>
+            <div style="margin-top:14px;display:grid;gap:6px">
+              <button class="sub-btn block">Update card</button>
+              <button class="sub-btn block">Switch to bank transfer</button>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--ink-100);font-size:12px;color:var(--ink-500);line-height:1.5">
+              Invoices are issued from PartsHub FZ-LLC · Dubai. TRN 100 234 567 80001. Charged on the 1st of each month.
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger zone -->
+        <div class="sub-danger">
+          <div class="sub-danger__main">
+            <div class="sub-danger__title">Pause or cancel subscription</div>
+            <div class="sub-danger__sub">Pausing preserves data; cancelling will downgrade you to Starter and archive paid features after the current cycle.</div>
+          </div>
+          <button class="sub-btn">Pause</button>
+          <button class="sub-btn danger">Cancel subscription</button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+</body>
+</html>
