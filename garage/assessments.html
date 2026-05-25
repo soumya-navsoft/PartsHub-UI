@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>PartsHub Garage — Assessments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../shared/styles.css" />
+<style>
+  .ak-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
+  .ak { background: #fff; border: 1px solid var(--auth-box-border); border-radius: 8px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .ak__ic { width: 40px; height: 40px; border-radius: 8px; background: var(--brand-red-ghost); color: var(--brand-red); display: grid; place-items: center; flex: none; }
+  .ak__ic.blue { background: #e3eefc; color: var(--forgot-link-color); }
+  .ak__ic.green { background: var(--ok-bg); color: var(--ok-fg); }
+  .ak__ic.amber { background: #fff4dc; color: #b87410; }
+  .ak__l { font-size: 12.5px; color: var(--ink-500); margin-bottom: 4px; }
+  .ak__v { font-size: 22px; font-weight: 500; color: var(--bodyText); font-family: 'Roboto', sans-serif; line-height: 1.1; }
+  .ak__sub { font-size: 12px; color: var(--ink-400); margin-top: 4px; }
+
+  .as-card { background: #fff; border: 1px solid var(--auth-box-border); border-radius: 8px; overflow: hidden; }
+  .as-toolbar { display: flex; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--ink-100); }
+  .as-toolbar .search { flex: 1; max-width: 380px; height: 38px; padding: 0 12px; border: 1px solid var(--form-field-border); border-radius: 6px; display: flex; align-items: center; gap: 8px; color: var(--ink-400); }
+  .as-toolbar .search input { border: 0; outline: 0; background: transparent; flex: 1; font-size: 13.5px; color: var(--bodyText); font-family: inherit; }
+  .as-toolbar__sp { flex: 1; }
+  .as-btn { padding: 8px 14px; border: 1px solid var(--form-field-border); background: #fff; border-radius: 6px; font-size: 13px; color: var(--bodyText); cursor: pointer; font-family: inherit; }
+  .as-btn:hover { background: var(--bodyBg); }
+  .as-btn.primary { background: var(--brand-red); color: #fff; border-color: var(--brand-red); font-weight: 500; }
+  .as-btn.primary:hover { background: var(--brand-red-dark); }
+
+  .tabs { display: flex; gap: 4px; padding: 12px 18px; border-bottom: 1px solid var(--ink-100); }
+  .tab { padding: 7px 14px; border: 1px solid var(--form-field-border); background: #fff; border-radius: 4px; font-size: 13px; color: var(--ink-500); cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px; }
+  .tab.is-active { background: var(--brand-red); color: #fff; border-color: var(--brand-red); }
+  .tab__count { background: var(--ink-100); color: var(--ink-500); padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 500; }
+  .tab.is-active .tab__count { background: rgba(255,255,255,0.25); color: #fff; }
+
+  table.as-tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+  table.as-tbl thead th { text-align: left; font-weight: 500; color: var(--ink-500); font-size: 12.5px; padding: 12px 14px; background: #f4f8fd; border-bottom: 1px solid var(--auth-box-border); white-space: nowrap; }
+  table.as-tbl tbody td { padding: 14px; border-bottom: 1px solid var(--ink-100); color: var(--bodyText); vertical-align: middle; }
+  table.as-tbl tbody tr:hover td { background: var(--active-row-color); }
+  table.as-tbl tbody tr:last-child td { border-bottom: 0; }
+  .as-link { color: var(--brand-red); font-weight: 500; text-decoration: none; }
+  .as-link:hover { text-decoration: underline; }
+  .as-sub { font-size: 11.5px; color: var(--ink-400); margin-top: 2px; }
+
+  .pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 4px; font-size: 11.5px; font-weight: 500; }
+  .pill::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .pill.scheduled { background: #fff4dc; color: #b87410; }
+  .pill.progress { background: #e3eefc; color: var(--forgot-link-color); }
+  .pill.complete { background: var(--ok-bg); color: var(--ok-fg); }
+  .pill.cancelled { background: var(--brand-red-ghost); color: var(--brand-red); }
+  .pill.review { background: #f3eafe; color: #6b3aa0; }
+
+  .sev { font-weight: 500; }
+  .sev.severe { color: var(--brand-red); }
+  .sev.moderate { color: #b87410; }
+  .sev.minor { color: var(--forgot-link-color); }
+  .sev.total { color: #6b3aa0; }
+
+  .row-action { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--brand-red); background: #fff; color: var(--brand-red); border-radius: 4px; padding: 6px 12px; font-size: 12.5px; font-weight: 500; cursor: pointer; text-decoration: none; font-family: inherit; }
+  .row-action:hover { background: var(--brand-red-ghost); }
+  .row-action.muted { color: var(--ink-500); border-color: var(--form-field-border); }
+  .row-action.muted:hover { background: var(--bodyBg); }
+</style>
+</head>
+<body data-portal="garage" data-page="assessments" data-page-title="Assessments">
+<div class="app">
+  <div id="shell-sidebar"></div>
+  <main>
+    <div id="shell-topbar"></div>
+    <div class="page">
+
+      <div class="ak-grid">
+        <div class="ak">
+          <div class="ak__ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><div class="ak__l">Scheduled</div><div class="ak__v">9</div><div class="ak__sub">Bookings this week</div></div>
+        </div>
+        <div class="ak">
+          <div class="ak__ic blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l2-6 4-3h6l4 3 2 6 0 3-4 0 0-2 -10 0 0 2 -4 0z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg></div>
+          <div><div class="ak__l">In Progress</div><div class="ak__v">4</div><div class="ak__sub">Vehicles in inspection bay</div></div>
+        </div>
+        <div class="ak">
+          <div class="ak__ic amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg></div>
+          <div><div class="ak__l">Awaiting Approval</div><div class="ak__v">6</div><div class="ak__sub">Sent to insurer</div></div>
+        </div>
+        <div class="ak">
+          <div class="ak__ic green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><div class="ak__l">Completed this month</div><div class="ak__v">42</div><div class="ak__sub">Avg cycle 1.4 days</div></div>
+        </div>
+      </div>
+
+      <div class="as-card">
+        <div class="tabs" id="tabs">
+          <button class="tab is-active" data-filter="all">All <span class="tab__count">21</span></button>
+          <button class="tab" data-filter="scheduled">Scheduled <span class="tab__count">9</span></button>
+          <button class="tab" data-filter="progress">In Progress <span class="tab__count">4</span></button>
+          <button class="tab" data-filter="review">Awaiting Approval <span class="tab__count">6</span></button>
+          <button class="tab" data-filter="complete">Completed <span class="tab__count">2</span></button>
+        </div>
+        <div class="as-toolbar">
+          <div class="search"><span id="si"></span><input placeholder="Search by Assessment ID, Claim ID, vehicle..."/></div>
+          <div class="as-toolbar__sp"></div>
+          <button class="as-btn">Export</button>
+          <button class="as-btn primary">+ New Assessment</button>
+        </div>
+
+        <div style="overflow-x:auto">
+          <table class="as-tbl" id="asTable">
+            <thead>
+              <tr>
+                <th>Assessment ID</th>
+                <th>Claim · Insurer</th>
+                <th>Vehicle</th>
+                <th>Scheduled</th>
+                <th>Assessor</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Est. Cost</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+<script src="../shared/icons.js"></script>
+<script src="../shared/sidebar.js"></script>
+<script>
+  document.getElementById('si').innerHTML = PHIcon('search', 14);
+  const ROWS = [
+    ['AS-2042', 'JKLMN56780', 'Oriental Insurance',   'BMW 3 Series 2024',       '23 May, 10:00', 'Rajesh K.',  'severe',   'progress',  24854],
+    ['AS-2041', 'JKLMN56779', 'Emirates GI',          'Toyota Camry 2022',       '23 May, 11:30', 'Salim A.',   'moderate', 'review',    14620],
+    ['AS-2040', 'JKLMN56778', 'ADNIC',                'Honda Accord 2021',       '23 May, 14:00', 'Rajesh K.',  'minor',    'scheduled', 0],
+    ['AS-2039', 'JKLMN56777', 'Orient Insurance',     'Mercedes E-Class 2022',   '24 May, 09:00', 'Mohamed I.', 'severe',   'scheduled', 0],
+    ['AS-2038', 'JKLMN56776', 'Salama',               'Lexus ES350 2023',        '24 May, 11:00', 'Salim A.',   'moderate', 'scheduled', 0],
+    ['AS-2037', 'JKLMN56775', 'Tokio Marine',         'Hyundai Tucson 2023',     '21 May',        'Rajesh K.',  'minor',    'complete',  4280],
+    ['AS-2036', 'JKLMN56774', 'ADNIC',                'Audi A6 2021',            '20 May',        'Mohamed I.', 'severe',   'review',    18650],
+    ['AS-2035', 'JKLMN56773', 'Emirates GI',          'Toyota Land Cruiser 2023','19 May',        'Salim A.',   'total',    'review',    62400],
+    ['AS-2034', 'JKLMN56772', 'Salama',               'Nissan Patrol 2022',      '18 May',        'Rajesh K.',  'moderate', 'progress',  9820],
+    ['AS-2033', 'JKLMN56771', 'Tokio Marine',         'Ford Explorer 2021',      '18 May',        'Salim A.',   'minor',    'complete',  3140],
+    ['AS-2032', 'JKLMN56770', 'ADNIC',                'Mitsubishi Pajero 2022',  '17 May',        'Mohamed I.', 'moderate', 'review',    11820],
+    ['AS-2031', 'JKLMN56769', 'Orient Insurance',     'Range Rover Sport 2020',  '16 May',        'Rajesh K.',  'severe',   'progress',  31200]
+  ];
+  const STATUS_MAP = {
+    scheduled: ['scheduled','● Scheduled'],
+    progress:  ['progress', '● In Progress'],
+    review:    ['review',   '● Awaiting Approval'],
+    complete:  ['complete', '● Completed'],
+    cancelled: ['cancelled','● Cancelled']
+  };
+  const SEV_MAP = { severe: 'Severe', moderate: 'Moderate', minor: 'Minor', total: 'Total Loss' };
+
+  function render(filter) {
+    const rows = ROWS.filter(r => filter === 'all' || r[7] === filter);
+    document.querySelector('#asTable tbody').innerHTML = rows.map(r => {
+      const [aid, claim, insurer, vehicle, sched, assessor, sev, status, cost] = r;
+      const [sCls, sLbl] = STATUS_MAP[status];
+      const action = status === 'review'
+        ? `<a class="row-action" href="assessment-step4-quotation.html?aid=${aid}&claim=${claim}">Resend →</a>`
+        : (status === 'progress'
+          ? `<a class="row-action" href="assessment-step2-damage.html?aid=${aid}&claim=${claim}">Continue →</a>`
+          : (status === 'scheduled'
+            ? `<a class="row-action muted" href="assessment-step2-damage.html?aid=${aid}&claim=${claim}">Start</a>`
+            : `<a class="row-action muted" href="assessment-step4-quotation.html?aid=${aid}&claim=${claim}">View</a>`));
+      return `
+        <tr>
+          <td><a class="as-link" href="assessment-step2-damage.html?aid=${aid}&claim=${claim}">${aid}</a></td>
+          <td>${claim}<div class="as-sub">${insurer}</div></td>
+          <td>${vehicle}</td>
+          <td>${sched}</td>
+          <td>${assessor}</td>
+          <td><span class="sev ${sev}">${SEV_MAP[sev]}</span></td>
+          <td><span class="pill ${sCls}">${sLbl}</span></td>
+          <td style="color:${cost ? 'var(--bodyText)' : 'var(--ink-300)'};font-variant-numeric:tabular-nums">${cost ? 'AED ' + cost.toLocaleString() : '—'}</td>
+          <td>${action}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('#tabs .tab').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('#tabs .tab').forEach(t => t.classList.remove('is-active'));
+    b.classList.add('is-active');
+    render(b.dataset.filter);
+  }));
+  render('all');
+</script>
+</body>
+</html>

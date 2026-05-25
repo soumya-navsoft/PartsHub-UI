@@ -21,6 +21,7 @@ window.PHRenderShell = function () {
         { id: 'garage-quotations-list', label: 'My Quotations', href: 'quotation-list.html' },
         { id: 'claims-orders', label: 'Claims Orders', href: 'claims-orders.html' }
       ]},
+      { id: 'assessments', label: 'Assessments', icon: 'claim', href: 'assessments.html' },
       { id: 'jobs', label: 'Jobs', icon: 'orders', href: 'jobs.html' },
       { id: 'orders', label: 'Orders', icon: 'truck', expandable: true, children: [
         { id: 'rfq-to-supplier', label: 'RFQ To Supplier', href: 'rfq-to-supplier.html' },
@@ -28,6 +29,8 @@ window.PHRenderShell = function () {
         { id: 'supplier-orders', label: 'Supplier Orders', href: 'supplier-orders.html' }
       ]},
       { id: 'inventory', label: 'Inventory', icon: 'inventory', href: 'inventory.html' },
+      { id: 'auction-top', label: 'Auction', icon: 'auction', href: 'auction.html' },
+      { id: 'hot-deals-top', label: 'Hot Deals', icon: 'deals', href: 'hot-deals.html' },
       { id: 'store', label: 'Store', icon: 'store', expandable: true, children: [
         { id: 'auction', label: 'Auction', href: 'auction.html' },
         { id: 'hot-deals', label: 'Hot Deals', href: 'hot-deals.html' }

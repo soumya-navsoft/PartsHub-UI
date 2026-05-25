@@ -57,12 +57,17 @@
   const GAR = ['Royal Swiss Automobile','Craft Auto Services','Gargash Auto Centre','Speedway Motors','Al Habtoor Motors','Bin Hamoodah Garage'];
   const STAT = [['To Ship','badge--warn'],['In Transit','badge--info'],['Delivered','badge--ok'],['To Confirm','badge']];
   let html='';
+  const STATUS_KEY = ['toship','transit','delivered','confirm'];
   for (let i=0;i<10;i++) {
     const s = STAT[i%STAT.length];
+    const sk = STATUS_KEY[i%STAT.length];
+    const po = `SO-${5200+i}`;
+    const gar = GAR[i%GAR.length];
+    const href = `order-detail.html?po=${encodeURIComponent(po)}&garage=${encodeURIComponent(gar)}&status=${sk}`;
     html+=`<tr>
       <td><input type="checkbox" class="cbx"/></td>
-      <td><a class="id-link" href="#">SO-${5200+i}</a></td>
-      <td>${GAR[i%GAR.length]}</td>
+      <td><a class="id-link" href="${href}">${po}</a></td>
+      <td>${gar}</td>
       <td>${3 + (i%5)} items</td>
       <td><strong>${(2800 + i*420).toLocaleString()}</strong></td>
       <td><span class="badge badge--ok">Paid</span></td>
